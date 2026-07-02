@@ -59,6 +59,30 @@
                       SelectionMode="Single"
                       SelectionChanged="ClientsGrid_SelectionChanged"
                       MouseDoubleClick="ClientsGrid_MouseDoubleClick">
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Foreground" Value="#202020"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Status}" Value="Checking">
+                                <Setter Property="Background" Value="#FFF4D6"/>
+                                <Setter Property="Foreground" Value="#664D03"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="Online">
+                                <Setter Property="Background" Value="#EAF7EA"/>
+                                <Setter Property="Foreground" Value="#0F5132"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="Offline">
+                                <Setter Property="Background" Value="#FDECEC"/>
+                                <Setter Property="Foreground" Value="#842029"/>
+                            </DataTrigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#2D6CDF"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="№" Binding="{Binding Number}" Width="55"/>
                     <DataGridTextColumn Header="Компьютер" Binding="{Binding Computer}" Width="180"/>
