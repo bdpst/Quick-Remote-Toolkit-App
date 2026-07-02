@@ -1,11 +1,11 @@
 # Quick Remote Toolkit App
 
-<img width="1166" height="753" alt="изображение" src="https://github.com/user-attachments/assets/800accc2-1cf2-43f5-bb1b-9e2e4aa94331" />
-
-
 Графическая Windows-утилита для быстрых действий удаленной поддержки.
 
 Это C# / WPF версия batch-утилиты `Quick Remote Toolkit`.
+
+<img width="1166" height="753" alt="изображение" src="https://github.com/user-attachments/assets/800accc2-1cf2-43f5-bb1b-9e2e4aa94331" />
+
 
 ## Возможности MVP
 
