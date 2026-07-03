@@ -149,13 +149,6 @@
                             Click="Gpupdate_Click"
                             ToolTip="Запустить обновление групповых политик на выбранном клиенте"/>
 
-                    <Menu Margin="0,4,0,0">
-                        <MenuItem Header="Копировать" ToolTip="Редкие действия копирования для выбранного клиента">
-                            <MenuItem Header="Имя ПК" Click="CopyComputer_Click"/>
-                            <MenuItem Header="IP" Click="CopyIp_Click"/>
-                        </MenuItem>
-                    </Menu>
-
                     <Separator Margin="0,6,0,12"/>
                     <Button Content="Проверить всех"
                             Click="PingAll_Click"
