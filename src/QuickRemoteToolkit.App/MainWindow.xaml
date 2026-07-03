@@ -38,12 +38,14 @@
             <Button Grid.Column="2"
                     Content="Открыть CSV"
                     Margin="12,0,8,0"
-                    Click="ChooseCsv_Click"/>
+                    Click="ChooseCsv_Click"
+                    ToolTip="Выбрать CSV-файл со списком клиентов"/>
 
             <Button Grid.Column="3"
                     Content="Обновить"
                     Margin="0"
-                    Click="ReloadClients_Click"/>
+                    Click="ReloadClients_Click"
+                    ToolTip="Перечитать список клиентов из выбранного CSV"/>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -59,7 +61,25 @@
                       IsReadOnly="True"
                       SelectionMode="Single"
                       SelectionChanged="ClientsGrid_SelectionChanged"
-                      MouseDoubleClick="ClientsGrid_MouseDoubleClick">
+                      MouseDoubleClick="ClientsGrid_MouseDoubleClick"
+                      PreviewMouseRightButtonDown="ClientsGrid_PreviewMouseRightButtonDown">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Remote Assistance" Click="RemoteAssistance_Click"/>
+                        <MenuItem Header="Ping" Click="PingSelected_Click"/>
+                        <MenuItem Header="Tracert" Click="Tracert_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Открыть C$" Click="AdminShare_Click"/>
+                        <MenuItem Header="Event Viewer" Click="EventViewer_Click"/>
+                        <MenuItem Header="Computer Management" Click="ComputerManagement_Click"/>
+                        <MenuItem Header="MSTSC" Click="Mstsc_Click"/>
+                        <MenuItem Header="WinRS cmd" Click="WinRsCmd_Click"/>
+                        <MenuItem Header="gpupdate /force" Click="Gpupdate_Click"/>
+                        <Separator/>
+                        <MenuItem Header="Копировать имя ПК" Click="CopyComputer_Click"/>
+                        <MenuItem Header="Копировать IP" Click="CopyIp_Click"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <Setter Property="Background" Value="White"/>
@@ -101,21 +121,48 @@
                                FontWeight="SemiBold"
                                Margin="0,0,0,10"/>
 
-                    <Button Content="Remote Assistance" Click="RemoteAssistance_Click"/>
-                    <Button Content="Ping" Click="PingSelected_Click"/>
-                    <Button Content="Tracert" Click="Tracert_Click"/>
-                    <Button Content="Открыть C$" Click="AdminShare_Click"/>
-                    <Button Content="Event Viewer" Click="EventViewer_Click"/>
-                    <Button Content="Computer Management" Click="ComputerManagement_Click"/>
-                    <Button Content="MSTSC" Click="Mstsc_Click"/>
-                    <Button Content="WinRS cmd" Click="WinRsCmd_Click"/>
-                    <Button Content="gpupdate /force" Click="Gpupdate_Click"/>
-                    <Button Content="Копировать имя ПК" Click="CopyComputer_Click"/>
-                    <Button Content="Копировать IP" Click="CopyIp_Click"/>
+                    <Button Content="Remote Assistance"
+                            Click="RemoteAssistance_Click"
+                            ToolTip="Открыть Windows Remote Assistance для выбранного клиента"/>
+                    <Button Content="Ping"
+                            Click="PingSelected_Click"
+                            ToolTip="Проверить доступность выбранного клиента"/>
+                    <Button Content="Tracert"
+                            Click="Tracert_Click"
+                            ToolTip="Открыть трассировку маршрута до выбранного клиента"/>
+                    <Button Content="Открыть C$"
+                            Click="AdminShare_Click"
+                            ToolTip="Открыть административную шару C$ выбранного клиента"/>
+                    <Button Content="Event Viewer"
+                            Click="EventViewer_Click"
+                            ToolTip="Открыть просмотр событий выбранного удаленного ПК"/>
+                    <Button Content="Computer Management"
+                            Click="ComputerManagement_Click"
+                            ToolTip="Открыть управление компьютером для выбранного клиента"/>
+                    <Button Content="MSTSC"
+                            Click="Mstsc_Click"
+                            ToolTip="Запустить подключение через Remote Desktop"/>
+                    <Button Content="WinRS cmd"
+                            Click="WinRsCmd_Click"
+                            ToolTip="Открыть удаленную командную строку через WinRS"/>
+                    <Button Content="gpupdate /force"
+                            Click="Gpupdate_Click"
+                            ToolTip="Запустить обновление групповых политик на выбранном клиенте"/>
+
+                    <Menu Margin="0,4,0,0">
+                        <MenuItem Header="Копировать" ToolTip="Редкие действия копирования для выбранного клиента">
+                            <MenuItem Header="Имя ПК" Click="CopyComputer_Click"/>
+                            <MenuItem Header="IP" Click="CopyIp_Click"/>
+                        </MenuItem>
+                    </Menu>
 
                     <Separator Margin="0,6,0,12"/>
-                    <Button Content="Проверить всех" Click="PingAll_Click"/>
-                    <Button Content="Экспорт логов" Click="ExportLogs_Click"/>
+                    <Button Content="Проверить всех"
+                            Click="PingAll_Click"
+                            ToolTip="Параллельно проверить ping для всех клиентов из списка"/>
+                    <Button Content="Экспорт логов"
+                            Click="ExportLogs_Click"
+                            ToolTip="Сохранить журнал действий в TXT или CSV"/>
 
                     <TextBlock Text="CSV"
                                FontSize="13"

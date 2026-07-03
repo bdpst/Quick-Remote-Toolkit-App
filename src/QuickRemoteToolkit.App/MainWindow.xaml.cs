@@ -7,7 +7,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace QuickRemoteToolkit.App;
 
@@ -158,6 +160,35 @@ public partial class MainWindow : Window
         RunForSelected("Remote Assistance", _actions.OpenRemoteAssistance);
     }
 
+    private void ClientsGrid_PreviewMouseRightButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        var row = FindParent<DataGridRow>((DependencyObject)e.OriginalSource);
+        if (row is null)
+        {
+            return;
+        }
+
+        row.IsSelected = true;
+        ClientsGrid.SelectedItem = row.Item;
+        row.Focus();
+    }
+
+    private static T? FindParent<T>(DependencyObject child) where T : DependencyObject
+    {
+        var current = child;
+        while (current is not null)
+        {
+            if (current is T target)
+            {
+                return target;
+            }
+
+            current = VisualTreeHelper.GetParent(current);
+        }
+
+        return null;
+    }
+
     private void RemoteAssistance_Click(object sender, RoutedEventArgs e) => RunForSelected("Remote Assistance", _actions.OpenRemoteAssistance);
     private void Tracert_Click(object sender, RoutedEventArgs e) => RunForSelected("Tracert", _actions.OpenTracert);
     private void AdminShare_Click(object sender, RoutedEventArgs e) => RunForSelected("Open C$", _actions.OpenAdminShare);
@@ -211,8 +242,10 @@ public partial class MainWindow : Window
     {
         var dialog = new SaveFileDialog
         {
-            Filter = "CSV files (*.csv)|*.csv|Text files (*.txt)|*.txt",
-            FileName = $"quick-remote-toolkit-log-{DateTime.Now:yyyyMMdd-HHmmss}.csv"
+            Filter = "Text files (*.txt)|*.txt|CSV files (*.csv)|*.csv|All files (*.*)|*.*",
+            DefaultExt = "txt",
+            FilterIndex = 1,
+            FileName = $"quick-remote-toolkit-log-{DateTime.Now:yyyyMMdd-HHmmss}.txt"
         };
 
         if (dialog.ShowDialog(this) != true)
@@ -220,7 +253,12 @@ public partial class MainWindow : Window
             return;
         }
 
-        File.WriteAllLines(dialog.FileName, _logs.Select(log => $"{log.Time:yyyy-MM-dd HH:mm:ss};{log.Computer};{log.Action};{log.Result}"));
+        var isCsv = string.Equals(Path.GetExtension(dialog.FileName), ".csv", StringComparison.OrdinalIgnoreCase);
+        var lines = isCsv
+            ? _logs.Select(log => $"{log.Time:yyyy-MM-dd HH:mm:ss};{log.Computer};{log.Action};{log.Result}")
+            : _logs.Select(log => $"[{log.Time:yyyy-MM-dd HH:mm:ss}] {log.Computer} | {log.Action} | {log.Result}");
+
+        File.WriteAllLines(dialog.FileName, lines);
         AddLog("", "Export logs", dialog.FileName);
     }
 }
