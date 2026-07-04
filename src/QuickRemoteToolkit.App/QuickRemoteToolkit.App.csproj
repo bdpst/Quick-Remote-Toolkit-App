@@ -7,5 +7,9 @@
     <UseWPF>true</UseWPF>
     <AssemblyName>QuickRemoteToolkit</AssemblyName>
     <RootNamespace>QuickRemoteToolkit.App</RootNamespace>
+    <ApplicationIcon>Assets\QuickRemoteToolkit.ico</ApplicationIcon>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Assets\QuickRemoteToolkit.ico" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>

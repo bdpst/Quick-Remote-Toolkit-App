@@ -27,6 +27,7 @@ public sealed class ClientEntry : INotifyPropertyChanged
             _status = value;
             OnPropertyChanged();
             OnPropertyChanged(nameof(StatusText));
+            OnPropertyChanged(nameof(StatusBrush));
         }
     }
 
@@ -54,7 +55,15 @@ public sealed class ClientEntry : INotifyPropertyChanged
         _ => "Неизвестно"
     };
 
-    public string LastCheckedText => LastChecked?.ToString("dd.MM.yyyy HH:mm:ss") ?? "";
+    public string StatusBrush => Status switch
+    {
+        ClientStatus.Online => "#16A34A",
+        ClientStatus.Offline => "#DC2626",
+        ClientStatus.Checking => "#2563EB",
+        _ => "#8A94A3"
+    };
+
+    public string LastCheckedText => LastChecked?.ToString("dd.MM.yyyy HH:mm:ss") ?? "—";
 
     public event PropertyChangedEventHandler? PropertyChanged;
 

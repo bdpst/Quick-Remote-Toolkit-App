@@ -15,7 +15,7 @@
 - действия: Remote Assistance, ping, tracert, `\\PC\c$`, Event Viewer, Computer Management, mstsc, WinRS cmd, WinRS gpupdate;
 - параллельная проверка доступности клиентов;
 - журнал действий в окне;
-- экспорт журнала в CSV;
+- экспорт журнала в TXT по умолчанию, CSV доступен как дополнительный формат;
 - настройки в `%AppData%\QuickRemoteToolkitApp\settings.json`.
 
 ## Сборка

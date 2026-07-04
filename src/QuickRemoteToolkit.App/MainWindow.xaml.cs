@@ -9,7 +9,9 @@ using System.Net.NetworkInformation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace QuickRemoteToolkit.App;
 
@@ -23,9 +25,13 @@ public partial class MainWindow : Window
     private readonly AppSettings _settings;
     private readonly ICollectionView _clientsView;
 
+    public ICommand FocusSearchCommand { get; }
+
     public MainWindow()
     {
+        FocusSearchCommand = new RelayCommand(FocusSearch);
         InitializeComponent();
+        SetWindowIcon();
 
         _settings = _settingsService.Load();
         ClientsGrid.ItemsSource = _clients;
@@ -38,6 +44,23 @@ public partial class MainWindow : Window
     }
 
     private ClientEntry? SelectedClient => ClientsGrid.SelectedItem as ClientEntry;
+
+    private void SetWindowIcon()
+    {
+        var iconPath = Path.Combine(AppContext.BaseDirectory, "Assets", "QuickRemoteToolkit.ico");
+        if (!File.Exists(iconPath))
+        {
+            return;
+        }
+
+        Icon = BitmapFrame.Create(new Uri(iconPath, UriKind.Absolute));
+    }
+
+    private void FocusSearch()
+    {
+        SearchBox.Focus();
+        SearchBox.SelectAll();
+    }
 
     private bool FilterClient(object item)
     {
@@ -63,6 +86,8 @@ public partial class MainWindow : Window
 
         if (string.IsNullOrWhiteSpace(_settings.ClientsCsvPath) || !File.Exists(_settings.ClientsCsvPath))
         {
+            CsvPathText.Text = "CSV не выбран или файл не найден.";
+            CsvInfoText.Text = "";
             AddLog("", "Load CSV", "CSV не выбран или файл не найден.");
             return;
         }
@@ -75,6 +100,8 @@ public partial class MainWindow : Window
             }
 
             AddLog("", "Load CSV", $"Загружено клиентов: {_clients.Count}");
+            CsvPathText.Text = _settings.ClientsCsvPath;
+            CsvInfoText.Text = $"Загружено: {DateTime.Now:dd.MM.yyyy HH:mm}   Клиентов: {_clients.Count}";
         }
         catch (Exception ex)
         {
@@ -260,5 +287,18 @@ public partial class MainWindow : Window
 
         File.WriteAllLines(dialog.FileName, lines);
         AddLog("", "Export logs", dialog.FileName);
+    }
+
+    private sealed class RelayCommand(Action execute) : ICommand
+    {
+        public event EventHandler? CanExecuteChanged
+        {
+            add { }
+            remove { }
+        }
+
+        public bool CanExecute(object? parameter) => true;
+
+        public void Execute(object? parameter) => execute();
     }
 }
