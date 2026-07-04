@@ -4,7 +4,7 @@
 
 Это C# / WPF версия batch-утилиты `Quick Remote Toolkit`.
 
-<img width="1166" height="753" alt="изображение" src="https://github.com/user-attachments/assets/800accc2-1cf2-43f5-bb1b-9e2e4aa94331" />
+<img width="1486" height="913" alt="изображение" src="https://github.com/user-attachments/assets/68f23bae-a2e6-48ac-8da0-01a5e0db53bc" />
 
 
 ## Возможности MVP
