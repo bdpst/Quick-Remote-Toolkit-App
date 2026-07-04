@@ -7,7 +7,7 @@
 <img width="1486" height="913" alt="изображение" src="https://github.com/user-attachments/assets/68f23bae-a2e6-48ac-8da0-01a5e0db53bc" />
 
 
-## Возможности MVP
+## Возможности
 
 - чтение клиентов из CSV `number;computer;ip;person`;
 - поддержка CSV в Windows-1251 и UTF-8;
