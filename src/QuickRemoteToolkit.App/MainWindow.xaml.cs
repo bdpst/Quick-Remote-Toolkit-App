@@ -39,15 +39,12 @@ public partial class MainWindow : Window
         _clientsView = CollectionViewSource.GetDefaultView(_clients);
         _clientsView.Filter = FilterClient;
 
-        AdminUserBox.Text = CurrentAdminUserName;
         CsvPathText.Text = _settings.ClientsCsvPath;
         LoadClients();
     }
 
     private ClientEntry? SelectedClient => ClientsGrid.SelectedItem as ClientEntry;
-    private string CurrentAdminUserName => string.IsNullOrWhiteSpace(_settings.AdminUserName)
-        ? $@"{Environment.UserDomainName}\{Environment.UserName}"
-        : _settings.AdminUserName.Trim();
+    private static string CurrentAdminUserName => $@"{Environment.UserDomainName}\{Environment.UserName}";
 
     private void SetWindowIcon()
     {
@@ -294,14 +291,6 @@ public partial class MainWindow : Window
 
         File.WriteAllLines(dialog.FileName, lines);
         AddLog("", "Export logs", dialog.FileName);
-    }
-
-    private void SaveAdminUser_Click(object sender, RoutedEventArgs e)
-    {
-        _settings.AdminUserName = AdminUserBox.Text.Trim();
-        _settingsService.Save(_settings);
-        AdminUserBox.Text = CurrentAdminUserName;
-        AddLog("", "Settings", $"Админ-пользователь: {CurrentAdminUserName}");
     }
 
     private sealed class RelayCommand(Action execute) : ICommand
