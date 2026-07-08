@@ -289,6 +289,31 @@
                     </StackPanel>
                 </Border>
 
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                            <TextBlock Text="&#xE77B;" Style="{StaticResource SectionHeaderIconStyle}"/>
+                            <TextBlock Text="Админ-доступ"
+                                       FontSize="14"
+                                       FontWeight="SemiBold"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="Пользователь"
+                                   Foreground="{StaticResource TextSecondaryBrush}"
+                                   Margin="0,0,0,6"/>
+                        <TextBox x:Name="AdminUserBox"
+                                 ToolTip="Доменный пользователь для подготовки SMB-сессии, например GTL\kmn"/>
+                        <Button Style="{StaticResource ToolButtonStyle}"
+                                Click="SaveAdminUser_Click"
+                                ToolTip="Сохранить пользователя для подключения к административным шарам">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE74E;" Style="{StaticResource IconTextStyle}" Foreground="{StaticResource AccentBrush}"/>
+                                <TextBlock Text="Сохранить"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Border>
+
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">

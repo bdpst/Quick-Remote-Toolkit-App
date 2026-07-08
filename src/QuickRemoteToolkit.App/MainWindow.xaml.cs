@@ -39,11 +39,15 @@ public partial class MainWindow : Window
         _clientsView = CollectionViewSource.GetDefaultView(_clients);
         _clientsView.Filter = FilterClient;
 
+        AdminUserBox.Text = CurrentAdminUserName;
         CsvPathText.Text = _settings.ClientsCsvPath;
         LoadClients();
     }
 
     private ClientEntry? SelectedClient => ClientsGrid.SelectedItem as ClientEntry;
+    private string CurrentAdminUserName => string.IsNullOrWhiteSpace(_settings.AdminUserName)
+        ? $@"{Environment.UserDomainName}\{Environment.UserName}"
+        : _settings.AdminUserName.Trim();
 
     private void SetWindowIcon()
     {
@@ -218,7 +222,10 @@ public partial class MainWindow : Window
 
     private void RemoteAssistance_Click(object sender, RoutedEventArgs e) => RunForSelected("Remote Assistance", _actions.OpenRemoteAssistance);
     private void Tracert_Click(object sender, RoutedEventArgs e) => RunForSelected("Tracert", _actions.OpenTracert);
-    private void AdminShare_Click(object sender, RoutedEventArgs e) => RunForSelected("Open C$", _actions.OpenAdminShare);
+    private void AdminShare_Click(object sender, RoutedEventArgs e)
+    {
+        RunForSelected("Open C$", client => _actions.OpenAdminShare(client, CurrentAdminUserName));
+    }
     private void EventViewer_Click(object sender, RoutedEventArgs e) => RunForSelected("Event Viewer", _actions.OpenEventViewer);
     private void ComputerManagement_Click(object sender, RoutedEventArgs e) => RunForSelected("Computer Management", _actions.OpenComputerManagement);
     private void Mstsc_Click(object sender, RoutedEventArgs e) => RunForSelected("MSTSC", _actions.OpenMstsc);
@@ -287,6 +294,14 @@ public partial class MainWindow : Window
 
         File.WriteAllLines(dialog.FileName, lines);
         AddLog("", "Export logs", dialog.FileName);
+    }
+
+    private void SaveAdminUser_Click(object sender, RoutedEventArgs e)
+    {
+        _settings.AdminUserName = AdminUserBox.Text.Trim();
+        _settingsService.Save(_settings);
+        AdminUserBox.Text = CurrentAdminUserName;
+        AddLog("", "Settings", $"Админ-пользователь: {CurrentAdminUserName}");
     }
 
     private sealed class RelayCommand(Action execute) : ICommand

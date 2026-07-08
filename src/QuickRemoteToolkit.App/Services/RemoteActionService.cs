@@ -16,8 +16,9 @@ public sealed class RemoteActionService
         Start(Environment.GetEnvironmentVariable("ComSpec") ?? "cmd.exe", $"/d /c \"tracert {client.Target} & echo. & pause\"");
     }
 
-    public void OpenAdminShare(ClientEntry client)
+    public void OpenAdminShare(ClientEntry client, string adminUserName)
     {
+        EnsureSmbSession(client, adminUserName);
         Start("explorer.exe", $@"\\{client.Computer}\c$");
     }
 
@@ -55,5 +56,41 @@ public sealed class RemoteActionService
             UseShellExecute = true,
             WorkingDirectory = Directory.GetCurrentDirectory()
         });
+    }
+
+    private static void EnsureSmbSession(ClientEntry client, string adminUserName)
+    {
+        if (string.IsNullOrWhiteSpace(adminUserName))
+        {
+            return;
+        }
+
+        using var process = Process.Start(new ProcessStartInfo
+        {
+            FileName = Environment.GetEnvironmentVariable("ComSpec") ?? "cmd.exe",
+            Arguments = $"/d /c net use \\\\{client.Computer}\\IPC$ /user:{QuoteForCmd(adminUserName)}",
+            CreateNoWindow = true,
+            RedirectStandardInput = true,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            UseShellExecute = false,
+            WorkingDirectory = Directory.GetCurrentDirectory()
+        });
+
+        if (process is null)
+        {
+            return;
+        }
+
+        process.StandardInput.WriteLine();
+        if (!process.WaitForExit(5000))
+        {
+            process.Kill();
+        }
+    }
+
+    private static string QuoteForCmd(string value)
+    {
+        return "\"" + value.Replace("\"", "\\\"", StringComparison.Ordinal) + "\"";
     }
 }
