@@ -41,11 +41,15 @@ publish\
 
 Self-contained single-file сборка выполняется в GitHub Actions при создании релиза.
 
+Локальная публикация выше является framework-dependent: она компактная, но требует установленный .NET Desktop Runtime.
+
 ## GitHub Release
 
 В репозитории есть workflow `.github/workflows/release.yml`.
 
 Он собирает приложение на `windows-latest`. При push тега вида `v1.0.0` workflow создаст GitHub Release и приложит `QuickRemoteToolkit.App-win-x64.zip`.
+
+Релизный архив автономный: в него входит .NET/WPF runtime, поэтому он заметно больше batch-файла и локального framework-dependent publish. Для уменьшения размера используется single-file compression, при этом trimming намеренно не включен из-за рисков для WPF/XAML.
 
 ## CSV
 

@@ -221,7 +221,23 @@ public partial class MainWindow : Window
     private void Tracert_Click(object sender, RoutedEventArgs e) => RunForSelected("Tracert", _actions.OpenTracert);
     private void AdminShare_Click(object sender, RoutedEventArgs e)
     {
-        RunForSelected("Open C$", client => _actions.OpenAdminShare(client, CurrentAdminUserName));
+        var client = SelectedClient;
+        if (client is null)
+        {
+            MessageBox.Show("Выберите клиента.", "Quick Remote Toolkit", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        try
+        {
+            var result = _actions.OpenAdminShare(client, CurrentAdminUserName);
+            AddLog(client.Computer, "Open C$", result);
+        }
+        catch (Exception ex)
+        {
+            AddLog(client.Computer, "Open C$", ex.Message);
+            MessageBox.Show(ex.Message, "Open C$", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
     private void EventViewer_Click(object sender, RoutedEventArgs e) => RunForSelected("Event Viewer", _actions.OpenEventViewer);
     private void ComputerManagement_Click(object sender, RoutedEventArgs e) => RunForSelected("Computer Management", _actions.OpenComputerManagement);

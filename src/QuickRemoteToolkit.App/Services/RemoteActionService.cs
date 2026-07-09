@@ -16,10 +16,11 @@ public sealed class RemoteActionService
         Start(Environment.GetEnvironmentVariable("ComSpec") ?? "cmd.exe", $"/d /c \"tracert {client.Target} & echo. & pause\"");
     }
 
-    public void OpenAdminShare(ClientEntry client, string adminUserName)
+    public string OpenAdminShare(ClientEntry client, string adminUserName)
     {
-        EnsureSmbSession(client, adminUserName);
+        var smbSessionResult = EnsureSmbSession(client, adminUserName);
         Start("explorer.exe", $@"\\{client.Computer}\c$");
+        return smbSessionResult;
     }
 
     public void OpenEventViewer(ClientEntry client)
@@ -58,39 +59,53 @@ public sealed class RemoteActionService
         });
     }
 
-    private static void EnsureSmbSession(ClientEntry client, string adminUserName)
+    private static string EnsureSmbSession(ClientEntry client, string adminUserName)
     {
         if (string.IsNullOrWhiteSpace(adminUserName))
         {
-            return;
+            return "SMB session skipped: user is empty.";
         }
 
-        using var process = Process.Start(new ProcessStartInfo
+        var startInfo = new ProcessStartInfo
         {
-            FileName = Environment.GetEnvironmentVariable("ComSpec") ?? "cmd.exe",
-            Arguments = $"/d /c net use \\\\{client.Computer}\\IPC$ /user:{QuoteForCmd(adminUserName)}",
+            FileName = "net.exe",
             CreateNoWindow = true,
             RedirectStandardInput = true,
             RedirectStandardOutput = true,
             RedirectStandardError = true,
             UseShellExecute = false,
             WorkingDirectory = Directory.GetCurrentDirectory()
-        });
+        };
+        startInfo.ArgumentList.Add("use");
+        startInfo.ArgumentList.Add($@"\\{client.Computer}\IPC$");
+        startInfo.ArgumentList.Add($"/user:{adminUserName}");
+
+        using var process = Process.Start(startInfo);
 
         if (process is null)
         {
-            return;
+            return "SMB session skipped: net.exe did not start.";
         }
 
         process.StandardInput.WriteLine();
+
         if (!process.WaitForExit(5000))
         {
-            process.Kill();
+            process.Kill(entireProcessTree: true);
+            return "SMB session timeout.";
         }
+
+        var output = process.StandardOutput.ReadToEnd().Trim();
+        var error = process.StandardError.ReadToEnd().Trim();
+        if (process.ExitCode == 0)
+        {
+            return "SMB session prepared.";
+        }
+
+        var message = string.IsNullOrWhiteSpace(error) ? output : error;
+        return string.IsNullOrWhiteSpace(message)
+            ? $"SMB session failed: exit code {process.ExitCode}."
+            : $"SMB session failed: {message}";
     }
 
-    private static string QuoteForCmd(string value)
-    {
-        return "\"" + value.Replace("\"", "\\\"", StringComparison.Ordinal) + "\"";
-    }
 }
