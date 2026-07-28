@@ -30,21 +30,64 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         FocusSearchCommand = new RelayCommand(FocusSearch);
+        _settings = _settingsService.Load();
+        ThemeService.Apply(_settings.IsDarkTheme);
         InitializeComponent();
         SetWindowIcon();
 
-        _settings = _settingsService.Load();
         ClientsGrid.ItemsSource = _clients;
         LogGrid.ItemsSource = _logs;
         _clientsView = CollectionViewSource.GetDefaultView(_clients);
         _clientsView.Filter = FilterClient;
 
         CsvPathText.Text = _settings.ClientsCsvPath;
+        UpdateThemeButton();
         LoadClients();
     }
 
     private ClientEntry? SelectedClient => ClientsGrid.SelectedItem as ClientEntry;
     private static string CurrentAdminUserName => $@"{Environment.UserDomainName}\{Environment.UserName}";
+
+    private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.ClickCount == 2)
+        {
+            ToggleMaximizeRestore();
+            return;
+        }
+
+        if (e.LeftButton == MouseButtonState.Pressed)
+        {
+            DragMove();
+        }
+    }
+
+    private void MinimizeWindow_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+    private void MaximizeRestoreWindow_Click(object sender, RoutedEventArgs e) => ToggleMaximizeRestore();
+
+    private void CloseWindow_Click(object sender, RoutedEventArgs e) => Close();
+
+    private void Window_StateChanged(object sender, EventArgs e) => UpdateMaximizeRestoreButton();
+
+    private void ToggleMaximizeRestore()
+    {
+        WindowState = WindowState == WindowState.Maximized
+            ? WindowState.Normal
+            : WindowState.Maximized;
+    }
+
+    private void UpdateMaximizeRestoreButton()
+    {
+        if (MaximizeRestoreButton is null)
+        {
+            return;
+        }
+
+        var isMaximized = WindowState == WindowState.Maximized;
+        MaximizeRestoreButton.Content = isMaximized ? "\uE923" : "\uE922";
+        MaximizeRestoreButton.ToolTip = isMaximized ? "Восстановить" : "Развернуть";
+    }
 
     private void SetWindowIcon()
     {
@@ -176,6 +219,22 @@ public partial class MainWindow : Window
     }
 
     private void ReloadClients_Click(object sender, RoutedEventArgs e) => LoadClients();
+
+    private void ToggleTheme_Click(object sender, RoutedEventArgs e)
+    {
+        _settings.IsDarkTheme = !_settings.IsDarkTheme;
+        ThemeService.Apply(_settings.IsDarkTheme);
+        _settingsService.Save(_settings);
+        UpdateThemeButton();
+    }
+
+    private void UpdateThemeButton()
+    {
+        ThemeIcon.Text = _settings.IsDarkTheme ? "\uE706" : "\uE708";
+        ThemeButton.ToolTip = _settings.IsDarkTheme
+            ? "Включить светлую тему"
+            : "Включить тёмную тему";
+    }
 
     private void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) => _clientsView.Refresh();
 

@@ -8,6 +8,7 @@
     <AssemblyName>QuickRemoteToolkit</AssemblyName>
     <RootNamespace>QuickRemoteToolkit.App</RootNamespace>
     <ApplicationIcon>Assets\QuickRemoteToolkit.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="Assets\QuickRemoteToolkit.ico" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
