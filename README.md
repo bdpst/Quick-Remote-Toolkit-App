@@ -4,7 +4,10 @@
 
 Это C# / WPF версия batch-утилиты `Quick Remote Toolkit`.
 
-<img width="1486" height="913" alt="изображение" src="https://github.com/user-attachments/assets/68f23bae-a2e6-48ac-8da0-01a5e0db53bc" />
+<img width="1500" height="920" alt="изображение" src="https://github.com/user-attachments/assets/ac25ffdb-78e7-4fe1-86e8-d009f6bde4ed" />
+<img width="1500" height="920" alt="изображение" src="https://github.com/user-attachments/assets/9c489bac-233d-409a-b28c-42ffc7a0cc50" />
+
+
 
 
 ## Возможности
