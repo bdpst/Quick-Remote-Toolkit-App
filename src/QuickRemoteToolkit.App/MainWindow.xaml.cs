@@ -6,10 +6,12 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -17,6 +19,9 @@ namespace QuickRemoteToolkit.App;
 
 public partial class MainWindow : Window
 {
+    private const int WmGetMinMaxInfo = 0x0024;
+    private const uint MonitorDefaultToNearest = 0x00000002;
+
     private readonly ObservableCollection<ClientEntry> _clients = [];
     private readonly ObservableCollection<LogEntry> _logs = [];
     private readonly SettingsService _settingsService = new();
@@ -24,6 +29,7 @@ public partial class MainWindow : Window
     private readonly RemoteActionService _actions = new();
     private readonly AppSettings _settings;
     private readonly ICollectionView _clientsView;
+    private HwndSource? _windowSource;
 
     public ICommand FocusSearchCommand { get; }
 
@@ -47,6 +53,58 @@ public partial class MainWindow : Window
 
     private ClientEntry? SelectedClient => ClientsGrid.SelectedItem as ClientEntry;
     private static string CurrentAdminUserName => $@"{Environment.UserDomainName}\{Environment.UserName}";
+
+    protected override void OnSourceInitialized(EventArgs e)
+    {
+        base.OnSourceInitialized(e);
+        _windowSource = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+        _windowSource?.AddHook(WindowMessageHook);
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        _windowSource?.RemoveHook(WindowMessageHook);
+        _windowSource = null;
+        base.OnClosed(e);
+    }
+
+    private static nint WindowMessageHook(
+        nint windowHandle,
+        int message,
+        nint wParam,
+        nint lParam,
+        ref bool handled)
+    {
+        if (message != WmGetMinMaxInfo)
+        {
+            return nint.Zero;
+        }
+
+        var monitorHandle = MonitorFromWindow(windowHandle, MonitorDefaultToNearest);
+        if (monitorHandle == nint.Zero)
+        {
+            return nint.Zero;
+        }
+
+        var monitorInfo = new MonitorInfo
+        {
+            Size = Marshal.SizeOf<MonitorInfo>()
+        };
+        if (!GetMonitorInfo(monitorHandle, ref monitorInfo))
+        {
+            return nint.Zero;
+        }
+
+        var minMaxInfo = Marshal.PtrToStructure<MinMaxInfo>(lParam);
+        minMaxInfo.MaxPosition.X = monitorInfo.WorkArea.Left - monitorInfo.MonitorArea.Left;
+        minMaxInfo.MaxPosition.Y = monitorInfo.WorkArea.Top - monitorInfo.MonitorArea.Top;
+        minMaxInfo.MaxSize.X = monitorInfo.WorkArea.Right - monitorInfo.WorkArea.Left;
+        minMaxInfo.MaxSize.Y = monitorInfo.WorkArea.Bottom - monitorInfo.WorkArea.Top;
+        Marshal.StructureToPtr(minMaxInfo, lParam, fDeleteOld: true);
+        handled = true;
+
+        return nint.Zero;
+    }
 
     private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
@@ -220,6 +278,40 @@ public partial class MainWindow : Window
 
     private void ReloadClients_Click(object sender, RoutedEventArgs e) => LoadClients();
 
+    private void CsvPath_Click(object sender, RoutedEventArgs e)
+    {
+        var csvPath = _settings.ClientsCsvPath;
+        if (string.IsNullOrWhiteSpace(csvPath) || !File.Exists(csvPath))
+        {
+            MessageBox.Show(
+                "CSV-файл не выбран или больше не существует.",
+                "Quick Remote Toolkit",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+            return;
+        }
+
+        try
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = "explorer.exe",
+                Arguments = $"/select,\"{csvPath}\"",
+                UseShellExecute = true
+            };
+            Process.Start(startInfo);
+        }
+        catch (Exception ex)
+        {
+            AddLog("", "Open CSV location", ex.Message);
+            MessageBox.Show(
+                ex.Message,
+                "Не удалось открыть расположение CSV",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+        }
+    }
+
     private void ToggleTheme_Click(object sender, RoutedEventArgs e)
     {
         _settings.IsDarkTheme = !_settings.IsDarkTheme;
@@ -380,4 +472,46 @@ public partial class MainWindow : Window
 
         public void Execute(object? parameter) => execute();
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct NativePoint
+    {
+        public int X;
+        public int Y;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MinMaxInfo
+    {
+        public NativePoint Reserved;
+        public NativePoint MaxSize;
+        public NativePoint MaxPosition;
+        public NativePoint MinTrackSize;
+        public NativePoint MaxTrackSize;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct NativeRect
+    {
+        public int Left;
+        public int Top;
+        public int Right;
+        public int Bottom;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    private struct MonitorInfo
+    {
+        public int Size;
+        public NativeRect MonitorArea;
+        public NativeRect WorkArea;
+        public uint Flags;
+    }
+
+    [DllImport("user32.dll")]
+    private static extern nint MonitorFromWindow(nint windowHandle, uint flags);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    private static extern bool GetMonitorInfo(nint monitorHandle, ref MonitorInfo monitorInfo);
 }
