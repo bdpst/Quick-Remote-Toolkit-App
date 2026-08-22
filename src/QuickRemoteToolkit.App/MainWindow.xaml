@@ -250,6 +250,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Домен" Binding="{Binding Domain}" SortMemberPath="Domain" Width="180" ElementStyle="{StaticResource GridTextStyle}"/>
                         <DataGridTextColumn Header="Последняя проверка" Binding="{Binding LastCheckedText}" SortMemberPath="LastChecked" Width="170" ElementStyle="{StaticResource GridTextStyle}"/>
                     </DataGrid.Columns>
                 </DataGrid>

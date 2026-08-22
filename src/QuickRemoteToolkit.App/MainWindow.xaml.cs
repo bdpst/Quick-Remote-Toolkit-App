@@ -27,6 +27,7 @@ public partial class MainWindow : Window
     private readonly SettingsService _settingsService = new();
     private readonly CsvClientStore _clientStore = new();
     private readonly RemoteActionService _actions = new();
+    private readonly DomainMembershipService _domainMembership = new();
     private readonly AppSettings _settings;
     private readonly ICollectionView _clientsView;
     private HwndSource? _windowSource;
@@ -179,7 +180,8 @@ public partial class MainWindow : Window
 
         return client.Computer.Contains(query, StringComparison.OrdinalIgnoreCase)
             || client.Ip.Contains(query, StringComparison.OrdinalIgnoreCase)
-            || client.Person.Contains(query, StringComparison.OrdinalIgnoreCase);
+            || client.Person.Contains(query, StringComparison.OrdinalIgnoreCase)
+            || client.Domain.Contains(query, StringComparison.OrdinalIgnoreCase);
     }
 
     private void LoadClients()
@@ -242,6 +244,7 @@ public partial class MainWindow : Window
     {
         client.Status = ClientStatus.Checking;
         client.LastChecked = DateTime.Now;
+        client.Domain = "Проверка…";
 
         try
         {
@@ -249,10 +252,24 @@ public partial class MainWindow : Window
             var reply = await ping.SendPingAsync(client.Target, _settings.PingTimeoutMs);
             client.Status = reply.Status == IPStatus.Success ? ClientStatus.Online : ClientStatus.Offline;
             AddLog(client.Computer, "Ping", reply.Status == IPStatus.Success ? $"{reply.RoundtripTime} ms" : reply.Status.ToString());
+
+            if (reply.Status != IPStatus.Success)
+            {
+                client.Domain = "Недоступно";
+                return;
+            }
+
+            var domain = await _domainMembership.GetAsync(client.Computer);
+            client.Domain = domain.DisplayText;
+            if (domain.ErrorMessage is not null)
+            {
+                AddLog(client.Computer, "Domain", domain.ErrorMessage);
+            }
         }
         catch (Exception ex)
         {
             client.Status = ClientStatus.Offline;
+            client.Domain = "Недоступно";
             AddLog(client.Computer, "Ping", ex.Message);
         }
     }
