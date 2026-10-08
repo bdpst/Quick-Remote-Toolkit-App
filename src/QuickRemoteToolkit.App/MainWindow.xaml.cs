@@ -27,6 +27,7 @@ public partial class MainWindow : Window
     private readonly SettingsService _settingsService = new();
     private readonly CsvClientStore _clientStore = new();
     private readonly RemoteActionService _actions = new();
+    private readonly RemoteMessageService _messages = new();
     private readonly DomainMembershipService _domainMembership = new();
     private readonly AppSettings _settings;
     private readonly ICollectionView _clientsView;
@@ -439,8 +440,8 @@ public partial class MainWindow : Window
         AddLog(client.Computer, "Сообщение", "Отправка…");
         try
         {
-            await _actions.SendMessageAsync(client, dialog.MessageTextValue, dialog.DisplaySeconds);
-            AddLog(client.Computer, "Сообщение", $"msg.exe завершилась успешно. Время показа: {dialog.DisplaySeconds} сек. Прочтение не подтверждено.");
+            var progress = new Progress<string>(result => AddLog(client.Computer, "Сообщение", result));
+            await _messages.SendAsync(client.Computer, dialog.MessageTextValue, dialog.DisplaySeconds, progress);
         }
         catch (Exception ex)
         {

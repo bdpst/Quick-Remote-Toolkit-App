@@ -16,7 +16,7 @@
         <TextBlock x:Name="RecipientText" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap"/>
         <TextBlock Grid.Row="1" Margin="0,8,0,12" TextWrapping="Wrap"
                    Foreground="{DynamicResource TextSecondaryBrush}"
-                   Text="Сообщение получат все пользователи выбранного ПК. Требуются сеанс пользователя и права отправки сообщений."/>
+                   Text="Сообщение получат пользователи выбранного ПК. Нажатие ОК, Отмена или истечение времени появится в журнале. Требуются права просмотра сеансов и отправки сообщений."/>
         <TextBox x:Name="MessageText" Grid.Row="2" AcceptsReturn="True" TextWrapping="Wrap"
                  VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto"
                  MaxLength="2000" TextChanged="MessageText_TextChanged"
