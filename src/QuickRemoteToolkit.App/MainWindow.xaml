@@ -20,6 +20,52 @@
                             UseAeroCaptionButtons="False"/>
     </shell:WindowChrome.WindowChrome>
     <Window.Resources>
+        <Style x:Key="SectionExpanderStyle" TargetType="Expander">
+            <Setter Property="IsExpanded" Value="True"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Expander">
+                        <StackPanel>
+                            <ToggleButton IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                          Cursor="Hand" Foreground="{TemplateBinding Foreground}"
+                                          AutomationProperties.Name="{Binding Header.Children[1].Text, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="Transparent" Padding="0,2">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+                                                <ContentPresenter Content="{Binding Header, RelativeSource={RelativeSource AncestorType=Expander}}"/>
+                                                <TextBlock x:Name="Arrow" Grid.Column="1" Text="&#xE76C;" Margin="10,0,0,0"
+                                                           FontFamily="Segoe MDL2 Assets" FontSize="11" VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource TextMutedBrush}"/>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="Arrow" Property="Text" Value="&#xE70D;"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Arrow" Property="Foreground" Value="{DynamicResource AccentBrush}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter x:Name="SectionContent" ContentSource="Content" Margin="0,10,0,0"/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsExpanded" Value="False">
+                                <Setter TargetName="SectionContent" Property="Visibility" Value="Collapsed"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="CopyCellButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
             <Setter Property="Width" Value="24"/>
             <Setter Property="Height" Value="22"/>
@@ -252,6 +298,7 @@
                             <MenuItem Header="MSTSC" Click="Mstsc_Click"/>
                             <MenuItem Header="WinRS cmd" Click="WinRsCmd_Click"/>
                             <MenuItem Header="gpupdate /force" Click="Gpupdate_Click"/>
+                            <MenuItem Header="Локальные администраторы…" Click="LocalAdministrators_Click"/>
                             <MenuItem Header="Отправить сообщение…" Click="SendMessage_Click"/>
                             <Separator/>
                             <MenuItem Header="Копировать имя ПК" Click="CopyComputer_Click"/>
@@ -326,8 +373,9 @@
                       VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Expander Style="{StaticResource SectionExpanderStyle}">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal" Margin="0">
                             <TextBlock Text="&#xE8AF;" Style="{StaticResource SectionHeaderIconStyle}"/>
                             <TextBlock Text="Подключение"
                                        FontSize="14"
@@ -335,6 +383,8 @@
                                        Foreground="{DynamicResource TextPrimaryBrush}"
                                        VerticalAlignment="Center"/>
                         </StackPanel>
+                        </Expander.Header>
+                        <StackPanel>
                         <Button Style="{StaticResource ToolButtonStyle}" Click="RemoteAssistance_Click" ToolTip="Открыть Windows Remote Assistance для выбранного клиента">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE8AF;" Style="{StaticResource IconTextStyle}" Foreground="{DynamicResource AccentBrush}"/>
@@ -360,11 +410,13 @@
                             </StackPanel>
                         </Button>
                     </StackPanel>
+                    </Expander>
                 </Border>
 
                 <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <Expander Style="{StaticResource SectionExpanderStyle}">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal" Margin="0">
                             <TextBlock Text="&#xE713;" Style="{StaticResource SectionHeaderIconStyle}"/>
                             <TextBlock Text="Инструменты"
                                        FontSize="14"
@@ -372,6 +424,8 @@
                                        Foreground="{DynamicResource TextPrimaryBrush}"
                                        VerticalAlignment="Center"/>
                         </StackPanel>
+                        </Expander.Header>
+                        <StackPanel>
                         <Button Style="{StaticResource ToolButtonStyle}" Click="EventViewer_Click" ToolTip="Открыть просмотр событий выбранного удаленного ПК">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE8A5;" Style="{StaticResource IconTextStyle}" Foreground="{DynamicResource AccentBrush}"/>
@@ -402,6 +456,12 @@
                                 <TextBlock Text="Отправить сообщение…"/>
                             </StackPanel>
                         </Button>
+                        <Button Style="{StaticResource ToolButtonStyle}" Click="LocalAdministrators_Click" ToolTip="Добавить или удалить пользователя из локальных администраторов выбранного ПК">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xEA18;" Style="{StaticResource IconTextStyle}" Foreground="{DynamicResource AccentBrush}"/>
+                                <TextBlock Text="Локальные администраторы…"/>
+                            </StackPanel>
+                        </Button>
                         <Button Style="{StaticResource ToolButtonStyle}" Click="Gpupdate_Click" ToolTip="Запустить обновление групповых политик на выбранном клиенте">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE713;" Style="{StaticResource IconTextStyle}" Foreground="{DynamicResource AccentBrush}"/>
@@ -409,18 +469,22 @@
                             </StackPanel>
                         </Button>
                     </StackPanel>
+                    </Expander>
                 </Border>
 
                 <Border Style="{StaticResource CardStyle}" Margin="0,0,0,12">
-                    <StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <TextBlock Text="&#xE9D2;" Style="{StaticResource SectionHeaderIconStyle}"/>
+                    <Expander Style="{StaticResource SectionExpanderStyle}">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal" Margin="0">
+                            <TextBlock Text="&#xE8FD;" Style="{StaticResource SectionHeaderIconStyle}"/>
                             <TextBlock Text="Операции"
                                        FontSize="14"
                                        FontWeight="SemiBold"
                                        Foreground="{DynamicResource TextPrimaryBrush}"
                                        VerticalAlignment="Center"/>
                         </StackPanel>
+                        </Expander.Header>
+                        <StackPanel>
                         <Button Style="{StaticResource ToolButtonStyle}" Click="PingAll_Click" ToolTip="Параллельно проверить ping для всех клиентов из списка">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE716;" Style="{StaticResource IconTextStyle}" Foreground="{DynamicResource AccentBrush}"/>
@@ -434,6 +498,7 @@
                             </StackPanel>
                         </Button>
                     </StackPanel>
+                    </Expander>
                 </Border>
 
                 <Border Style="{StaticResource CardStyle}">

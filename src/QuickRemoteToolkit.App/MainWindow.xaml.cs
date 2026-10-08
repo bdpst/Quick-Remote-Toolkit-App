@@ -27,6 +27,8 @@ public partial class MainWindow : Window
     private readonly SettingsService _settingsService = new();
     private readonly CsvClientStore _clientStore = new();
     private readonly RemoteActionService _actions = new();
+    private readonly LocalAdministratorsService _localAdministrators = new();
+    private bool _isChangingAdministrators;
     private readonly RemoteMessageService _messages = new();
     private readonly DomainMembershipService _domainMembership = new();
     private readonly AppSettings _settings;
@@ -419,6 +421,41 @@ public partial class MainWindow : Window
     private void Mstsc_Click(object sender, RoutedEventArgs e) => RunForSelected("MSTSC", _actions.OpenMstsc);
     private void WinRsCmd_Click(object sender, RoutedEventArgs e) => RunForSelected("WinRS cmd", _actions.OpenWinRsCmd);
     private void Gpupdate_Click(object sender, RoutedEventArgs e) => RunForSelected("gpupdate", _actions.RunGpupdate);
+
+    private async void LocalAdministrators_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isChangingAdministrators)
+        {
+            MessageBox.Show(this, "Дождитесь завершения текущей операции.", "Локальные администраторы", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+        var client = SelectedClient;
+        if (client is null)
+        {
+            MessageBox.Show(this, "Выберите клиента.", "Quick Remote Toolkit", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+        var dialog = new LocalAdministratorsWindow(client.Computer) { Owner = this };
+        if (dialog.ShowDialog() != true)
+            return;
+        var action = dialog.AddMember ? "Добавление администратора" : "Удаление администратора";
+        _isChangingAdministrators = true;
+        AddLog(client.Computer, action, $"{dialog.Member}: выполнение…");
+        try
+        {
+            await _localAdministrators.ChangeAsync(client.Computer, dialog.Member, dialog.AddMember);
+            AddLog(client.Computer, action, $"{dialog.Member}: успешно.");
+        }
+        catch (Exception ex)
+        {
+            AddLog(client.Computer, action, $"{dialog.Member}: {ex.Message.ReplaceLineEndings(" ")}");
+            MessageBox.Show(this, ex.Message, action, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        finally
+        {
+            _isChangingAdministrators = false;
+        }
+    }
 
     private async void SendMessage_Click(object sender, RoutedEventArgs e)
     {

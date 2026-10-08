@@ -1,0 +1,23 @@
+<Window x:Class="QuickRemoteToolkit.App.LocalAdministratorsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Локальные администраторы" Width="560" SizeToContent="Height"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <StackPanel Margin="20">
+        <TextBlock x:Name="RecipientText" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap"/>
+        <TextBlock Text="Пользователь (ДОМЕН\логин или ИМЯ-ПК\логин)" Margin="0,16,0,8"/>
+        <TextBox x:Name="MemberText" MaxLength="256" AutomationProperties.Name="Учётная запись пользователя"/>
+        <TextBlock Text="Действие" Margin="0,16,0,8"/>
+        <RadioButton x:Name="AddOption" Content="Добавить в локальные администраторы" IsChecked="True"
+                     Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,10"/>
+        <RadioButton Content="Удалить из локальных администраторов" Foreground="{DynamicResource TextPrimaryBrush}"/>
+        <TextBlock Text="Операция изменит права указанной учётной записи на выбранном ПК. Требуются WinRM и административные права текущего пользователя."
+                   Foreground="{DynamicResource TextSecondaryBrush}" TextWrapping="Wrap" Margin="0,16,0,12"/>
+        <TextBlock x:Name="StatusText" TextWrapping="Wrap" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,12"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Отмена" IsCancel="True" Width="110" Margin="0,0,8,0"/>
+            <Button Content="Выполнить" IsDefault="True" Width="130" Margin="0"
+                    Style="{StaticResource PrimaryButtonStyle}" Click="Apply_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
