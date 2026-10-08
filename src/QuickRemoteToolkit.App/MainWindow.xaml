@@ -19,6 +19,46 @@
                             CornerRadius="0"
                             UseAeroCaptionButtons="False"/>
     </shell:WindowChrome.WindowChrome>
+    <Window.Resources>
+        <Style x:Key="CopyCellButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Width" Value="24"/>
+            <Setter Property="Height" Value="22"/>
+            <Setter Property="MinHeight" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="4,0,4,0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Content" Value="&#xE8C8;"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding}" Value="">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding}" Value="-">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="CopyCellTemplate">
+            <Grid x:Name="CopyCell" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding}" Style="{StaticResource GridTextStyle}" TextTrimming="CharacterEllipsis"/>
+                <Button x:Name="CopyButton" Grid.Column="1" Style="{StaticResource CopyCellButtonStyle}" Tag="{Binding}"
+                        Visibility="Hidden"
+                        Click="CopyCell_Click" AutomationProperties.Name="{Binding StringFormat=Копировать {0}}"/>
+            </Grid>
+            <DataTemplate.Triggers>
+                <Trigger SourceName="CopyCell" Property="IsMouseOver" Value="True">
+                    <Setter TargetName="CopyButton" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="F" Modifiers="Control" Command="{Binding FocusSearchCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
     </Window.InputBindings>
@@ -216,6 +256,7 @@
                             <Separator/>
                             <MenuItem Header="Копировать имя ПК" Click="CopyComputer_Click"/>
                             <MenuItem Header="Копировать IP" Click="CopyIp_Click"/>
+                            <MenuItem Header="Копировать имя сотрудника" Click="CopyPerson_Click"/>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                     <DataGrid.RowStyle>
@@ -235,9 +276,30 @@
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="№" Binding="{Binding Number}" SortMemberPath="Number" Width="58" ElementStyle="{StaticResource GridTextStyle}"/>
-                        <DataGridTextColumn Header="Компьютер" Binding="{Binding Computer}" SortMemberPath="Computer" Width="190" ElementStyle="{StaticResource GridTextStyle}"/>
-                        <DataGridTextColumn Header="IP" Binding="{Binding Ip}" SortMemberPath="Ip" Width="150" ElementStyle="{StaticResource GridTextStyle}"/>
-                        <DataGridTextColumn Header="Сотрудник" Binding="{Binding Person}" SortMemberPath="Person" Width="*" ElementStyle="{StaticResource GridTextStyle}"/>
+                        <DataGridTemplateColumn Header="Компьютер" SortMemberPath="Computer" Width="190">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentControl Content="{Binding Computer}" ContentTemplate="{StaticResource CopyCellTemplate}"
+                                                    HorizontalContentAlignment="Stretch" ToolTip="Копировать имя ПК"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="IP" SortMemberPath="Ip" Width="150">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentControl Content="{Binding Ip}" ContentTemplate="{StaticResource CopyCellTemplate}"
+                                                    HorizontalContentAlignment="Stretch" ToolTip="Копировать IP"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Сотрудник" SortMemberPath="Person" Width="*">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentControl Content="{Binding Person}" ContentTemplate="{StaticResource CopyCellTemplate}"
+                                                    HorizontalContentAlignment="Stretch" ToolTip="Копировать имя сотрудника"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTemplateColumn Header="Статус" SortMemberPath="StatusText" Width="150">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

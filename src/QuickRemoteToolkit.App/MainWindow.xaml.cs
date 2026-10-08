@@ -355,6 +355,11 @@ public partial class MainWindow : Window
 
     private void ClientsGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
+        if (FindParent<Button>((DependencyObject)e.OriginalSource) is not null)
+        {
+            return;
+        }
+
         RunForSelected("Remote Assistance", _actions.OpenRemoteAssistance);
     }
 
@@ -491,7 +496,33 @@ public partial class MainWindow : Window
 
     private void CopyIp_Click(object sender, RoutedEventArgs e)
     {
-        RunForSelected("Copy IP", client => Clipboard.SetText(client.Target));
+        RunForSelected("Copy IP", client => Clipboard.SetText(client.Ip));
+    }
+
+    private void CopyPerson_Click(object sender, RoutedEventArgs e)
+    {
+        RunForSelected("Copy person", client => Clipboard.SetText(client.Person));
+    }
+
+    private void CopyCell_Click(object sender, RoutedEventArgs e)
+    {
+        e.Handled = true;
+        if (sender is not Button { Tag: string value } button || string.IsNullOrWhiteSpace(value) || value == "-")
+        {
+            return;
+        }
+
+        var client = FindParent<DataGridRow>(button)?.Item as ClientEntry;
+        try
+        {
+            Clipboard.SetText(value);
+            AddLog(client?.Computer ?? "", "Копирование", "Значение скопировано в буфер обмена.");
+        }
+        catch (Exception ex)
+        {
+            AddLog(client?.Computer ?? "", "Копирование", ex.Message);
+            MessageBox.Show(this, ex.Message, "Не удалось скопировать", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     private void ExportLogs_Click(object sender, RoutedEventArgs e)
