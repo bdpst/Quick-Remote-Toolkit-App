@@ -212,6 +212,7 @@
                             <MenuItem Header="MSTSC" Click="Mstsc_Click"/>
                             <MenuItem Header="WinRS cmd" Click="WinRsCmd_Click"/>
                             <MenuItem Header="gpupdate /force" Click="Gpupdate_Click"/>
+                            <MenuItem Header="Отправить сообщение…" Click="SendMessage_Click"/>
                             <Separator/>
                             <MenuItem Header="Копировать имя ПК" Click="CopyComputer_Click"/>
                             <MenuItem Header="Копировать IP" Click="CopyIp_Click"/>
@@ -331,6 +332,12 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="&#xE756;" Style="{StaticResource IconTextStyle}" Foreground="{DynamicResource AccentBrush}"/>
                                 <TextBlock Text="WinRS cmd"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ToolButtonStyle}" Click="SendMessage_Click" ToolTip="Отправить сообщение пользователям выбранного ПК">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE8F2;" Style="{StaticResource IconTextStyle}" Foreground="{DynamicResource AccentBrush}"/>
+                                <TextBlock Text="Отправить сообщение…"/>
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource ToolButtonStyle}" Click="Gpupdate_Click" ToolTip="Запустить обновление групповых политик на выбранном клиенте">

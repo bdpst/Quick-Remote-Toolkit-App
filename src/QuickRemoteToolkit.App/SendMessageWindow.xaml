@@ -1,0 +1,37 @@
+<Window x:Class="QuickRemoteToolkit.App.SendMessageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Отправить сообщение" Width="560" Height="460"
+        MinWidth="460" MinHeight="420" WindowStartupLocation="CenterOwner"
+        ShowInTaskbar="False">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="RecipientText" FontSize="16" FontWeight="SemiBold" TextWrapping="Wrap"/>
+        <TextBlock Grid.Row="1" Margin="0,8,0,12" TextWrapping="Wrap"
+                   Foreground="{DynamicResource TextSecondaryBrush}"
+                   Text="Сообщение получат все пользователи выбранного ПК. Требуются сеанс пользователя и права отправки сообщений."/>
+        <TextBox x:Name="MessageText" Grid.Row="2" AcceptsReturn="True" TextWrapping="Wrap"
+                 VerticalContentAlignment="Top" VerticalScrollBarVisibility="Auto"
+                 MaxLength="2000" TextChanged="MessageText_TextChanged"
+                 AutomationProperties.Name="Текст сообщения"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,12,0,0">
+            <TextBlock Text="Время показа (секунды):" VerticalAlignment="Center" Margin="0,0,12,0"/>
+            <TextBox x:Name="DisplaySecondsText" Text="300" Width="90" MaxLength="4"
+                     AutomationProperties.Name="Время показа в секундах"/>
+        </StackPanel>
+        <TextBlock x:Name="StatusText" Grid.Row="4" Margin="0,8,0,12" TextWrapping="Wrap"
+                   Foreground="{DynamicResource TextSecondaryBrush}" Text="От 1 до 3600 секунд. Ctrl+Enter — отправить."/>
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Отмена" IsCancel="True" Width="110" Margin="0,0,8,0"/>
+            <Button x:Name="SendButton" Content="Отправить" Width="130" Margin="0"
+                    Style="{StaticResource PrimaryButtonStyle}" IsEnabled="False" Click="Send_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

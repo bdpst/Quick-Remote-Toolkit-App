@@ -31,6 +31,7 @@ public partial class MainWindow : Window
     private readonly AppSettings _settings;
     private readonly ICollectionView _clientsView;
     private HwndSource? _windowSource;
+    private bool _isSendingMessage;
 
     public ICommand FocusSearchCommand { get; }
 
@@ -412,6 +413,45 @@ public partial class MainWindow : Window
     private void Mstsc_Click(object sender, RoutedEventArgs e) => RunForSelected("MSTSC", _actions.OpenMstsc);
     private void WinRsCmd_Click(object sender, RoutedEventArgs e) => RunForSelected("WinRS cmd", _actions.OpenWinRsCmd);
     private void Gpupdate_Click(object sender, RoutedEventArgs e) => RunForSelected("gpupdate", _actions.RunGpupdate);
+
+    private async void SendMessage_Click(object sender, RoutedEventArgs e)
+    {
+        if (_isSendingMessage)
+        {
+            MessageBox.Show(this, "Дождитесь завершения текущей отправки.", "Отправить сообщение", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        var client = SelectedClient;
+        if (client is null)
+        {
+            MessageBox.Show(this, "Выберите клиента.", "Quick Remote Toolkit", MessageBoxButton.OK, MessageBoxImage.Information);
+            return;
+        }
+
+        var dialog = new SendMessageWindow(client.Computer) { Owner = this };
+        if (dialog.ShowDialog() != true)
+        {
+            return;
+        }
+
+        _isSendingMessage = true;
+        AddLog(client.Computer, "Сообщение", "Отправка…");
+        try
+        {
+            await _actions.SendMessageAsync(client, dialog.MessageTextValue, dialog.DisplaySeconds);
+            AddLog(client.Computer, "Сообщение", $"msg.exe завершилась успешно. Время показа: {dialog.DisplaySeconds} сек. Прочтение не подтверждено.");
+        }
+        catch (Exception ex)
+        {
+            AddLog(client.Computer, "Сообщение", ex.Message.ReplaceLineEndings(" "));
+            MessageBox.Show(this, ex.Message, "Не удалось отправить сообщение", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        finally
+        {
+            _isSendingMessage = false;
+        }
+    }
 
     private async void PingSelected_Click(object sender, RoutedEventArgs e)
     {

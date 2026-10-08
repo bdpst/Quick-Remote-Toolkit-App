@@ -6,6 +6,67 @@ namespace QuickRemoteToolkit.App.Services;
 
 public sealed class RemoteActionService
 {
+    public async Task SendMessageAsync(ClientEntry client, string message, int displaySeconds)
+    {
+        if (string.IsNullOrWhiteSpace(client.Computer))
+        {
+            throw new ArgumentException("Не указано имя компьютера.");
+        }
+
+        if (string.IsNullOrWhiteSpace(message) || message.Contains('\0'))
+        {
+            throw new ArgumentException("Введите текст сообщения без нулевых символов.");
+        }
+
+        if (displaySeconds is < 1 or > 3600)
+        {
+            throw new ArgumentOutOfRangeException(nameof(displaySeconds), "Время показа: от 1 до 3600 секунд.");
+        }
+
+        var startInfo = new ProcessStartInfo
+        {
+            FileName = Path.Combine(Environment.SystemDirectory, "msg.exe"),
+            UseShellExecute = false,
+            CreateNoWindow = true,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true
+        };
+        startInfo.ArgumentList.Add("*");
+        startInfo.ArgumentList.Add($"/server:{client.Computer}");
+        startInfo.ArgumentList.Add($"/time:{displaySeconds}");
+        startInfo.ArgumentList.Add(message);
+
+        using var process = Process.Start(startInfo)
+            ?? throw new InvalidOperationException("Не удалось запустить msg.exe.");
+        var outputTask = process.StandardOutput.ReadToEndAsync();
+        var errorTask = process.StandardError.ReadToEndAsync();
+        using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+        try
+        {
+            await process.WaitForExitAsync(timeout.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            if (!process.HasExited)
+            {
+                process.Kill(entireProcessTree: true);
+            }
+
+            await process.WaitForExitAsync();
+            await Task.WhenAll(outputTask, errorTask);
+            throw new TimeoutException("msg.exe не завершилась за 30 секунд. Доставка сообщения не подтверждена.");
+        }
+
+        var output = (await outputTask).Trim();
+        var error = (await errorTask).Trim();
+        if (process.ExitCode != 0)
+        {
+            var details = string.IsNullOrWhiteSpace(error) ? output : error;
+            throw new InvalidOperationException(
+                $"msg.exe завершилась с кодом {process.ExitCode}. {details}\nПроверьте доступность ПК, наличие сеанса пользователя и права отправки сообщений.");
+        }
+    }
+
     public void OpenRemoteAssistance(ClientEntry client)
     {
         Start("msra.exe", $"/offerra \"{client.Computer}\"");
