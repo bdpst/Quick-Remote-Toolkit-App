@@ -609,18 +609,25 @@
                 Padding="10"
                 Margin="0,0,12,0">
             <DockPanel>
-                <StackPanel DockPanel.Dock="Top"
-                            Orientation="Horizontal"
-                            Margin="4,2,4,10">
-                    <TextBlock Text="&#xE8FD;"
-                               Style="{StaticResource IconTextStyle}"
-                               Foreground="{DynamicResource AccentBrush}"/>
-                    <TextBlock Text="Журнал"
-                               FontSize="14"
-                               FontWeight="SemiBold"
-                               Foreground="{DynamicResource TextPrimaryBrush}"
-                               VerticalAlignment="Center"/>
-                </StackPanel>
+                <DockPanel DockPanel.Dock="Top" LastChildFill="True" Margin="4,2,4,10">
+                    <Button DockPanel.Dock="Right"
+                            Style="{StaticResource ToolButtonStyle}"
+                            Click="ClearLogs_Click"
+                            Content="Очистить журнал"
+                            ToolTip="Удалить текущие записи журнала из окна"/>
+                    <StackPanel
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <TextBlock Text="&#xE8FD;"
+                                   Style="{StaticResource IconTextStyle}"
+                                   Foreground="{DynamicResource AccentBrush}"/>
+                        <TextBlock Text="Журнал"
+                                   FontSize="14"
+                                   FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DockPanel>
                 <Border Background="{DynamicResource CardBackgroundBrush}"
                         BorderBrush="{DynamicResource DividerBrush}"
                         BorderThickness="1"
