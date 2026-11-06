@@ -613,11 +613,6 @@ public partial class MainWindow : Window
         }
     }
 
-    private void ClearLogs_Click(object sender, RoutedEventArgs e)
-    {
-        _logs.Clear();
-    }
-
     private void ExportLogs_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new SaveFileDialog
