@@ -272,6 +272,10 @@
                 Style="{StaticResource CardStyle}"
                 Padding="10"
                 Margin="0,0,12,0">
+            <DockPanel>
+                <CheckBox x:Name="FavoritesOnlyBox" DockPanel.Dock="Top" Content="Только избранные"
+                          Margin="4,2,4,10" Foreground="{DynamicResource TextPrimaryBrush}"
+                          Click="FavoritesOnly_Click"/>
             <Border Background="{DynamicResource CardBackgroundBrush}"
                     BorderBrush="{DynamicResource DividerBrush}"
                     BorderThickness="1"
@@ -322,6 +326,49 @@
                         </Style>
                     </DataGrid.RowStyle>
                     <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="★" Width="48" SortMemberPath="IsFavorite">
+                            <DataGridTemplateColumn.CellStyle>
+                                <Style TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+                                    <Setter Property="Padding" Value="0"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                </Style>
+                            </DataGridTemplateColumn.CellStyle>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Click="Favorite_Click" IsEnabled="{Binding CanFavorite}"
+                                            AutomationProperties.Name="{Binding Computer, StringFormat=Избранное: {0}}">
+                                        <Button.Style>
+                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                <Setter Property="Content" Value="&#xE734;"/>
+                                                <Setter Property="ToolTip" Value="Добавить в избранное"/>
+                                                <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+                                                <Setter Property="FontSize" Value="16"/>
+                                                <Setter Property="Width" Value="28"/>
+                                                <Setter Property="Height" Value="24"/>
+                                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                                <Setter Property="VerticalAlignment" Value="Center"/>
+                                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                                <Setter Property="MinHeight" Value="0"/>
+                                                <Setter Property="Padding" Value="0"/>
+                                                <Setter Property="Margin" Value="0"/>
+                                                <Setter Property="Background" Value="Transparent"/>
+                                                <Setter Property="BorderThickness" Value="0"/>
+                                                <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsFavorite}" Value="True">
+                                                        <Setter Property="Content" Value="&#xE735;"/>
+                                                        <Setter Property="ToolTip" Value="Убрать из избранного"/>
+                                                        <Setter Property="Foreground" Value="{DynamicResource FavoriteBrush}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
                         <DataGridTextColumn Header="№" Binding="{Binding Number}" SortMemberPath="Number" Width="58" ElementStyle="{StaticResource GridTextStyle}"/>
                         <DataGridTemplateColumn Header="Компьютер" SortMemberPath="Computer" Width="190">
                             <DataGridTemplateColumn.CellTemplate>
@@ -365,6 +412,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </Border>
+            </DockPanel>
         </Border>
 
         <ScrollViewer Grid.Row="1"

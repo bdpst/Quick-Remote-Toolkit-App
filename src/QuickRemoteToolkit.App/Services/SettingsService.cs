@@ -34,7 +34,16 @@ public sealed class SettingsService
     {
         Directory.CreateDirectory(_settingsDirectory);
         var json = JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(SettingsPath, json);
+        var temporaryPath = Path.Combine(_settingsDirectory, $"settings-{Guid.NewGuid():N}.tmp");
+        try
+        {
+            File.WriteAllText(temporaryPath, json);
+            File.Move(temporaryPath, SettingsPath, overwrite: true);
+        }
+        finally
+        {
+            if (File.Exists(temporaryPath)) File.Delete(temporaryPath);
+        }
     }
 
     private static string TryFindDefaultCsv()

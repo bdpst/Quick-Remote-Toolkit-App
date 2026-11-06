@@ -9,6 +9,23 @@ public sealed class ClientEntry : INotifyPropertyChanged
     private DateTime? _lastChecked;
     private string _domain = "—";
 
+    private bool _isFavorite;
+    public string FavoriteKey => !string.IsNullOrWhiteSpace(Computer) && Computer.Trim() != "-"
+        ? "computer:" + Computer.Trim().ToUpperInvariant()
+        : !string.IsNullOrWhiteSpace(Ip) && Ip.Trim() != "-"
+            ? "ip:" + Ip.Trim().ToUpperInvariant() : "";
+    public bool CanFavorite => FavoriteKey.Length > 0;
+    public bool IsFavorite
+    {
+        get => _isFavorite;
+        set
+        {
+            if (_isFavorite == value) return;
+            _isFavorite = value;
+            OnPropertyChanged();
+        }
+    }
+
     public int Number { get; init; }
     public string Computer { get; init; } = "";
     public string Ip { get; init; } = "";

@@ -70,6 +70,7 @@ number;computer;ip;person
 - Не менять поведение удаленных команд без ручной проверки аналогичной команды в PowerShell/CMD.
 - Для UI соблюдать текущий дизайн светлой и тёмной тем, использовать общие динамические ресурсы из `App.xaml` и существующие размеры/отступы.
 - После изменений запускать `dotnet build`.
+- После изменений приложения и успешной сборки обязательно обновлять локальную версию в `C:\Users\KMN.GTL\Documents\GitHub\Quick-Remote-Toolkit-App\publish` командой `dotnet publish .\src\QuickRemoteToolkit.App\QuickRemoteToolkit.App.csproj -c Release --no-restore -o .\publish`. Перед завершением задачи проверять успешность публикации. Папку `publish/` по-прежнему не коммитить.
 
 ## Релизы
 

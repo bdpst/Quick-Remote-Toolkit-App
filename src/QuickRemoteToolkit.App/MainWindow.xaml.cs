@@ -51,6 +51,7 @@ public partial class MainWindow : Window
         _clientsView = CollectionViewSource.GetDefaultView(_clients);
         _clientsView.Filter = FilterClient;
 
+        FavoritesOnlyBox.IsChecked = _settings.ShowFavoritesOnly;
         CsvPathText.Text = _settings.ClientsCsvPath;
         UpdateThemeButton();
         LoadClients();
@@ -176,6 +177,8 @@ public partial class MainWindow : Window
             return false;
         }
 
+        if (_settings.ShowFavoritesOnly && !client.IsFavorite) return false;
+
         var query = SearchBox.Text.Trim();
         if (string.IsNullOrWhiteSpace(query))
         {
@@ -204,6 +207,7 @@ public partial class MainWindow : Window
         {
             foreach (var client in _clientStore.Load(_settings.ClientsCsvPath))
             {
+                client.IsFavorite = (_settings.FavoriteComputers ?? []).Contains(client.FavoriteKey, StringComparer.OrdinalIgnoreCase);
                 _clients.Add(client);
             }
 
@@ -350,6 +354,53 @@ public partial class MainWindow : Window
     }
 
     private void SearchBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) => _clientsView.Refresh();
+
+    private void Favorite_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is not Button { DataContext: ClientEntry client } || !client.CanFavorite) return;
+        var previous = _settings.FavoriteComputers;
+        var favorites = new HashSet<string>(previous ?? [], StringComparer.OrdinalIgnoreCase);
+        var isFavorite = !client.IsFavorite;
+        if (isFavorite) favorites.Add(client.FavoriteKey);
+        else favorites.Remove(client.FavoriteKey);
+        _settings.FavoriteComputers = favorites.OrderBy(key => key, StringComparer.OrdinalIgnoreCase).ToList();
+        if (!SaveFavoriteSettings())
+        {
+            _settings.FavoriteComputers = previous ?? [];
+            return;
+        }
+        foreach (var row in _clients.Where(row => row.FavoriteKey == client.FavoriteKey)) row.IsFavorite = isFavorite;
+        _clientsView.Refresh();
+    }
+
+    private void FavoritesOnly_Click(object sender, RoutedEventArgs e)
+    {
+        var previous = _settings.ShowFavoritesOnly;
+        _settings.ShowFavoritesOnly = FavoritesOnlyBox.IsChecked == true;
+        if (!SaveFavoriteSettings())
+        {
+            _settings.ShowFavoritesOnly = previous;
+            FavoritesOnlyBox.IsChecked = previous;
+            return;
+        }
+        _clientsView.Refresh();
+    }
+
+    private bool SaveFavoriteSettings()
+    {
+        try
+        {
+            _settingsService.Save(_settings);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            AddLog("", "Избранное", ex.Message);
+            MessageBox.Show(this, "Не удалось сохранить избранное. Изменение отменено.\n" + ex.Message,
+                "Ошибка сохранения настроек", MessageBoxButton.OK, MessageBoxImage.Error);
+            return false;
+        }
+    }
 
     private void ClientsGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
