@@ -1,0 +1,84 @@
+Final portable archive; isolated fixture path redacted.
+Window: "Quick Remote Toolkit", App: QuickRemoteToolkitRust.exe.
+	0 window (окно) Quick Remote Toolkit Secondary Actions: Raise
+		1 custom (особый)
+		2 image (рисунок)
+		3 text (текстовый) Quick Remote Toolkit
+		4 button (кнопка) Закрыть
+		5 button (кнопка) Развернуть
+		6 button (кнопка) Свернуть
+		7 text (текстовый) Quick Remote Toolkit
+		8 text field (поле) (settable, string) Description: Поиск компьютера, сотрудника или IP...
+		9 button (кнопка) Открыть CSV
+		10 button (кнопка) Обновить
+		11 button (кнопка) 
+		12 checkbox (флажок) Только избранные
+		13 custom (особый)
+		14 button (кнопка) ★
+		15 button (кнопка) №
+		16 button (кнопка) Компьютер
+		17 button (кнопка) IP
+		18 button (кнопка) Сотрудник
+		19 button (кнопка) Статус
+		20 button (кнопка) Домен
+		21 button (кнопка) Последняя проверка
+		22 button (кнопка) Избранное: PC-DEMO
+		23 text (текстовый) 1
+		24 text (текстовый) PC-DEMO
+		25 text (текстовый) 192.0.2.1
+		26 text (текстовый) Тестовый сотрудник
+		27 text (текстовый) Неизвестно
+		28 text (текстовый) —
+		29 text (текстовый) —
+		30 custom (особый)
+		31 custom (особый)
+		32 custom (особый)
+		33 custom (особый)
+		34 custom (особый)
+		35 custom (особый)
+		36 custom (особый)
+		37 custom (особый)
+		38 custom (особый)
+		39 custom (особый)
+		40 button (кнопка) Подключение
+		41 button (кнопка) Remote Assistance
+		42 button (кнопка) Ping
+		43 button (кнопка) Tracert
+		44 button (кнопка) Открыть C$
+		45 button (кнопка) Инструменты
+		46 button (кнопка) Event Viewer
+		47 button (кнопка) Computer Management
+		48 button (кнопка) MSTSC
+		49 button (кнопка) WinRS cmd
+		50 button (кнопка) Отправить сообщение…
+		51 button (кнопка) Локальные администраторы…
+		52 button (кнопка) gpupdate /force
+		53 button (кнопка) Операции
+		54 button (кнопка) Проверить всех
+		55 button (кнопка) Экспорт логов
+		56 text (текстовый) 
+		57 text (текстовый) CSV
+		58 text (текстовый) <ISOLATED_PROFILE>\demo.csv
+		59 text (текстовый) Загружено: 16.11.2026 22:54 Клиентов: 1
+		60 custom (особый)
+		61 custom (особый)
+		62 custom (особый)
+		63 text (текстовый) 
+		64 text (текстовый) Журнал
+		65 button (кнопка) Очистить журнал
+		66 custom (особый)
+		67 button (кнопка) Время
+		68 button (кнопка) Компьютер
+		69 button (кнопка) Действие
+		70 button (кнопка) Результат
+		71 text (текстовый) 16.11.2026 22:54:43
+		72 text (текстовый)
+		73 text (текстовый) Load CSV
+		74 text (текстовый) Загружено клиентов: 1
+		75 custom (особый)
+		76 custom (особый)
+		77 custom (особый)
+		78 custom (особый)
+		79 custom (особый)
+
+The focused UI element is 0 window (окно) Quick Remote Toolkit Secondary Actions: Raise.

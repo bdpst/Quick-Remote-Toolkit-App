@@ -1,0 +1,3 @@
+# Local render evidence and isolated fixture profiles; regenerate with tests/*.ps1.
+rust-*/
+wpf-*/

@@ -1,0 +1,71 @@
+{
+  "machine": "AMD64",
+  "subsystem": "Windows GUI",
+  "clr_directory": false,
+  "external_vc_runtime_imports": false,
+  "imports": [
+    "ADVAPI32.dll",
+    "GDI32.dll",
+    "KERNEL32.dll",
+    "NETAPI32.dll",
+    "OPENGL32.dll",
+    "SHELL32.dll",
+    "USER32.dll",
+    "WTSAPI32.dll",
+    "api-ms-win-core-synch-l1-2-0.dll",
+    "bcryptprimitives.dll",
+    "dwmapi.dll",
+    "gdi32.dll",
+    "imm32.dll",
+    "iphlpapi.dll",
+    "ntdll.dll",
+    "ole32.dll",
+    "oleaut32.dll",
+    "shlwapi.dll",
+    "uiautomationcore.dll",
+    "uxtheme.dll",
+    "ws2_32.dll"
+  ],
+  "resource_types": [
+    3,
+    14,
+    24
+  ],
+  "dpi_manifest": "PerMonitorV2,PerMonitor",
+  "execution_level": "asInvoker",
+  "exe_bytes": 4861440,
+  "exe_sha256": "d2d75c4c500900dae3175f66c1fe0a0949de79f97ca87dd0fa411dd07b0eb49b",
+  "zip_bytes": 2416722,
+  "zip_sha256": "ec15aa75666b18d1965ecf93aa92dffbe70fe3f70f0208dff2d8da2e599f14b7",
+  "zip_entries_verified": true,
+  "checked_at_utc": "2026-11-17T05:34:53.186196+00:00",
+  "regression_test": "ui::ui_tests::search_text_is_centered_and_shortcut_stays_inside_its_badge",
+  "tests_passed": 27,
+  "tests_failed": 0,
+  "fmt": "PASS",
+  "clippy": "PASS",
+  "release_publish": "PASS",
+  "gui_runs_passed": 8,
+  "gui_themes": [
+    "light",
+    "dark"
+  ],
+  "gui_sizes_dip": [
+    [
+      1500,
+      920
+    ],
+    [
+      1200,
+      760
+    ]
+  ],
+  "layout_test_scales": [
+    1,
+    1.25,
+    1.5,
+    2
+  ],
+  "physical_dpi_switching_tested": false,
+  "running_previous_executable_preserved": true
+}

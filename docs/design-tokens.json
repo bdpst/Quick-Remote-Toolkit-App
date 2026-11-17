@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "source": "src/QuickRemoteToolkit.Rust/src/design.rs:Palette::new",
+  "units": "egui logical points; sRGB colors",
+  "colors": {
+    "window": {
+      "light": "#F5F7FB",
+      "dark": "#111827"
+    },
+    "card": {
+      "light": "#FFFFFF",
+      "dark": "#1F2937"
+    },
+    "muted": {
+      "light": "#F8FAFD",
+      "dark": "#273449"
+    },
+    "text": {
+      "light": "#0F172A",
+      "dark": "#F1F5F9"
+    },
+    "secondary": {
+      "light": "#475569",
+      "dark": "#CBD5E1"
+    },
+    "dim": {
+      "light": "#7C8798",
+      "dark": "#94A3B8"
+    },
+    "border": {
+      "light": "#D8E0EC",
+      "dark": "#475569"
+    },
+    "divider": {
+      "light": "#E5EAF3",
+      "dark": "#344256"
+    },
+    "accent": {
+      "light": "#2563EB",
+      "dark": "#60A5FA"
+    },
+    "selected": {
+      "light": "#DDEBFF",
+      "dark": "#1E4976"
+    },
+    "alternate": {
+      "light": "#FBFCFE",
+      "dark": "#243044"
+    },
+    "hover": {
+      "light": "#F1F6FF",
+      "dark": "#30415A"
+    },
+    "favorite": {
+      "light": "#CA8A04",
+      "dark": "#FACC15"
+    }
+  },
+  "geometry": {
+    "window": [
+      1500,
+      920
+    ],
+    "minimum": [
+      1200,
+      760
+    ],
+    "titlebar": 32,
+    "sidebar": 320,
+    "toolbarIcon": 42,
+    "titleIcon": 16,
+    "cardRadius": 12
+  },
+  "typography": {
+    "body": 12,
+    "title": 22,
+    "fonts": [
+      "Segoe UI",
+      "Segoe MDL2 Assets"
+    ]
+  }
+}

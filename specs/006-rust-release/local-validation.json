@@ -1,0 +1,117 @@
+{
+  "fmt": "PASS",
+  "clippy_all_targets": "PASS",
+  "clippy_qa_host": "PASS",
+  "tests_passed": 27,
+  "release_build": "PASS",
+  "artifact": {
+    "version": "0.4.0",
+    "source_commit": "a9a6a893bef84747b8fc1a838821e5962dd7de9d",
+    "source_dirty": true,
+    "machine": "AMD64",
+    "subsystem": "Windows GUI",
+    "clr_directory": false,
+    "external_vc_runtime_imports": false,
+    "imports": [
+      "ADVAPI32.dll",
+      "GDI32.dll",
+      "KERNEL32.dll",
+      "NETAPI32.dll",
+      "OPENGL32.dll",
+      "SHELL32.dll",
+      "USER32.dll",
+      "WTSAPI32.dll",
+      "api-ms-win-core-synch-l1-2-0.dll",
+      "bcryptprimitives.dll",
+      "dwmapi.dll",
+      "gdi32.dll",
+      "imm32.dll",
+      "iphlpapi.dll",
+      "ntdll.dll",
+      "ole32.dll",
+      "oleaut32.dll",
+      "shlwapi.dll",
+      "uiautomationcore.dll",
+      "uxtheme.dll",
+      "ws2_32.dll"
+    ],
+    "resource_types": [
+      3,
+      14,
+      16,
+      24
+    ],
+    "dpi_manifest": "PerMonitorV2,PerMonitor",
+    "execution_level": "asInvoker",
+    "exe_bytes": 4886528,
+    "exe_sha256": "e4255287a7be2f333891689e024e4ede6891b583bb4f59d4f748fe4f1720f398",
+    "zip_bytes": 2439643,
+    "zip_sha256": "b3617c8c7b2357664eeda395da549d43061298afce34c24ca7a48628a16e8809",
+    "zip_entries_verified": true
+  },
+  "package_smoke": {
+    "remote_actions_run": false,
+    "clean_machine": false,
+    "window_title": "Quick Remote Toolkit 0.4.0",
+    "archive_sha256": "b3617c8c7b2357664eeda395da549d43061298afce34c24ca7a48628a16e8809",
+    "version": "0.4.0",
+    "normal_close": true,
+    "isolated_appdata": true,
+    "commit": "a9a6a893bef84747b8fc1a838821e5962dd7de9d",
+    "settings_preserved": true
+  },
+  "gui_runs": [
+    {
+      "theme": "light",
+      "scene": "main",
+      "exit": 0
+    },
+    {
+      "theme": "light",
+      "scene": "message",
+      "exit": 0
+    },
+    {
+      "theme": "light",
+      "scene": "admin",
+      "exit": 0
+    },
+    {
+      "theme": "light",
+      "scene": "message-error",
+      "exit": 0
+    },
+    {
+      "theme": "light",
+      "scene": "admin-error",
+      "exit": 0
+    },
+    {
+      "theme": "dark",
+      "scene": "main",
+      "exit": 0
+    },
+    {
+      "theme": "dark",
+      "scene": "message",
+      "exit": 0
+    },
+    {
+      "theme": "dark",
+      "scene": "admin",
+      "exit": 0
+    },
+    {
+      "theme": "dark",
+      "scene": "message-error",
+      "exit": 0
+    },
+    {
+      "theme": "dark",
+      "scene": "admin-error",
+      "exit": 0
+    }
+  ],
+  "remote_tests_run": false,
+  "clean_machine": false
+}

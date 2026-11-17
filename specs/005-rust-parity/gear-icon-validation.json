@@ -1,0 +1,67 @@
+{
+  "machine": "AMD64",
+  "subsystem": "Windows GUI",
+  "clr_directory": false,
+  "external_vc_runtime_imports": false,
+  "imports": [
+    "ADVAPI32.dll",
+    "GDI32.dll",
+    "KERNEL32.dll",
+    "NETAPI32.dll",
+    "OPENGL32.dll",
+    "SHELL32.dll",
+    "USER32.dll",
+    "WTSAPI32.dll",
+    "api-ms-win-core-synch-l1-2-0.dll",
+    "bcryptprimitives.dll",
+    "dwmapi.dll",
+    "gdi32.dll",
+    "imm32.dll",
+    "iphlpapi.dll",
+    "ntdll.dll",
+    "ole32.dll",
+    "oleaut32.dll",
+    "shlwapi.dll",
+    "uiautomationcore.dll",
+    "uxtheme.dll",
+    "ws2_32.dll"
+  ],
+  "resource_types": [
+    3,
+    14,
+    24
+  ],
+  "dpi_manifest": "PerMonitorV2,PerMonitor",
+  "execution_level": "asInvoker",
+  "exe_bytes": 4885504,
+  "exe_sha256": "33c61d196b330429acac159b449b9723f6f0b27223ca1eaee5bf232861ed85bd",
+  "zip_bytes": 2438879,
+  "zip_sha256": "69ccb851bc2e34463ef5ad05a1ec3a00d59f8aaad384063e6dd8fa2ef36fdf90",
+  "zip_entries_verified": true,
+  "checked_at_utc": "2026-11-17T05:58:27.665706+00:00",
+  "tests_passed": 27,
+  "fmt": "PASS",
+  "clippy_all_targets_deny_warnings": "PASS",
+  "artwork": "monitor with gear inside",
+  "shared_titlebar_toolbar_texture": true,
+  "theme_accents": [
+    "#2563EB",
+    "#60A5FA"
+  ],
+  "ico_frame_sizes": [
+    16,
+    20,
+    24,
+    32,
+    40,
+    48,
+    64,
+    128,
+    256
+  ],
+  "ui_evidence": "evidence/rust-monitor-gear-20261117",
+  "ui_themes_passed": [
+    "light",
+    "dark"
+  ]
+}

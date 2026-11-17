@@ -1,0 +1,33 @@
+[package]
+name = "quick-remote-toolkit"
+version = "0.4.0"
+edition = "2024"
+
+[features]
+ui-qa = []
+
+[[bin]]
+name = "QuickRemoteToolkitRust"
+path = "src/main.rs"
+
+[[bin]]
+name = "qrt-ui-qa"
+path = "src/qa_main.rs"
+required-features = ["ui-qa"]
+
+[dependencies]
+eframe = { version = "=0.33.3", default-features = false, features = ["glow", "default_fonts", "accesskit"] }
+egui_extras = "=0.33.3"
+rfd = "=0.17.2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+encoding_rs = "0.8"
+chrono = "0.4"
+base64 = "0.22"
+
+windows-sys = { version = "=0.61.2", features = ["Win32_Foundation", "Win32_NetworkManagement_IpHelper", "Win32_Networking_WinSock", "Win32_System_IO", "Win32_UI_Shell", "Win32_System_Com"] }
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+strip = true

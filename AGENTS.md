@@ -1,84 +1,48 @@
 # AGENTS.md
 
-Инструкции для Codex и других помощников, работающих с этим репозиторием.
+Quick Remote Toolkit — поддерживаемое Windows-приложение на Rust. WPF/C++ удалены;
+история доступна в Git. Основной код: `src/QuickRemoteToolkit.Rust/src/`, ресурсы:
+`assets/`, проверки/QA: `tests/`, дизайн: `docs/`, спецификации: `specs/`.
 
-## Проект
+## Проверки и локальная поставка
 
-Quick Remote Toolkit App - WPF-приложение на C#/.NET для быстрых действий удаленной поддержки Windows-клиентов.
-
-Основные возможности:
-
-- чтение списка клиентов из CSV;
-- запуск Remote Assistance, ping, tracert, C$, Event Viewer, Computer Management, MSTSC, WinRS cmd и gpupdate;
-- параллельная проверка доступности;
-- журнал действий и экспорт логов.
-
-## Структура
-
-- `src/QuickRemoteToolkit.App/` - исходный код WPF-приложения.
-- `src/QuickRemoteToolkit.App/Models/` - модели данных.
-- `src/QuickRemoteToolkit.App/Services/` - работа с CSV, настройками и запуском удаленных действий.
-- `src/QuickRemoteToolkit.App/Assets/` - иконка приложения.
-- `samples/clients.example.csv` - пример CSV без реальных данных.
-- `.github/workflows/release.yml` - сборка GitHub Release.
-- `publish/` - локальная публикация, не считать источником правды для кода.
-
-## Команды
-
-Сборка:
+Windows x64 MSVC, Rust 1.99.1, MSVC Build Tools и Windows SDK. Из корня:
 
 ```powershell
-dotnet build .\QuickRemoteToolkit.App.sln -c Release --no-restore
+cargo fmt --check --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml
+cargo clippy --locked --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml --all-targets -- -D warnings
+cargo test --locked --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml
+cargo build --release --locked --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml
+./src/QuickRemoteToolkit.Rust/build.ps1 -OutputDirectory ./publish-rust
 ```
 
-Публикация локальной portable-версии:
+После изменения приложения выполнить проверки и обновить `publish-rust/`. Каталог
+относителен checkout; персональные пути не нужны. Не коммитить target/, поставки,
+архивы, временные файлы и реальные CSV. Сохранить работу пользователя; без force push/reset.
 
-```powershell
-dotnet publish .\src\QuickRemoteToolkit.App\QuickRemoteToolkit.App.csproj -c Release --no-restore -o .\publish
-```
+## Правила реализации
 
-Проверка статуса Git:
+- UI: `docs/design-guidelines.md`; цвета/шрифты в `src/design.rs`. Проверять обе темы,
+  поиск, splitter и затронутые диалоги. Сохранять монитор с шестерёнкой во всех иконках.
+- Блокирующие Windows API/процессы/сеть выполнять вне UI-потока. Возвращать результаты
+  через события; защищать повторный запуск и устаревшие ответы. Не считать старт
+  процесса подтверждением успешной удалённой операции.
+- CSV: `number;computer;ip;person`, UTF-8/Windows-1251. Сохранять контракт JSON,
+  AppData-путь, unknown поля, backup и защиту повреждённых настроек. Не трогать личные данные.
+- Только текущая Windows-сессия, без хранения/передачи паролей и обхода прав.
+  SMB/WinRM/WTS требуют соответствующих служб и прав. Изменённые удалённые команды
+  проверять ручным эквивалентом только на явно разрешённых тестовых ПК.
+- Для существенных изменений Spec Kit: specify → plan → tasks → implement;
+  использовать установленный resolver и существующие материалы. Небольшие исправления
+  не требуют новой спецификации. Исторические specs не являются актуальными инструкциями.
+- Фиксировать выполненные проверки и ограничения, не закрывать непроведённые тесты.
 
-```powershell
-git status --short
-```
+## Выпуск
 
-## CSV
-
-Формат списка клиентов:
-
-```csv
-number;computer;ip;person
-1;PC-NAME;192.168.1.10;User One
-```
-
-Не добавлять реальные рабочие данные клиентов в репозиторий. Для примеров использовать только обезличенные значения.
-
-## Важные замечания по удаленным действиям
-
-Приложение не хранит и не передает пароли. Все действия запускаются от текущей Windows-сессии пользователя.
-
-- `C$` требует SMB-доступа и прав локального администратора на целевом ПК.
-- `WinRS` требует рабочий WinRM и подходящие права на целевом ПК.
-- Если `dir \\PC-NAME\c$` или `winrs -r:PC-NAME hostname` не работают вручную, проблема не в приложении.
-- Не добавлять хранение паролей в код без отдельного решения по безопасному хранению учетных данных.
-
-## Стиль разработки
-
-- Держать изменения небольшими и проверяемыми.
-- Не коммитить `publish/`, временные файлы и реальные CSV с клиентами.
-- Не менять поведение удаленных команд без ручной проверки аналогичной команды в PowerShell/CMD.
-- Для UI соблюдать текущий дизайн светлой и тёмной тем, использовать общие динамические ресурсы из `App.xaml` и существующие размеры/отступы.
-- После изменений запускать `dotnet build`.
-- После изменений приложения и успешной сборки обязательно обновлять локальную версию в `C:\Users\KMN.GTL\Documents\GitHub\Quick-Remote-Toolkit-App\publish` командой `dotnet publish .\src\QuickRemoteToolkit.App\QuickRemoteToolkit.App.csproj -c Release --no-restore -o .\publish`. Перед завершением задачи проверять успешность публикации. Папку `publish/` по-прежнему не коммитить.
-
-## Релизы
-
-Релиз создается пушем тега вида `v0.2.1`.
-
-```powershell
-git tag -a v0.2.1 -m "Release v0.2.1"
-git push origin v0.2.1
-```
-
-GitHub Actions собирает архив релиза автоматически.
+Единственный источник версии — Cargo.toml; синхронизировать Cargo.lock. build.rs,
+UI и build.ps1 получают её автоматически. Подробные команды и процесс — в README.
+Сначала локальные проверки и CI, затем разрешённое слияние с main и успешный main CI.
+Тег `0.4.0` (в дальнейшем также поддерживаются `v*`) ставить на проверенный main.
+Workflow публикует стабильный Release с ZIP, BUILD-INFO.json и SHA256SUMS.
+Проверить скачанный архив, версию и source commit. Не перемещать существующие теги,
+не обходить правила GitHub; PR/релиз публиковать только в рамках разрешённой задачи.
