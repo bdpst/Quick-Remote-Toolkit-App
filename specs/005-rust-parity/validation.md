@@ -34,7 +34,7 @@ Plan research GUI выполнен отдельным агентом gui_researc
 - Cargo host Windows x64 MSVC; release --locked и финальная статическая CRT линковка
   /Brepro выполняются build.ps1. Финальные размеры/хеши — artifact-validation.json.
 - Команды используют --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml.
-- Cargo host печатает `could not canonicalize path C:\Users\KMN.GTL`; это предупреждение
+- Cargo host печатает `could not canonicalize path C:\Users\<user>`; это предупреждение
   окружения launcher, не подавленное предупреждение собственного Rust-кода.
 
 Тесты проверяют обе CSV-кодировки, пустые/ошибочные строки, 0 и отрицательные номера,

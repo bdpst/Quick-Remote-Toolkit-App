@@ -2,7 +2,7 @@
 
 **Feature Branch**: `codex/rust-rewrite`
 **Created**: 2026-11-17
-**Status**: Accepted for implementation
+**Status**: Released and verified — 0.4.0 (see validation.md)
 **Input**: Maintainer approval of Rust UI; retire legacy implementations, merge main and publish stable 0.4.0.
 
 ## User Scenarios & Testing

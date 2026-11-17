@@ -16,7 +16,15 @@ Details: local-validation.json. Local precommit package has source_dirty=true an
 
 ## Release gates
 
-PR, checked final main commit, tag workflow and downloaded release verification will be recorded after they complete. No tag exists yet at preparation time.
+- [PR #1](https://github.com/bdpst/Quick-Remote-Toolkit-App/pull/1) merged as c8fa0afbf90c79900069f174835ba3bde480ae7b. Branch and PR CI passed.
+- [Main CI](https://github.com/bdpst/Quick-Remote-Toolkit-App/actions/runs/44031272654) on that merge commit passed before tag creation.
+- Exact annotated tag 0.4.0 points at that checked main commit. [Release workflow](https://github.com/bdpst/Quick-Remote-Toolkit-App/actions/runs/44031880849) succeeded and published a stable [Release](https://github.com/bdpst/Quick-Remote-Toolkit-App/releases/tag/0.4.0).
+- Downloaded all three public assets; GitHub digests and SHA256SUMS matched. ZIP SHA-256: 45cd1aa29af26f2bbfbe7f12f9028653f3926e94e5401be60e3914f81b03b82e.
+- Downloaded Windows EXE has FileVersion/ProductVersion 0.4.0 and correct resources. Embedded BUILD-INFO.json matches the external asset and checked commit; source_dirty=false.
+- Published ZIP smoke passed: normal launch and close, versioned main window, isolated settings/backup/unknown fields preserved. No remote operations performed.
+- Local publish-rust updated to the downloaded release bytes, not a different local rebuild.
+
+Full evidence: release-verification.json. This post-publication documentation record does not change the tagged application or move tag 0.4.0. Later documentation commits on main are distinct from the immutable release source commit.
 
 ## Unperformed checks
 

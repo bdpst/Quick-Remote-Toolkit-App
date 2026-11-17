@@ -21,11 +21,11 @@ Independent test: source/reference audit and README commands build without old c
 Independent test: published ZIP version/checksum/main commit and stable release URL.
 - [x] T008 [US3] Update .github/workflows/release.yml for main checks, exact 0.4.0 trigger and stable release assets/notes.
 - [x] T009 [US3] Run Windows fmt/clippy/tests/release/package/PE, packaged smoke, both-theme main/dialog QA; record validation.md and current screenshots.
-- [ ] T010 [US3] Review diff/links/privacy; commit, push, PR/allowed merge; verify final main CI.
-- [ ] T011 [US3] Tag verified main 0.4.0; await workflow and verify downloaded release/version/commit/checksums.
+- [x] T010 [US3] Review diff/links/privacy; commit, push, PR/allowed merge; verify final main CI.
+- [x] T011 [US3] Tag verified main 0.4.0; await workflow and verify downloaded release/version/commit/checksums.
 
 ## Phase 6: Polish
-- [ ] T012 Record completed release evidence, final status and remaining unperformed integration checks in validation.md.
+- [x] T012 Record completed release evidence, final status and remaining unperformed integration checks in validation.md.
 
 ## Dependencies and strategy
 T001→T002→T003→T004→T005→T006→T007→T008→T009→T010→T011→T012.

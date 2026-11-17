@@ -1,0 +1,88 @@
+{
+  "release_url": "https://github.com/bdpst/Quick-Remote-Toolkit-App/releases/tag/0.4.0",
+  "version": "0.4.0",
+  "commit": "c8fa0afbf90c79900069f174835ba3bde480ae7b",
+  "stable": true,
+  "checksums": "PASS",
+  "assets": {
+    "BUILD-INFO.json": {
+      "url": "https://github.com/bdpst/Quick-Remote-Toolkit-App/releases/download/0.4.0/BUILD-INFO.json",
+      "bytes": 234,
+      "digest": "sha256:5cdc567ffc063b7dfd11b1e9e8015dfb4a54dddae2495883c2a30d373b07ed5d"
+    },
+    "QuickRemoteToolkit.Rust-win-x64.zip": {
+      "url": "https://github.com/bdpst/Quick-Remote-Toolkit-App/releases/download/0.4.0/QuickRemoteToolkit.Rust-win-x64.zip",
+      "bytes": 2439775,
+      "digest": "sha256:45cd1aa29af26f2bbfbe7f12f9028653f3926e94e5401be60e3914f81b03b82e"
+    },
+    "SHA256SUMS": {
+      "url": "https://github.com/bdpst/Quick-Remote-Toolkit-App/releases/download/0.4.0/SHA256SUMS",
+      "bytes": 102,
+      "digest": "sha256:e07d7c0d447ae5f0fed07ecfaf87a8df41d3016826264140947c30771bfa386f"
+    }
+  },
+  "artifact_validation": {
+    "version": "0.4.0",
+    "source_commit": "c8fa0afbf90c79900069f174835ba3bde480ae7b",
+    "source_dirty": false,
+    "machine": "AMD64",
+    "subsystem": "Windows GUI",
+    "clr_directory": false,
+    "external_vc_runtime_imports": false,
+    "imports": [
+      "ADVAPI32.dll",
+      "GDI32.dll",
+      "KERNEL32.dll",
+      "NETAPI32.dll",
+      "OPENGL32.dll",
+      "SHELL32.dll",
+      "USER32.dll",
+      "WTSAPI32.dll",
+      "api-ms-win-core-synch-l1-2-0.dll",
+      "bcryptprimitives.dll",
+      "dwmapi.dll",
+      "gdi32.dll",
+      "imm32.dll",
+      "iphlpapi.dll",
+      "ntdll.dll",
+      "ole32.dll",
+      "oleaut32.dll",
+      "shlwapi.dll",
+      "uiautomationcore.dll",
+      "uxtheme.dll",
+      "ws2_32.dll"
+    ],
+    "resource_types": [
+      3,
+      14,
+      16,
+      24
+    ],
+    "dpi_manifest": "PerMonitorV2,PerMonitor",
+    "execution_level": "asInvoker",
+    "exe_bytes": 4887552,
+    "exe_sha256": "37eb8e49eecea77d2ebd00d7675807a2a0b09579290dacadf1ea53b95b837f97",
+    "zip_bytes": 2439775,
+    "zip_sha256": "45cd1aa29af26f2bbfbe7f12f9028653f3926e94e5401be60e3914f81b03b82e",
+    "zip_entries_verified": true
+  },
+  "published_package_smoke": {
+    "version": "0.4.0",
+    "archive_sha256": "45cd1aa29af26f2bbfbe7f12f9028653f3926e94e5401be60e3914f81b03b82e",
+    "window_title": "Quick Remote Toolkit 0.4.0",
+    "commit": "c8fa0afbf90c79900069f174835ba3bde480ae7b",
+    "clean_machine": false,
+    "normal_close": true,
+    "isolated_appdata": true,
+    "settings_preserved": true,
+    "remote_actions_run": false
+  },
+  "pull_request": "https://github.com/bdpst/Quick-Remote-Toolkit-App/pull/1",
+  "ci": {
+    "branch": "https://github.com/bdpst/Quick-Remote-Toolkit-App/actions/runs/44030595367",
+    "pr": "https://github.com/bdpst/Quick-Remote-Toolkit-App/actions/runs/44030728227",
+    "main": "https://github.com/bdpst/Quick-Remote-Toolkit-App/actions/runs/44031272654",
+    "release": "https://github.com/bdpst/Quick-Remote-Toolkit-App/actions/runs/44031880849",
+    "all_conclusions": "success"
+  }
+}
