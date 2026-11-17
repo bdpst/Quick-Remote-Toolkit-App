@@ -1,0 +1,3082 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "branch": "main",
+    "sha": "91689516c96d52877bba3480bf498b7d807ead64",
+    "date": "2026-11-16",
+    "evidence": "source",
+    "visualVerified": false
+  },
+  "units": {
+    "DIP": "WPF device independent pixel, 1/96 inch; font sizes also DIP",
+    "insets": "WPF scalar, horizontal/vertical pair, or left/top/right/bottom",
+    "system": "Unspecified WPF/Windows metrics are not assigned invented numeric values"
+  },
+  "colors": {
+    "surface.window": {
+      "resource": "WindowBackgroundBrush",
+      "light": "#F5F7FB",
+      "dark": "#111827",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "фон окна",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.WindowBackgroundBrush",
+        "evidence": "source"
+      }
+    },
+    "surface.card": {
+      "resource": "CardBackgroundBrush",
+      "light": "#FFFFFF",
+      "dark": "#1F2937",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "фон карточек и полей",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.CardBackgroundBrush",
+        "evidence": "source"
+      }
+    },
+    "surface.muted": {
+      "resource": "CardMutedBrush",
+      "light": "#F8FAFD",
+      "dark": "#273449",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "приглушённые поверхности, кнопки и заголовки",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.CardMutedBrush",
+        "evidence": "source"
+      }
+    },
+    "text.primary": {
+      "resource": "TextPrimaryBrush",
+      "light": "#0F172A",
+      "dark": "#F1F5F9",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "основной текст",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.TextPrimaryBrush",
+        "evidence": "source"
+      }
+    },
+    "text.secondary": {
+      "resource": "TextSecondaryBrush",
+      "light": "#475569",
+      "dark": "#CBD5E1",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "вторичный текст",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.TextSecondaryBrush",
+        "evidence": "source"
+      }
+    },
+    "text.muted": {
+      "resource": "TextMutedBrush",
+      "light": "#7C8798",
+      "dark": "#94A3B8",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "приглушённый текст и шевроны",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.TextMutedBrush",
+        "evidence": "source"
+      }
+    },
+    "favorite.active": {
+      "resource": "FavoriteBrush",
+      "light": "#CA8A04",
+      "dark": "#FACC15",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "активное избранное",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.FavoriteBrush",
+        "evidence": "source"
+      }
+    },
+    "border.soft": {
+      "resource": "BorderBrushSoft",
+      "light": "#D8E0EC",
+      "dark": "#475569",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "мягкие границы",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.BorderBrushSoft",
+        "evidence": "source"
+      }
+    },
+    "border.divider": {
+      "resource": "DividerBrush",
+      "light": "#E5EAF3",
+      "dark": "#344256",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "разделители и линии таблиц",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.DividerBrush",
+        "evidence": "source"
+      }
+    },
+    "accent.base": {
+      "resource": "AccentBrush",
+      "light": "#2563EB",
+      "dark": "#60A5FA",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "акцент, primary и фокус",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.AccentBrush",
+        "evidence": "source"
+      }
+    },
+    "accent.hover": {
+      "resource": "AccentHoverBrush",
+      "light": "#1D4ED8",
+      "dark": "#3B82F6",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "primary hover",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.AccentHoverBrush",
+        "evidence": "source"
+      }
+    },
+    "accent.soft": {
+      "resource": "AccentSoftBrush",
+      "light": "#E8F1FF",
+      "dark": "#1E3A5F",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "мягкий акцент (текущий код напрямую не использует ресурс)",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.AccentSoftBrush",
+        "evidence": "source"
+      }
+    },
+    "table.selection": {
+      "resource": "SelectedRowBrush",
+      "light": "#DDEBFF",
+      "dark": "#1E4976",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "выбранные строки/ячейки",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.SelectedRowBrush",
+        "evidence": "source"
+      }
+    },
+    "table.alternating": {
+      "resource": "AlternatingRowBrush",
+      "light": "#FBFCFE",
+      "dark": "#243044",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "чередующаяся строка",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.AlternatingRowBrush",
+        "evidence": "source"
+      }
+    },
+    "button.hover.background": {
+      "resource": "ButtonHoverBrush",
+      "light": "#F1F6FF",
+      "dark": "#30415A",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "кнопка hover",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.ButtonHoverBrush",
+        "evidence": "source"
+      }
+    },
+    "button.hover.border": {
+      "resource": "ButtonHoverBorderBrush",
+      "light": "#BFD0EA",
+      "dark": "#5B708D",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "граница кнопки hover",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.ButtonHoverBorderBrush",
+        "evidence": "source"
+      }
+    },
+    "button.pressed.background": {
+      "resource": "ButtonPressedBrush",
+      "light": "#E8F1FF",
+      "dark": "#1E3A5F",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "кнопка pressed",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.ButtonPressedBrush",
+        "evidence": "source"
+      }
+    },
+    "button.primary.pressed": {
+      "resource": "PrimaryPressedBrush",
+      "light": "#1E40AF",
+      "dark": "#1D4ED8",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "primary pressed",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.PrimaryPressedBrush",
+        "evidence": "source"
+      }
+    },
+    "table.header.hover": {
+      "resource": "HeaderHoverBrush",
+      "light": "#F1F5FB",
+      "dark": "#30415A",
+      "type": "color",
+      "unit": "sRGB hex",
+      "purpose": "заголовок таблицы hover",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Services/ThemeService.cs",
+        "symbol": "LightPalette/DarkPalette.HeaderHoverBrush",
+        "evidence": "source"
+      }
+    }
+  },
+  "sharedColors": {
+    "text.onAccent": {
+      "value": "#FFFFFF",
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "type": "color",
+      "unit": "sRGB hex",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "PrimaryButtonStyle",
+        "evidence": "source"
+      }
+    },
+    "surface.transparent": {
+      "value": "#00FFFFFF",
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "type": "color",
+      "unit": "ARGB hex",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "TitleBarButtonStyle",
+        "evidence": "source"
+      }
+    },
+    "window.close.hover": {
+      "value": "#C42B1C",
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "type": "color",
+      "unit": "sRGB hex",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "CloseTitleBarButtonStyle.IsMouseOver",
+        "evidence": "source"
+      }
+    },
+    "window.close.pressed": {
+      "value": "#A4261D",
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "type": "color",
+      "unit": "sRGB hex",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "CloseTitleBarButtonStyle.IsPressed",
+        "evidence": "source"
+      }
+    },
+    "status.online": {
+      "value": "#16A34A",
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "type": "color",
+      "unit": "sRGB hex",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Models/ClientEntry.cs",
+        "symbol": "StatusBrush.Online",
+        "evidence": "source"
+      }
+    },
+    "status.offline": {
+      "value": "#DC2626",
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "type": "color",
+      "unit": "sRGB hex",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Models/ClientEntry.cs",
+        "symbol": "StatusBrush.Offline",
+        "evidence": "source"
+      }
+    },
+    "status.checking": {
+      "value": "#2563EB",
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "type": "color",
+      "unit": "sRGB hex",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Models/ClientEntry.cs",
+        "symbol": "StatusBrush.Checking",
+        "evidence": "source"
+      }
+    },
+    "status.unknown": {
+      "value": "#8A94A3",
+      "themes": [
+        "light",
+        "dark"
+      ],
+      "type": "color",
+      "unit": "sRGB hex",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/Models/ClientEntry.cs",
+        "symbol": "StatusBrush.Unknown",
+        "evidence": "source"
+      }
+    }
+  },
+  "metrics": {
+    "card.padding": {
+      "value": 14,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "CardStyle.Padding",
+        "evidence": "source"
+      }
+    },
+    "card.radius": {
+      "value": 12,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "CardStyle.CornerRadius",
+        "evidence": "source"
+      }
+    },
+    "border.default": {
+      "value": 1,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "CardStyle.BorderThickness",
+        "evidence": "source"
+      }
+    },
+    "control.radius": {
+      "value": 8,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "Button/TextBox.Template",
+        "evidence": "source"
+      }
+    },
+    "button.minHeight": {
+      "value": 38,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "Button.MinHeight",
+        "evidence": "source"
+      }
+    },
+    "button.padding": {
+      "value": [
+        14,
+        8
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "Button.Padding",
+        "evidence": "source"
+      }
+    },
+    "button.margin": {
+      "value": [
+        0,
+        0,
+        0,
+        8
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "Button.Margin",
+        "evidence": "source"
+      }
+    },
+    "toolButton.minHeight": {
+      "value": 34,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "ToolButtonStyle.MinHeight",
+        "evidence": "source"
+      }
+    },
+    "toolButton.padding": {
+      "value": [
+        12,
+        7
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "ToolButtonStyle.Padding",
+        "evidence": "source"
+      }
+    },
+    "primary.minHeight": {
+      "value": 40,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "PrimaryButtonStyle.MinHeight",
+        "evidence": "source"
+      }
+    },
+    "input.minHeight": {
+      "value": 40,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "TextBox.MinHeight",
+        "evidence": "source"
+      }
+    },
+    "input.padding": {
+      "value": [
+        12,
+        7
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "TextBox.Padding",
+        "evidence": "source"
+      }
+    },
+    "table.rowHeight": {
+      "value": 26,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "DataGrid.RowHeight",
+        "evidence": "source"
+      }
+    },
+    "table.cellPadding": {
+      "value": [
+        8,
+        0
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "DataGridCell.Padding",
+        "evidence": "source"
+      }
+    },
+    "table.textMargin": {
+      "value": [
+        8,
+        0,
+        0,
+        0
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "GridTextStyle.Margin",
+        "evidence": "source"
+      }
+    },
+    "table.headerPadding": {
+      "value": [
+        8,
+        5
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "DataGridColumnHeader.Padding",
+        "evidence": "source"
+      }
+    },
+    "titleButton.size": {
+      "value": [
+        46,
+        32
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "TitleBarButtonStyle.Width/Height",
+        "evidence": "source"
+      }
+    },
+    "menu.padding": {
+      "value": 4,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "ContextMenu.Padding",
+        "evidence": "source"
+      }
+    },
+    "menu.itemPadding": {
+      "value": [
+        8,
+        5
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "MenuItem.Padding",
+        "evidence": "source"
+      }
+    },
+    "tooltip.padding": {
+      "value": [
+        8,
+        5
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "ToolTip.Padding",
+        "evidence": "source"
+      }
+    },
+    "control.disabledOpacity": {
+      "value": 0.55,
+      "unit": "ratio",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "Button/TextBox.IsEnabled",
+        "evidence": "source"
+      }
+    },
+    "window.main.size": {
+      "value": [
+        1500,
+        920
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Window.Width/Height",
+        "evidence": "source"
+      }
+    },
+    "window.main.minimum": {
+      "value": [
+        1200,
+        760
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Window.MinWidth/MinHeight",
+        "evidence": "source"
+      }
+    },
+    "window.chrome.captionHeight": {
+      "value": 32,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "WindowChrome.CaptionHeight",
+        "evidence": "source"
+      }
+    },
+    "window.chrome.resizeBorder": {
+      "value": 6,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "WindowChrome.ResizeBorderThickness",
+        "evidence": "source"
+      }
+    },
+    "layout.margin": {
+      "value": 16,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Grid.Margin",
+        "evidence": "source"
+      }
+    },
+    "layout.sidebarWidth": {
+      "value": 320,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "ColumnDefinition.Width",
+        "evidence": "source"
+      }
+    },
+    "layout.gap": {
+      "value": 12,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Border.Margin",
+        "evidence": "source"
+      }
+    },
+    "layout.logHeight": {
+      "value": 190,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "RowDefinition.Height",
+        "evidence": "source"
+      }
+    },
+    "splitter.height": {
+      "value": 10,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "GridSplitter.Height",
+        "evidence": "source"
+      }
+    },
+    "splitter.margin": {
+      "value": [
+        0,
+        6,
+        12,
+        6
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "GridSplitter.Margin",
+        "evidence": "source"
+      }
+    },
+    "status.dotSize": {
+      "value": [
+        9,
+        9
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Ellipse.Width/Height",
+        "evidence": "source"
+      }
+    },
+    "favorite.buttonSize": {
+      "value": [
+        28,
+        24
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Favorite Button.Width/Height",
+        "evidence": "source"
+      }
+    },
+    "copy.buttonSize": {
+      "value": [
+        24,
+        22
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "CopyCellButtonStyle.Width/Height",
+        "evidence": "source"
+      }
+    },
+    "brand.size": {
+      "value": [
+        42,
+        42
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Header Border.Width/Height",
+        "evidence": "source"
+      }
+    },
+    "brand.radius": {
+      "value": 10,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Header Border.CornerRadius",
+        "evidence": "source"
+      }
+    },
+    "window.message.size": {
+      "value": [
+        560,
+        460
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "Window.Width/Height",
+        "evidence": "source"
+      }
+    },
+    "window.message.minimum": {
+      "value": [
+        460,
+        420
+      ],
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "Window.MinWidth/MinHeight",
+        "evidence": "source"
+      }
+    },
+    "dialog.margin": {
+      "value": 20,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "Grid.Margin",
+        "evidence": "source"
+      }
+    },
+    "window.administrators.width": {
+      "value": 560,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "Window.Width",
+        "evidence": "source"
+      }
+    },
+    "dialog.cancelWidth": {
+      "value": 110,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "Cancel Button.Width",
+        "evidence": "source"
+      }
+    },
+    "dialog.submitWidth": {
+      "value": 130,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "SendButton.Width",
+        "evidence": "source"
+      }
+    },
+    "message.secondsWidth": {
+      "value": 90,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "DisplaySecondsText.Width",
+        "evidence": "source"
+      }
+    }
+  },
+  "typography": {
+    "body.family": {
+      "value": "Segoe UI",
+      "unit": "font family",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "Window.FontFamily",
+        "evidence": "source"
+      }
+    },
+    "body.size": {
+      "value": 12,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "Window.FontSize",
+        "evidence": "source"
+      }
+    },
+    "brand.size": {
+      "value": 22,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Header TextBlock.FontSize",
+        "evidence": "source"
+      }
+    },
+    "brand.weight": {
+      "value": "Bold",
+      "unit": "font weight",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Header TextBlock.FontWeight",
+        "evidence": "source"
+      }
+    },
+    "section.size": {
+      "value": 14,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Expander.Header",
+        "evidence": "source"
+      }
+    },
+    "section.weight": {
+      "value": "SemiBold",
+      "unit": "font weight",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "Expander.Header",
+        "evidence": "source"
+      }
+    },
+    "recipient.size": {
+      "value": 16,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "RecipientText.FontSize",
+        "evidence": "source"
+      }
+    },
+    "icon.family": {
+      "value": "Segoe MDL2 Assets",
+      "unit": "font family",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "IconTextStyle.FontFamily",
+        "evidence": "source"
+      }
+    },
+    "icon.size": {
+      "value": 16,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "IconTextStyle.FontSize",
+        "evidence": "source"
+      }
+    },
+    "sectionIcon.size": {
+      "value": 15,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "SectionHeaderIconStyle.FontSize",
+        "evidence": "source"
+      }
+    },
+    "chevron.size": {
+      "value": 11,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "ChevronTextStyle.FontSize",
+        "evidence": "source"
+      }
+    },
+    "sort.size": {
+      "value": 9,
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "DataGridColumnHeader.SortArrow",
+        "evidence": "source"
+      }
+    }
+  },
+  "sourceGeometryInventory": [
+    {
+      "property": "FontSize",
+      "value": "12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/19/Style/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/20/Style[CardStyle]/2/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/20/Style[CardStyle]/3/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "14",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/20/Style[CardStyle]/4/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,0,8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/21/Style/0/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "14,8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/21/Style/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "38",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/21/Style/2/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/21/Style/6/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "{TemplateBinding BorderThickness}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/21/Style/12/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/21/Style/12/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "{TemplateBinding Padding}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/21/Style/12/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]/0/ContentPresenter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "34",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/22/Style[ToolButtonStyle]/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "12,7",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/22/Style[ToolButtonStyle]/2/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "{TemplateBinding BorderThickness}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/22/Style[ToolButtonStyle]/3/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/22/Style[ToolButtonStyle]/3/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "{TemplateBinding Padding}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/22/Style[ToolButtonStyle]/3/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]/0/Grid",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/22/Style[ToolButtonStyle]/3/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]/0/Grid/0/Grid.ColumnDefinitions/0/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/22/Style[ToolButtonStyle]/3/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]/0/Grid/0/Grid.ColumnDefinitions/1/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "11",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/22/Style[ToolButtonStyle]/3/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]/0/Grid/2/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "10,0,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/22/Style[ToolButtonStyle]/3/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]/0/Grid/2/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "40",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/23/Style[PrimaryButtonStyle]/4/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "{TemplateBinding BorderThickness}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/23/Style[PrimaryButtonStyle]/5/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/23/Style[PrimaryButtonStyle]/5/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "{TemplateBinding Padding}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/23/Style[PrimaryButtonStyle]/5/Setter/0/Setter.Value/0/ControlTemplate/0/Border[ButtonBorder]/0/ContentPresenter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "46",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/24/Style[TitleBarButtonStyle]/0/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "32",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/24/Style[TitleBarButtonStyle]/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/24/Style[TitleBarButtonStyle]/2/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/24/Style[TitleBarButtonStyle]/3/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/24/Style[TitleBarButtonStyle]/4/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/24/Style[TitleBarButtonStyle]/6/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "10",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/24/Style[TitleBarButtonStyle]/9/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "16",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/26/Style[IconTextStyle]/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,10,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/26/Style[IconTextStyle]/3/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "15",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/27/Style[SectionHeaderIconStyle]/0/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,8,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/27/Style[SectionHeaderIconStyle]/2/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "11",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/28/Style[ChevronTextStyle]/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "10,0,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/28/Style[ChevronTextStyle]/4/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "12,7",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/29/Style/0/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "40",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/29/Style/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/29/Style/3/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "{TemplateBinding BorderThickness}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/29/Style/7/Setter/0/Setter.Value/0/ControlTemplate/0/Border[TextBoxBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/29/Style/7/Setter/0/Setter.Value/0/ControlTemplate/0/Border[TextBoxBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "{TemplateBinding Padding}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/29/Style/7/Setter/0/Setter.Value/0/ControlTemplate/0/Border[TextBoxBorder]/0/ScrollViewer[PART_ContentHost]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/30/Style/5/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "RowHeight",
+      "value": "26",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/30/Style/9/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "8,5",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/31/Style/3/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "0,0,1,1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/31/Style/5/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "{TemplateBinding BorderThickness}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/31/Style/7/Setter/0/Setter.Value/0/ControlTemplate/0/Border[HeaderBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "{TemplateBinding Padding}",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/31/Style/7/Setter/0/Setter.Value/0/ControlTemplate/0/Border[HeaderBorder]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/31/Style/7/Setter/0/Setter.Value/0/ControlTemplate/0/Border[HeaderBorder]/0/Grid/0/Grid.ColumnDefinitions/0/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/31/Style/7/Setter/0/Setter.Value/0/ControlTemplate/0/Border[HeaderBorder]/0/Grid/0/Grid.ColumnDefinitions/1/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "9",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/31/Style/7/Setter/0/Setter.Value/0/ControlTemplate/0/Border[HeaderBorder]/0/Grid/2/TextBlock[SortArrow]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "6,0,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/31/Style/7/Setter/0/Setter.Value/0/ControlTemplate/0/Border[HeaderBorder]/0/Grid/2/TextBlock[SortArrow]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "8,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/32/Style/0/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/32/Style/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/33/Style[GridTextStyle]/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "8,0,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/33/Style[GridTextStyle]/2/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/34/Style/3/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "4",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/34/Style/4/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "8,5",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/35/Style/2/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/37/Style/3/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "8,5",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/App.xaml",
+        "symbol": "/Application/0/Application.Resources/37/Style/4/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "1500",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "920",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinWidth",
+      "value": "1200",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "760",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CaptionHeight",
+      "value": "32",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/0/WindowChrome.WindowChrome/0/WindowChrome",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "ResizeBorderThickness",
+      "value": "6",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/0/WindowChrome.WindowChrome/0/WindowChrome",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "GlassFrameThickness",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/0/WindowChrome.WindowChrome/0/WindowChrome",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/0/WindowChrome.WindowChrome/0/WindowChrome",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "0,2",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/0/Style[SectionExpanderStyle]/2/Setter/0/Setter.Value/0/ControlTemplate/0/StackPanel/0/ToggleButton/0/ToggleButton.Template/0/ControlTemplate/0/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/0/Style[SectionExpanderStyle]/2/Setter/0/Setter.Value/0/ControlTemplate/0/StackPanel/0/ToggleButton/0/ToggleButton.Template/0/ControlTemplate/0/Border/0/Grid/0/Grid.ColumnDefinitions/0/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/0/Style[SectionExpanderStyle]/2/Setter/0/Setter.Value/0/ControlTemplate/0/StackPanel/0/ToggleButton/0/ToggleButton.Template/0/ControlTemplate/0/Border/0/Grid/0/Grid.ColumnDefinitions/1/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "10,0,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/0/Style[SectionExpanderStyle]/2/Setter/0/Setter.Value/0/ControlTemplate/0/StackPanel/0/ToggleButton/0/ToggleButton.Template/0/ControlTemplate/0/Border/0/Grid/2/TextBlock[Arrow]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "11",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/0/Style[SectionExpanderStyle]/2/Setter/0/Setter.Value/0/ControlTemplate/0/StackPanel/0/ToggleButton/0/ToggleButton.Template/0/ControlTemplate/0/Border/0/Grid/2/TextBlock[Arrow]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,10,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/0/Style[SectionExpanderStyle]/2/Setter/0/Setter.Value/0/ControlTemplate/0/StackPanel/1/ContentPresenter[SectionContent]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "24",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/1/Style[CopyCellButtonStyle]/0/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "22",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/1/Style[CopyCellButtonStyle]/1/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/1/Style[CopyCellButtonStyle]/2/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/1/Style[CopyCellButtonStyle]/3/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "4,0,4,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/1/Style[CopyCellButtonStyle]/4/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/1/Style[CopyCellButtonStyle]/6/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/1/Style[CopyCellButtonStyle]/9/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/2/DataTemplate[CopyCellTemplate]/0/Grid[CopyCell]/0/Grid.ColumnDefinitions/0/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/1/Window.Resources/2/DataTemplate[CopyCellTemplate]/0/Grid[CopyCell]/0/Grid.ColumnDefinitions/1/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "32",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/0/Grid.RowDefinitions/0/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/0/Grid.RowDefinitions/1/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "0,0,0,1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/1/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/1/Border/0/Grid/0/Grid.ColumnDefinitions/0/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/1/Border/0/Grid/0/Grid.ColumnDefinitions/1/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "10,0,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/1/Border/0/Grid/1/StackPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "16",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/1/Border/0/Grid/1/StackPanel/0/Image",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "16",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/1/Border/0/Grid/1/StackPanel/0/Image",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,8,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/1/Border/0/Grid/1/StackPanel/0/Image",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "16",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/0/Grid.ColumnDefinitions/0/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "320",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/0/Grid.ColumnDefinitions/1/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/1/Grid.RowDefinitions/0/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/1/Grid.RowDefinitions/1/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/1/Grid.RowDefinitions/2/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "190",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/1/Grid.RowDefinitions/3/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,0,12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/0/Grid.ColumnDefinitions/0/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/0/Grid.ColumnDefinitions/1/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/0/Grid.ColumnDefinitions/2/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/0/Grid.ColumnDefinitions/3/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/0/Grid.ColumnDefinitions/4/ColumnDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,24,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/1/StackPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "42",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/1/StackPanel/0/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "42",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/1/StackPanel/0/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "10",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/1/StackPanel/0/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,12,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/1/StackPanel/0/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "23",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/1/StackPanel/0/Border/0/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "22",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/1/StackPanel/1/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MaxWidth",
+      "value": "660",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/2/Grid",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "14,0,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/2/Grid/1/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,10,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/2/Grid/2/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/2/Grid/2/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "6",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/2/Grid/2/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "7,2",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/2/Grid/2/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "11",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/2/Grid/2/Border/0/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "12,0,8,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/3/Button",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,8,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/4/Button",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "42",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/5/Button[ThemeButton]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/5/Button[ThemeButton]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/5/Button[ThemeButton]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/2/Grid/5/Button[ThemeButton]/0/TextBlock[ThemeIcon]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "10",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,12,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "4,2,4,10",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/0/CheckBox[FavoritesOnlyBox]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "48",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/0/DataGridTemplateColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/0/DataGridTemplateColumn/0/DataGridTemplateColumn.CellStyle/0/Style/0/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "16",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/0/DataGridTemplateColumn/1/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/Button/0/Button.Style/0/Style/3/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "28",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/0/DataGridTemplateColumn/1/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/Button/0/Button.Style/0/Style/4/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "24",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/0/DataGridTemplateColumn/1/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/Button/0/Button.Style/0/Style/5/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/0/DataGridTemplateColumn/1/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/Button/0/Button.Style/0/Style/10/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/0/DataGridTemplateColumn/1/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/Button/0/Button.Style/0/Style/11/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/0/DataGridTemplateColumn/1/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/Button/0/Button.Style/0/Style/12/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/0/DataGridTemplateColumn/1/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/Button/0/Button.Style/0/Style/14/Setter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "58",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/1/DataGridTextColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "190",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/2/DataGridTemplateColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "150",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/3/DataGridTemplateColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/4/DataGridTemplateColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "150",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/5/DataGridTemplateColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "8,0,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/5/DataGridTemplateColumn/0/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/StackPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "9",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/5/DataGridTemplateColumn/0/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/StackPanel/0/Ellipse",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "9",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/5/DataGridTemplateColumn/0/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/StackPanel/0/Ellipse",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,9,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/5/DataGridTemplateColumn/0/DataGridTemplateColumn.CellTemplate/0/DataTemplate/0/StackPanel/0/Ellipse",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "180",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/6/DataGridTextColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "170",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/3/Border/0/DockPanel/1/Border/0/DataGrid[ClientsGrid]/2/DataGrid.Columns/7/DataGridTextColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,0,12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/0/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/0/Border/0/Expander/0/Expander.Header/0/StackPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "14",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/0/Border/0/Expander/0/Expander.Header/0/StackPanel/1/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,0,12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/1/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/1/Border/0/Expander/0/Expander.Header/0/StackPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "14",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/1/Border/0/Expander/0/Expander.Header/0/StackPanel/1/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,0,12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/2/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/2/Border/0/Expander/0/Expander.Header/0/StackPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "14",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/2/Border/0/Expander/0/Expander.Header/0/StackPanel/1/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,0,10",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/3/Border/0/StackPanel/0/StackPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "14",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/3/Border/0/StackPanel/0/StackPanel/1/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/3/Border/0/StackPanel/1/Button[CsvPathButton]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/3/Border/0/StackPanel/1/Button[CsvPathButton]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/3/Border/0/StackPanel/1/Button[CsvPathButton]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,12,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/4/ScrollViewer/0/StackPanel/3/Border/0/StackPanel/2/TextBlock[CsvInfoText]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "10",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/5/GridSplitter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,6,12,6",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/5/GridSplitter",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "10",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,12,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "4,2,4,10",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border/0/DockPanel/0/DockPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "14",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border/0/DockPanel/0/DockPanel/1/StackPanel/1/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "BorderThickness",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border/0/DockPanel/1/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "CornerRadius",
+      "value": "8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border/0/DockPanel/1/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Padding",
+      "value": "1",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border/0/DockPanel/1/Border",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "155",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border/0/DockPanel/1/Border/0/DataGrid[LogGrid]/0/DataGrid.Columns/0/DataGridTextColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "180",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border/0/DockPanel/1/Border/0/DataGrid[LogGrid]/0/DataGrid.Columns/1/DataGridTextColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "230",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border/0/DockPanel/1/Border/0/DataGrid[LogGrid]/0/DataGrid.Columns/2/DataGridTextColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/MainWindow.xaml",
+        "symbol": "/Window/3/Grid/2/Grid/6/Border/0/DockPanel/1/Border/0/DataGrid[LogGrid]/0/DataGrid.Columns/3/DataGridTextColumn",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "560",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "460",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinWidth",
+      "value": "460",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "MinHeight",
+      "value": "420",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "20",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/0/Grid.RowDefinitions/0/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/0/Grid.RowDefinitions/1/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "*",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/0/Grid.RowDefinitions/2/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/0/Grid.RowDefinitions/3/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/0/Grid.RowDefinitions/4/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Height",
+      "value": "Auto",
+      "unit": "layout",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/0/Grid.RowDefinitions/5/RowDefinition",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "16",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/1/TextBlock[RecipientText]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,8,0,12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/2/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,12,0,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/4/StackPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,12,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/4/StackPanel/0/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "90",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/4/StackPanel/1/TextBox[DisplaySecondsText]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,8,0,12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/5/TextBlock[StatusText]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "110",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/6/StackPanel/0/Button",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,8,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/6/StackPanel/0/Button",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "130",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/6/StackPanel/1/Button[SendButton]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/SendMessageWindow.xaml",
+        "symbol": "/Window/0/Grid/6/StackPanel/1/Button[SendButton]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "560",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "20",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "FontSize",
+      "value": "16",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/0/TextBlock[RecipientText]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,16,0,8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/1/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,16,0,8",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/3/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,0,10",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/4/RadioButton[AddOption]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,16,0,12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/6/TextBlock",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,0,12",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/7/TextBlock[StatusText]",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "110",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/8/StackPanel/0/Button",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0,0,8,0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/8/StackPanel/0/Button",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Width",
+      "value": "130",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/8/StackPanel/1/Button",
+        "evidence": "source"
+      }
+    },
+    {
+      "property": "Margin",
+      "value": "0",
+      "unit": "DIP",
+      "source": {
+        "file": "src/QuickRemoteToolkit.App/LocalAdministratorsWindow.xaml",
+        "symbol": "/Window/0/StackPanel/8/StackPanel/1/Button",
+        "evidence": "source"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# Модель
+Client: неизменный номер/имя/IP/сотрудник; вычисляемый ключ computer:/ip:, домен, статус, время начала проверки. Settings: PascalCase WPF; unknown fields сохранять. Log: время/цель/действие/результат, без сообщения. Event: generation/client-id/result; UI принимает только текущую generation. Operation: busy guard до завершения; закрытие UI отсоединяет receiver без обращения к HWND. Adapter: подменяемый probe/Windows effect; тесты не изменяют удалённые ПК.

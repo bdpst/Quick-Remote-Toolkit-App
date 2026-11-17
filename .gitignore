@@ -5,3 +5,9 @@ obj/
 *.suo
 *.log
 publish/
+win32-publish/
+target/
+rust-publish/
+
+publish-rust/
+QuickRemoteToolkit.Rust-win-x64.zip

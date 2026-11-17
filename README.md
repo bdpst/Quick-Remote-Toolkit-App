@@ -2,7 +2,9 @@
 
 Графическая Windows-утилита для быстрых действий удаленной поддержки.
 
-Это C# / WPF версия batch-утилиты `Quick Remote Toolkit`.
+Целевой стек — Rust. Сохраняемая C#/WPF-версия служит эталоном переноса.
+Сборка/запуск Rust описаны в разделе «Перенос на Rust» ниже. Изображения ниже — WPF,
+они не подтверждают текущий внешний вид Rust.
 
 <img width="1500" height="920" alt="изображение" src="https://github.com/user-attachments/assets/ac25ffdb-78e7-4fe1-86e8-d009f6bde4ed" />
 <img width="1500" height="920" alt="изображение" src="https://github.com/user-attachments/assets/9c489bac-233d-409a-b28c-42ffc7a0cc50" />
@@ -14,7 +16,7 @@
 
 - чтение клиентов из CSV `number;computer;ip;person`;
 - поддержка CSV в Windows-1251 и UTF-8;
-- поиск по компьютеру, IP и сотруднику;
+- поиск по компьютеру, IP, сотруднику и домену;
 - копирование имени ПК, IP и имени сотрудника кнопками, появляющимися при наведении на ячейку, или через контекстное меню;
 - действия: Remote Assistance, ping, tracert, `\\PC\c$`, Event Viewer, Computer Management, mstsc, WinRS cmd, WinRS gpupdate;
 - автоматическая подготовка SMB-доступа к административным шарам от текущего пользователя Windows;
@@ -28,9 +30,42 @@
 - светлая и тёмная темы с сохранением выбранного режима;
 - настройки в `%AppData%\QuickRemoteToolkitApp\settings.json`.
 
-## Сборка
+## Работа со Spec Kit
 
-Нужен .NET SDK 10 или новее.
+В проект подключён GitHub Spec Kit 1.3.1 для Codex с PowerShell-скриптами.
+Общие шаблоны и процесс находятся в `.specify/`, навыки Codex — в `.agents/skills/`.
+Эти файлы следует хранить в Git вместе с проектом. Правила репозитория — в `AGENTS.md`.
+
+После установки перезапустите Codex, чтобы он обнаружил новые навыки.
+В чате Codex (не в PowerShell) начните с:
+
+```text
+$speckit-constitution Сформируй принципы проекта на основе AGENTS.md и текущего кода.
+```
+
+Действующая `.specify/memory/constitution.md` — версия 2.0.0 с правилами перехода на Rust.
+Для новой функции используйте `$speckit-specify <описание>`, затем
+`$speckit-plan`, `$speckit-tasks` и `$speckit-implement`.
+Спецификации функций сохраняются в `specs/`; небольшие исправления можно выполнять обычным запросом.
+
+CLI установлен в пользовательское окружение через `uv`. В новом PowerShell:
+
+```powershell
+specify version
+specify integration status
+```
+
+Для установки CLI на другом компьютере:
+
+```powershell
+uv tool install --python 3.12 specify-cli --from git+https://github.com/github/spec-kit.git@v1.3.1
+```
+
+Повторно инициализировать уже клонированный проект не требуется.
+
+## Сборка сохранённого WPF-эталона
+
+Эти команды нужны только для сравнения и отката. Основная Rust-сборка описана ниже. Для WPF нужен .NET SDK 10 или новее.
 
 ```powershell
 dotnet build .\QuickRemoteToolkit.App.sln
@@ -48,17 +83,13 @@ dotnet publish .\src\QuickRemoteToolkit.App\QuickRemoteToolkit.App.csproj -c Rel
 publish\
 ```
 
-Self-contained single-file сборка выполняется в GitHub Actions при создании релиза.
-
 Локальная публикация выше является framework-dependent: она компактная, но требует установленный .NET Desktop Runtime.
 
-## GitHub Release
+## GitHub Actions
 
-В репозитории есть workflow `.github/workflows/release.yml`.
-
-Он собирает приложение на `windows-latest`. При push тега вида `v1.0.0` workflow создаст GitHub Release и приложит `QuickRemoteToolkit.App-win-x64.zip`.
-
-Релизный архив автономный: в него входит .NET/WPF runtime, поэтому он заметно больше batch-файла и локального framework-dependent publish. Для уменьшения размера используется single-file compression, при этом trimming намеренно не включен из-за рисков для WPF/XAML.
+Текущий workflow `.github/workflows/release.yml` проверяет Rust на `windows-latest`
+и сохраняет portable-архив `QuickRemoteToolkit.Rust-win-x64.zip` как build artifact.
+Он не создаёт GitHub Release. В рамках переноса теги, релизы и merge в main не выполняются.
 
 ## CSV
 
@@ -130,3 +161,40 @@ net use \\PC-NAME\IPC$ /user:DOMAIN\User
 ```
 
 Пароль не сохраняется и не передается приложением. Windows использует текущие доменные учетные данные автоматически.
+
+## Перенос на Rust
+
+Целевой стек — Rust + egui/eframe 0.33.3 (OpenGL/WGL, AccessKit), Windows x64 MSVC.
+WPF-эталон сохранён в src/QuickRemoteToolkit.App и publish/. Полный проверенный
+паритет пока не заявляется: [матрица](specs/005-rust-parity/parity-matrix.md),
+[текущий прогресс](specs/005-rust-parity/progress.md).
+
+```powershell
+cargo fmt --check --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml
+cargo clippy --locked --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml --all-targets -- -D warnings
+cargo test --locked --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml
+./src/QuickRemoteToolkit.Rust/build.ps1 -OutputDirectory ./publish-rust
+./publish-rust/QuickRemoteToolkitRust.exe
+```
+
+Rust 1.99.1, MSVC Build Tools и Windows SDK нужны для сборки. Для запуска .NET
+и инструменты разработки не нужны; необходимы Windows 10/11 x64 и драйвер с
+поддержкой OpenGL backend eframe. Системные WTS/NetAPI/ICMP DLL входят в Windows;
+Windows PowerShell/WinRS/SMB нужны соответствующим удалённым действиям.
+Чистая машина без SDK/.NET ещё требует отдельной проверки.
+
+Настройки совместимы с WPF: %AppData%/QuickRemoteToolkitApp/settings.json.
+Перед первой перезаписью Rust сохраняет settings.before-rust.json; для отката
+закройте обе версии и восстановите эту копию. Нельзя запускать обе версии
+одновременно при изменении настроек. При повреждённом JSON Rust не сохраняет
+пустые defaults поверх исходного файла. Старый settings-rust.json прототипа
+не заменяет общий файл WPF.
+
+GitHub Actions проверяет Rust на Windows и создаёт portable-архив как build artifact.
+Изменение workflow само по себе не создаёт GitHub Release; публикация тега/релиза
+в текущей задаче не выполняется. WPF при необходимости собирается прежними dotnet
+командами из начала документа.
+
+Проверки GUI запускаются отдельным test host с feature `ui-qa`; он не включается
+в portable-архив. Воспроизводимые команды и границы доказательств описаны в
+[отчёте проверки интерфейса](specs/005-rust-parity/ui-validation.md).

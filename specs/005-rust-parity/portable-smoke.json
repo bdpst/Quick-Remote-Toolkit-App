@@ -1,0 +1,14 @@
+{
+  "appdata_isolated": true,
+  "owned_process_stopped": true,
+  "window_title": "Quick Remote Toolkit",
+  "archive_sha256": "57C176CB83AE3F5438D71C3AD506974A3A637E8C0DEC853DCB952F4BF66689E6",
+  "path_restricted_to": "Windows/System32",
+  "window_registered": true,
+  "normal_close_verified": false,
+  "developer_environment_removed": true,
+  "demo_row_and_load_log_confirmed": true,
+  "uia_tree_available": true,
+  "clean_machine": false,
+  "set_value_error": "GetCursorPos: access denied (0x80070005)"
+}

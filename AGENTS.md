@@ -4,7 +4,7 @@
 
 ## Проект
 
-Quick Remote Toolkit App - WPF-приложение на C#/.NET для быстрых действий удаленной поддержки Windows-клиентов.
+Quick Remote Toolkit App - Windows-приложение, переносимое на Rust (WPF сохраняется как эталон) для быстрых действий удаленной поддержки Windows-клиентов.
 
 Основные возможности:
 
@@ -15,27 +15,30 @@ Quick Remote Toolkit App - WPF-приложение на C#/.NET для быст
 
 ## Структура
 
-- `src/QuickRemoteToolkit.App/` - исходный код WPF-приложения.
+- `src/QuickRemoteToolkit.Rust/` - целевое Rust-приложение: models, services, native, ui, design.
+- `src/QuickRemoteToolkit.App/` - сохраняемый WPF-эталон.
 - `src/QuickRemoteToolkit.App/Models/` - модели данных.
 - `src/QuickRemoteToolkit.App/Services/` - работа с CSV, настройками и запуском удаленных действий.
 - `src/QuickRemoteToolkit.App/Assets/` - иконка приложения.
 - `samples/clients.example.csv` - пример CSV без реальных данных.
-- `.github/workflows/release.yml` - сборка GitHub Release.
+- `.github/workflows/release.yml` - проверки Rust и portable build artifact для Windows.
 - `publish/` - локальная публикация, не считать источником правды для кода.
 
 ## Команды
 
-Сборка:
+Проверки Rust (Windows x64 MSVC):
 
 ```powershell
-dotnet build .\QuickRemoteToolkit.App.sln -c Release --no-restore
+cargo fmt --check --manifest-path .\src\QuickRemoteToolkit.Rust\Cargo.toml
+cargo clippy --locked --manifest-path .\src\QuickRemoteToolkit.Rust\Cargo.toml --all-targets -- -D warnings
+cargo test --locked --manifest-path .\src\QuickRemoteToolkit.Rust\Cargo.toml
+cargo build --release --locked --manifest-path .\src\QuickRemoteToolkit.Rust\Cargo.toml
+.\src\QuickRemoteToolkit.Rust\build.ps1 -OutputDirectory .\publish-rust
 ```
 
-Публикация локальной portable-версии:
-
-```powershell
-dotnet publish .\src\QuickRemoteToolkit.App\QuickRemoteToolkit.App.csproj -c Release --no-restore -o .\publish
-```
+WPF при изменении его кода: dotnet build solution Release --no-restore, затем
+ dotnet publish csproj Release --no-restore -o ./publish. Не заменять WPF-поставку
+до проверки Rust-паритета. Источник эталона — SHA в docs/design-guidelines.md.
 
 Проверка статуса Git:
 
@@ -68,13 +71,15 @@ number;computer;ip;person
 - Держать изменения небольшими и проверяемыми.
 - Не коммитить `publish/`, временные файлы и реальные CSV с клиентами.
 - Не менять поведение удаленных команд без ручной проверки аналогичной команды в PowerShell/CMD.
-- Для UI соблюдать текущий дизайн светлой и тёмной тем, использовать общие динамические ресурсы из `App.xaml` и существующие размеры/отступы.
-- После изменений запускать `dotnet build`.
-- После изменений приложения и успешной сборки обязательно обновлять локальную версию в `C:\Users\KMN.GTL\Documents\GitHub\Quick-Remote-Toolkit-App\publish` командой `dotnet publish .\src\QuickRemoteToolkit.App\QuickRemoteToolkit.App.csproj -c Release --no-restore -o .\publish`. Перед завершением задачи проверять успешность публикации. Папку `publish/` по-прежнему не коммитить.
+- Для UI соблюдать docs/design-guidelines.md, docs/design-tokens.json и ui-parity-checklist.md.
+- После изменения Rust выполнить Cargo-проверки выше и успешную публикацию в publish-rust/.
+- WPF publish/ сохранять для сравнения. Не коммитить publish-rust/, target/ и архивы поставки.
+- Не считать старт процесса успешным завершением удалённого действия; блокеры проверки фиксировать.
 
 ## Релизы
 
-Релиз создается пушем тега вида `v0.2.1`.
+Тег вида `v0.2.1` запускает сборку portable-архива Windows. Workflow загружает build artifact;
+GitHub Release не создаётся автоматически. В задаче переноса теги и релизы не публиковать.
 
 ```powershell
 git tag -a v0.2.1 -m "Release v0.2.1"
