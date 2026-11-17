@@ -54,7 +54,7 @@ fn main() -> eframe::Result {
         .and_then(|v| v.parse().ok())
         .unwrap_or(920.);
     eframe::run_native(
-        "Quick Remote Toolkit",
+        concat!("Quick Remote Toolkit ", env!("CARGO_PKG_VERSION")),
         eframe::NativeOptions {
             centered: true,
             viewport: egui::ViewportBuilder::default()

@@ -1,3 +1,5 @@
+> Исторический документ. Технологический контекст и пути относятся к этапу до Rust-only 0.4.0. Миграция принята пользователем 2026-11-17; неподтверждённые проверки ниже не объявляются успешными. Текущие инструкции: [README](https://github.com/bdpst/Quick-Remote-Toolkit-App#readme), финализация: specs/006-rust-release. Удалённый код доступен в истории Git (WPF: 91689516c96d52877bba3480bf498b7d807ead64).
+
 # UI and command contracts
 Выбор CSV → таблица → выбор строки → команды. Нет выбора — команды недоступны. Контекстное меню копирует поля и запускает те же действия. Поиск и избранное совместимы.
 Remote actions: msra /offerra; ping; tracert; explorer UNC c$; eventvwr /computer; compmgmt /computer; mstsc /v; winrs -r cmd/gpupdate. Не заявлять удалённый успех после spawn.

@@ -417,7 +417,11 @@ impl Toolkit {
     }
     fn run_action(&mut self, index: usize) {
         if self.current().is_none() {
-            crate::native::notice("Quick Remote Toolkit", "Выберите клиента.", false);
+            crate::native::notice(
+                concat!("Quick Remote Toolkit ", env!("CARGO_PKG_VERSION")),
+                "Выберите клиента.",
+                false,
+            );
             return;
         }
         if index == 1 {
@@ -486,7 +490,11 @@ impl Toolkit {
     }
     fn open_message(&mut self) {
         if self.current().is_none() {
-            crate::native::notice("Quick Remote Toolkit", "Выберите клиента.", false);
+            crate::native::notice(
+                concat!("Quick Remote Toolkit ", env!("CARGO_PKG_VERSION")),
+                "Выберите клиента.",
+                false,
+            );
             return;
         }
         if self.messaging {
@@ -509,7 +517,11 @@ impl Toolkit {
     }
     fn open_admin(&mut self) {
         if self.current().is_none() {
-            crate::native::notice("Quick Remote Toolkit", "Выберите клиента.", false);
+            crate::native::notice(
+                concat!("Quick Remote Toolkit ", env!("CARGO_PKG_VERSION")),
+                "Выберите клиента.",
+                false,
+            );
             return;
         }
         if self.administering {
@@ -729,7 +741,7 @@ impl Toolkit {
                     if let Some(icon) = &self.window_icon {
                         ui.image((icon.id(), egui::vec2(16., 16.)));
                     }
-                    ui.label("Quick Remote Toolkit");
+                    ui.label(concat!("Quick Remote Toolkit ", env!("CARGO_PKG_VERSION")));
                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                         ui.spacing_mut().item_spacing.x = 0.;
                         for (glyph, tip, cmd) in [
@@ -1019,7 +1031,7 @@ impl Toolkit {
                                 }
                             } else {
                                 crate::native::notice(
-                                    "Quick Remote Toolkit",
+                                    concat!("Quick Remote Toolkit ", env!("CARGO_PKG_VERSION")),
                                     "CSV-файл не выбран или больше не существует.",
                                     false,
                                 );

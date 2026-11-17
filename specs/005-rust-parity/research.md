@@ -1,3 +1,5 @@
+> Исторический документ. Технологический контекст и пути относятся к этапу до Rust-only 0.4.0. Миграция принята пользователем 2026-11-17; неподтверждённые проверки ниже не объявляются успешными. Текущие инструкции: [README](https://github.com/bdpst/Quick-Remote-Toolkit-App#readme), финализация: specs/006-rust-release. Удалённый код доступен в истории Git (WPF: 91689516c96d52877bba3480bf498b7d807ead64).
+
 # Research
 Решение: сохранить egui/eframe 0.33.3. Локальные исходники table.rs/context.rs/viewport.rs подтверждают virtual rows, context_menu, custom chrome, native viewports и repaint. Slint StandardTableView/dispatch потребует переписывания и собственных стилей; Win32 native потребует custom drawing и большего unsafe. Выявленные gaps — реализация, не запрет API. Исследование speckit-plan выполнено отдельным агентом gui_research, без изменения кода.
 Критичные проверки: sort+stable indices, native modal viewport, resize/DPI/chrome, generation-id, полный набор palette states, UIA labels. Пока ни одна не считается визуально пройденной. Существующий код — технический прототип; перед итоговой приёмкой проверить риски по tasks.

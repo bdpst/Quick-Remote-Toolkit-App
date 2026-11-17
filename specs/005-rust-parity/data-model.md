@@ -1,2 +1,4 @@
+> Исторический документ. Технологический контекст и пути относятся к этапу до Rust-only 0.4.0. Миграция принята пользователем 2026-11-17; неподтверждённые проверки ниже не объявляются успешными. Текущие инструкции: [README](https://github.com/bdpst/Quick-Remote-Toolkit-App#readme), финализация: specs/006-rust-release. Удалённый код доступен в истории Git (WPF: 91689516c96d52877bba3480bf498b7d807ead64).
+
 # Модель
 Client: неизменный номер/имя/IP/сотрудник; вычисляемый ключ computer:/ip:, домен, статус, время начала проверки. Settings: PascalCase WPF; unknown fields сохранять. Log: время/цель/действие/результат, без сообщения. Event: generation/client-id/result; UI принимает только текущую generation. Operation: busy guard до завершения; закрытие UI отсоединяет receiver без обращения к HWND. Adapter: подменяемый probe/Windows effect; тесты не изменяют удалённые ПК.

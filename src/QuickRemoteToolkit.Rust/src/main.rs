@@ -14,7 +14,7 @@ mod qa;
 fn main() -> eframe::Result {
     let icon = application_icon();
     eframe::run_native(
-        "Quick Remote Toolkit",
+        concat!("Quick Remote Toolkit ", env!("CARGO_PKG_VERSION")),
         eframe::NativeOptions {
             centered: true,
             viewport: eframe::egui::ViewportBuilder::default()

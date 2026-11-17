@@ -46,8 +46,39 @@ fn main() {
     let out = PathBuf::from(env::var_os("OUT_DIR").expect("Cargo output directory"));
     let resource = out.join("application.res");
     let script = out.join("application.rc");
+    let version = env::var("CARGO_PKG_VERSION").expect("Cargo version");
+    let numeric_version = format!("{},0", version.replace('.', ","));
     let contents = format!(
-        "#pragma code_page(65001)\n1 ICON \"{}\"\n1 24 \"{}\"\n",
+        r#"#pragma code_page(65001)
+1 ICON "{}"
+1 24 "{}"
+1 VERSIONINFO
+ FILEVERSION {numeric_version}
+ PRODUCTVERSION {numeric_version}
+ FILEFLAGSMASK 0x3fL
+ FILEFLAGS 0
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+BEGIN
+ BLOCK "StringFileInfo"
+ BEGIN
+  BLOCK "040904b0"
+  BEGIN
+   VALUE "CompanyName", "bdpst\0"
+   VALUE "FileDescription", "Quick Remote Toolkit\0"
+   VALUE "FileVersion", "{version}\0"
+   VALUE "InternalName", "QuickRemoteToolkitRust\0"
+   VALUE "OriginalFilename", "QuickRemoteToolkitRust.exe\0"
+   VALUE "ProductName", "Quick Remote Toolkit\0"
+   VALUE "ProductVersion", "{version}\0"
+  END
+ END
+ BLOCK "VarFileInfo"
+ BEGIN
+  VALUE "Translation", 0x409, 1200
+ END
+END
+"#,
         quoted_path(root.join("assets/QuickRemoteToolkit.ico")),
         quoted_path(root.join("assets/application.manifest"))
     );

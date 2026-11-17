@@ -1,3 +1,5 @@
+> Исторический документ. Технологический контекст и пути относятся к этапу до Rust-only 0.4.0. Миграция принята пользователем 2026-11-17; неподтверждённые проверки ниже не объявляются успешными. Текущие инструкции: [README](https://github.com/bdpst/Quick-Remote-Toolkit-App#readme), финализация: specs/006-rust-release. Удалённый код доступен в истории Git (WPF: 91689516c96d52877bba3480bf498b7d807ead64).
+
 # Исследование
 ## Решение: установленный Spec Kit
 CLI specify version = 1.3.1; .specify/integration.json и init-options.json указывают Codex skills, PowerShell и разделитель `-`. Проверены 9 .agents/skills/speckit-*/SKILL.md, шаблоны и PowerShell scripts; SHA-256 всех 9 skills совпали с codex.manifest.json. Для работы прочитаны specify, plan, tasks, implement, analyze. Прямой slash-вызов не предоставлен: инструкции исполняются агентом и скриптами. Наличие папки не было единственным доказательством установки. extensions.yml отсутствует, hooks пропущены на всех этапах. Обновление с GitHub не нужно; конституция сохранена.

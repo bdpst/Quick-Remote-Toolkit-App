@@ -1,200 +1,134 @@
-# Quick Remote Toolkit App
+# Quick Remote Toolkit
 
-Графическая Windows-утилита для быстрых действий удаленной поддержки.
+Windows-приложение для быстрых действий удалённой поддержки. Единственная
+поддерживаемая реализация — Rust + egui/eframe; текущая версия **0.4.0**.
 
-Целевой стек — Rust. Сохраняемая C#/WPF-версия служит эталоном переноса.
-Сборка/запуск Rust описаны в разделе «Перенос на Rust» ниже. Изображения ниже — WPF,
-они не подтверждают текущий внешний вид Rust.
+![Главное окно Rust в тёмной теме](docs/images/main-dark.png)
 
-<img width="1500" height="920" alt="изображение" src="https://github.com/user-attachments/assets/ac25ffdb-78e7-4fe1-86e8-d009f6bde4ed" />
-<img width="1500" height="920" alt="изображение" src="https://github.com/user-attachments/assets/9c489bac-233d-409a-b28c-42ffc7a0cc50" />
+## Скачать и запустить
 
+Скачайте `QuickRemoteToolkit.Rust-win-x64.zip` из [Releases](https://github.com/bdpst/Quick-Remote-Toolkit-App/releases/latest),
+распакуйте в отдельную папку и запустите `QuickRemoteToolkitRust.exe`.
+Рядом находятся `RUNTIME.txt` и `BUILD-INFO.json` с версией и исходным коммитом.
+Контрольная сумма ZIP опубликована в `SHA256SUMS`.
 
-
+Нужны **Windows 10/11 x64** и видеодрайвер с поддержкой OpenGL 3.3.
+.NET Desktop Runtime, Rust и инструменты разработки для запуска не нужны.
+Используются штатные Windows DLL, Windows PowerShell, сетевые средства и службы
+для соответствующих удалённых операций. Интерфейс запускается без запроса повышения
+прав; полномочия определяются текущей Windows-сессией.
 
 ## Возможности
 
-- чтение клиентов из CSV `number;computer;ip;person`;
-- поддержка CSV в Windows-1251 и UTF-8;
-- поиск по компьютеру, IP, сотруднику и домену;
-- копирование имени ПК, IP и имени сотрудника кнопками, появляющимися при наведении на ячейку, или через контекстное меню;
-- действия: Remote Assistance, ping, tracert, `\\PC\c$`, Event Viewer, Computer Management, mstsc, WinRS cmd, WinRS gpupdate;
-- автоматическая подготовка SMB-доступа к административным шарам от текущего пользователя Windows;
-- параллельная проверка доступности клиентов;
-- определение домена или рабочей группы во время проверки доступности;
-- журнал действий в окне;
-- отправка сообщения пользователям выбранного ПК с настройкой времени показа и ожиданием ответа;
-- добавление и удаление пользователя из локальных администраторов выбранного ПК через PowerShell Remoting;
-- сворачиваемые блоки «Подключение», «Инструменты» и «Операции»: нажмите на заголовок блока;
-- экспорт журнала в TXT по умолчанию, CSV доступен как дополнительный формат;
-- светлая и тёмная темы с сохранением выбранного режима;
-- настройки в `%AppData%\QuickRemoteToolkitApp\settings.json`.
+- Загрузка списка клиентов, поиск по компьютеру, IP и сотруднику; Ctrl+F.
+- Избранные ПК, фильтр избранного, сортировка, перестановка и ширина колонок,
+  копирование полей, контекстные меню.
+- Проверка доступности одного или всех ПК параллельными ICMP-запросами.
+- Remote Assistance, ping, tracert, административная шара C$, Event Viewer,
+  Computer Management, MSTSC, WinRS cmd и gpupdate.
+- Сообщение сеансам пользователей через Windows WTS API с ожиданием ОК/Отмена/тайм-аута.
+- Добавление/удаление членства в локальных администраторах через PowerShell Remoting.
+- Светлая/тёмная темы, изменяемая высота журнала, экспорт TXT/CSV и очистка журнала.
 
-## Работа со Spec Kit
+![Светлая тема](docs/images/main-light.png)
 
-В проект подключён GitHub Spec Kit 1.3.1 для Codex с PowerShell-скриптами.
-Общие шаблоны и процесс находятся в `.specify/`, навыки Codex — в `.agents/skills/`.
-Эти файлы следует хранить в Git вместе с проектом. Правила репозитория — в `AGENTS.md`.
-
-После установки перезапустите Codex, чтобы он обнаружил новые навыки.
-В чате Codex (не в PowerShell) начните с:
-
-```text
-$speckit-constitution Сформируй принципы проекта на основе AGENTS.md и текущего кода.
-```
-
-Действующая `.specify/memory/constitution.md` — версия 2.0.0 с правилами перехода на Rust.
-Для новой функции используйте `$speckit-specify <описание>`, затем
-`$speckit-plan`, `$speckit-tasks` и `$speckit-implement`.
-Спецификации функций сохраняются в `specs/`; небольшие исправления можно выполнять обычным запросом.
-
-CLI установлен в пользовательское окружение через `uv`. В новом PowerShell:
-
-```powershell
-specify version
-specify integration status
-```
-
-Для установки CLI на другом компьютере:
-
-```powershell
-uv tool install --python 3.12 specify-cli --from git+https://github.com/github/spec-kit.git@v1.3.1
-```
-
-Повторно инициализировать уже клонированный проект не требуется.
-
-## Сборка сохранённого WPF-эталона
-
-Эти команды нужны только для сравнения и отката. Основная Rust-сборка описана ниже. Для WPF нужен .NET SDK 10 или новее.
-
-```powershell
-dotnet build .\QuickRemoteToolkit.App.sln
-```
-
-Локальная публикация без загрузки runtime packs:
-
-```powershell
-dotnet publish .\src\QuickRemoteToolkit.App\QuickRemoteToolkit.App.csproj -c Release -o .\publish
-```
-
-Готовый `QuickRemoteToolkit.exe` появится в:
-
-```text
-publish\
-```
-
-Локальная публикация выше является framework-dependent: она компактная, но требует установленный .NET Desktop Runtime.
-
-## GitHub Actions
-
-Текущий workflow `.github/workflows/release.yml` проверяет Rust на `windows-latest`
-и сохраняет portable-архив `QuickRemoteToolkit.Rust-win-x64.zip` как build artifact.
-Он не создаёт GitHub Release. В рамках переноса теги, релизы и merge в main не выполняются.
-
-## CSV
-
-Формат:
+## CSV и настройки
 
 ```csv
 number;computer;ip;person
-1;PC-NAME;192.168.1.10;User One
+1;PC-DEMO;192.0.2.1;Тестовый сотрудник
 ```
 
-Можно использовать тот же `QuickRemoteToolkit.clients.csv`, что и в batch-версии.
+Первая строка — заголовок; разделитель `;`, кодировка UTF-8 (допустим BOM) или
+Windows-1251. Используйте [обезличенный пример](samples/clients.example.csv).
+Поля не должны содержать `;` и переводы строк: импорт не является полным RFC CSV-парсером.
+Выберите файл через «Открыть CSV»; «Обновить» перечитывает его.
 
-## Админ-доступ
+Настройки: `%AppData%\QuickRemoteToolkitApp\settings.json`. Сохраняются путь CSV,
+тема, избранное/фильтр, PingTimeoutMs и ParallelPingLimit; неизвестные поля JSON
+сохраняются. Эффективный параллелизм ограничен 1–128. Перед первой перезаписью
+существующего файла создаётся `settings.before-rust.json`. Повреждённый JSON
+не заменяется пустыми настройками. Журнал действий хранится **в памяти до закрытия**,
+автоматического файла журнала нет. Сохраните его через «Экспорт» в UTF-8 TXT либо CSV;
+место выбирается в диалоге. Текст отправленных сообщений не сохраняется в журнале.
 
-### Сообщение пользователям ПК
+### Переход с 0.3.x
 
-Выберите клиента и нажмите «Отправить сообщение…» в панели инструментов или контекстном меню.
-Введите текст (до 2000 символов) и время показа от 1 до 3600 секунд (по умолчанию 300).
-Нажмите «Отправить» или Ctrl+Enter. Приложение использует Windows API
-[`WTSSendMessageW`](https://learn.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtssendmessagew)
-от текущего пользователя Windows, ожидая ответ отдельно для каждого активного или
-отключённого пользовательского сеанса. Сообщения отправляются параллельно.
-В окне получателя есть кнопки «ОК» и «Отмена». В журнале отображаются нажатие «ОК»,
-закрытие без подтверждения, истечение времени ожидания или ошибка Windows с кодом.
-Нажатие «ОК» подтверждает действие пользователя, но не гарантирует прочтение текста.
+Распакуйте 0.4.0 и запустите новый EXE. Старые CSV, settings.json и избранное
+используются без конвертации. Сохранённые данные остаются в прежнем AppData-каталоге.
+Не запускайте несколько версий одновременно для изменения одних настроек.
+Устаревший `settings-rust.json` раннего прототипа не импортируется вместо settings.json.
+Старая C#/WPF-реализация больше не поддерживается; её исходники доступны в истории Git.
 
-Требуются сетевой доступ и права просмотра сеансов и отправки сообщений на целевом ПК.
-Окно приложения остаётся доступным во время ожидания ответа. Повторная отправка
-доступна после завершения текущего ожидания во всех сеансах.
-Текст сообщения не сохраняется в настройках или журнале.
+## Сеть и права Windows
 
-### Локальные администраторы
+Пароли не запрашиваются и не хранятся. Все операции выполняются от текущего пользователя.
 
-Выберите ПК и откройте «Локальные администраторы…» в блоке «Инструменты» или
-контекстном меню. Введите учётную запись в формате `DOMAIN\User` для доменного
-пользователя или `PC-NAME\User` для локального. Выберите добавление или удаление
-и нажмите «Выполнить». Результат операции и ошибки появятся в журнале.
+| Действие | Требования |
+| --- | --- |
+| C$ | SMB, доступ к административной шаре и права локального администратора. Подготовка IPC$ использует текущую Windows-учётную запись. |
+| WinRS/gpupdate и локальные администраторы | Рабочий WinRM, разрешённый PowerShell Remoting и подходящие права. Для членства нужен Microsoft.PowerShell.LocalAccounts на целевой Windows. |
+| Сообщения WTS | Доступ к сеансам и права отправки сообщений на целевом ПК; сетевые правила Windows должны допускать WTS. |
+| RDP/Remote Assistance/MMC | Доступность штатного инструмента, разрешённая служба и необходимые права на целевом ПК. |
+| Проверка доступности | ICMP должен проходить через брандмауэр; отсутствие ответа не доказывает выключение ПК. |
 
-Приложение выполняет `Invoke-Command` от текущего пользователя Windows. Группа
-определяется через `Get-LocalGroup -SID 'S-1-5-32-544'`, затем вызывается
-`Add-LocalGroupMember` или `Remove-LocalGroupMember`. Это позволяет работать
-независимо от языка имени группы «Администраторы».
+Если `dir \\PC-DEMO\c$` или `winrs -r:PC-DEMO hostname` не работают вручную,
+сначала проверьте сеть, службы и права. ОК в сообщении WTS не доказывает прочтение.
+Изменение администраторов затрагивает только членство, не удаляет учётную запись.
+После тайм-аута административной операции результат может быть неизвестен:
+проверьте состояние на целевом ПК перед повтором. Запуск внешнего инструмента
+фиксируется отдельно от результата удалённого действия.
 
-На целевом ПК должны быть доступны PowerShell Remoting (WinRM) и модуль
-`Microsoft.PowerShell.LocalAccounts`; текущей учётной записи нужны административные
-права. Пароли не запрашиваются и не сохраняются. Удаляется только членство в группе,
-сама учётная запись остаётся.
+## Сборка и проверки
 
-Интерфейс остаётся доступным во время выполнения. При превышении 60 секунд ожидание
-прерывается; результат может быть неизвестен, поэтому перед повтором проверьте состав
-группы на целевом ПК. Повторная операция доступна после завершения текущей.
-
-### Текущая учётная запись
-
-Приложение не хранит пароли. Все действия выполняются от текущей Windows-сессии.
-
-Перед открытием административной шары `C$` приложение выполняет подготовку SMB-сессии:
-
-```cmd
-net use \\PC-NAME\IPC$ /user:DOMAIN\User
-```
-
-`DOMAIN\User` подставляется автоматически из текущей Windows-сессии.
-
-Затем открывает:
-
-```cmd
-\\PC-NAME\c$
-```
-
-Пароль не сохраняется и не передается приложением. Windows использует текущие доменные учетные данные автоматически.
-
-## Перенос на Rust
-
-Целевой стек — Rust + egui/eframe 0.33.3 (OpenGL/WGL, AccessKit), Windows x64 MSVC.
-WPF-эталон сохранён в src/QuickRemoteToolkit.App и publish/. Полный проверенный
-паритет пока не заявляется: [матрица](specs/005-rust-parity/parity-matrix.md),
-[текущий прогресс](specs/005-rust-parity/progress.md).
+Нужны Windows x64, **Rust 1.99.1**, MSVC Build Tools с Windows SDK (`rc.exe`) и PowerShell 7.
+Для PE/ZIP-проверки нужен Python 3.10+. Из корня checkout:
 
 ```powershell
+rustup toolchain install 1.99.1 --profile minimal --component rustfmt --component clippy
+rustup default 1.99.1
 cargo fmt --check --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml
 cargo clippy --locked --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml --all-targets -- -D warnings
 cargo test --locked --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml
+cargo build --release --locked --manifest-path src/QuickRemoteToolkit.Rust/Cargo.toml
 ./src/QuickRemoteToolkit.Rust/build.ps1 -OutputDirectory ./publish-rust
-./publish-rust/QuickRemoteToolkitRust.exe
+python ./src/QuickRemoteToolkit.Rust/tests/verify-artifact.py ./publish-rust/QuickRemoteToolkitRust.exe ./publish-rust/QuickRemoteToolkit.Rust-win-x64.zip ./publish-rust/validation.json
+./src/QuickRemoteToolkit.Rust/tests/portable-smoke.ps1 -Archive ./publish-rust/QuickRemoteToolkit.Rust-win-x64.zip -OutputDirectory ./publish-rust/smoke
 ```
 
-Rust 1.99.1, MSVC Build Tools и Windows SDK нужны для сборки. Для запуска .NET
-и инструменты разработки не нужны; необходимы Windows 10/11 x64 и драйвер с
-поддержкой OpenGL backend eframe. Системные WTS/NetAPI/ICMP DLL входят в Windows;
-Windows PowerShell/WinRS/SMB нужны соответствующим удалённым действиям.
-Чистая машина без SDK/.NET ещё требует отдельной проверки.
+build.ps1 статически линкует CRT, встраивает иконки, Windows-версию и PerMonitorV2/asInvoker
+manifest, создаёт ZIP с фиксированными timestamps. При нестандартной установке SDK
+задайте `QRT_RC` полным путём к `rc.exe`. Build output не коммитится.
 
-Настройки совместимы с WPF: %AppData%/QuickRemoteToolkitApp/settings.json.
-Перед первой перезаписью Rust сохраняет settings.before-rust.json; для отката
-закройте обе версии и восстановите эту копию. Нельзя запускать обе версии
-одновременно при изменении настроек. При повреждённом JSON Rust не сохраняет
-пустые defaults поверх исходного файла. Старый settings-rust.json прототипа
-не заменяет общий файл WPF.
+QA интерфейса в отдельном Rust-host (не входит в поставку):
 
-GitHub Actions проверяет Rust на Windows и создаёт portable-архив как build artifact.
-Изменение workflow само по себе не создаёт GitHub Release; публикация тега/релиза
-в текущей задаче не выполняется. WPF при необходимости собирается прежними dotnet
-командами из начала документа.
+```powershell
+./src/QuickRemoteToolkit.Rust/tests/ui-smoke.ps1 -OutputDirectory ./publish-rust/ui-qa
+```
 
-Проверки GUI запускаются отдельным test host с feature `ui-qa`; он не включается
-в portable-архив. Воспроизводимые команды и границы доказательств описаны в
-[отчёте проверки интерфейса](specs/005-rust-parity/ui-validation.md).
+Host использует отдельный AppData, обезличенный CSV и настоящий framebuffer,
+проверяет обе темы/диалоги без административных действий. Это не заменяет физическую
+проверку всех DPI/мониторов. Реальные SMB/WinRM/WTS на тестовых ПК и отдельная чистая
+Windows-машина без средств разработки не проверялись при подготовке 0.4.0.
+
+## Разработка и релизы
+
+Правила: [AGENTS.md](AGENTS.md), [конституция](.specify/memory/constitution.md),
+[дизайн](docs/design-guidelines.md). Для существенных функций установлен Spec Kit:
+`$speckit-specify` → `$speckit-plan` → `$speckit-tasks` → `$speckit-implement`.
+Завершение миграции: [006](specs/006-rust-release/spec.md); старые specs — история.
+
+Версия задаётся в Cargo.toml и соответствующей записи Cargo.lock. UI, Windows metadata
+и упаковка получают её автоматически. Обновите CHANGELOG и файл release notes,
+пройдите локальные проверки, PR/правила репозитория и успешный CI итогового main.
+Только затем поставьте тег на проверенный коммит:
+
+```powershell
+git tag -a 0.4.0 <verified-main-sha> -m "Release 0.4.0"
+git push origin 0.4.0
+```
+
+Workflow поддерживает теги `0.4.0` и `v*`, проверяет совпадение версии и публикует
+стабильный GitHub Release с ZIP, SHA256SUMS и BUILD-INFO.json. Дождитесь результата,
+скачайте и проверьте артефакты/коммит. Не перезаписывайте опубликованные теги/релизы.
+Изменения версии: [CHANGELOG](CHANGELOG.md).

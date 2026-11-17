@@ -11,3 +11,7 @@ rust-publish/
 
 publish-rust/
 QuickRemoteToolkit.Rust-win-x64.zip
+
+__pycache__/
+*.pyc
+*.tmp

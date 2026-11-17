@@ -7,7 +7,7 @@ import struct
 import zipfile
 
 
-def inspect(executable: Path, archive: Path) -> dict:
+def inspect(executable: Path, archive: Path, expected_version: str = '0.4.0', expected_commit: str = None) -> dict:
     data = executable.read_bytes()
     u16 = lambda pos: struct.unpack_from('<H', data, pos)[0]
     u32 = lambda pos: struct.unpack_from('<I', data, pos)[0]
@@ -45,13 +45,25 @@ def inspect(executable: Path, archive: Path) -> dict:
     resource_base = offset(resource_rva)
     entry_count = u16(resource_base + 12) + u16(resource_base + 14)
     resource_types = sorted(u32(resource_base + 16 + i * 8) for i in range(entry_count))
-    assert 3 in resource_types and 14 in resource_types and 24 in resource_types, 'Missing icon/group/manifest'
+    assert all(t in resource_types for t in [3, 14, 16, 24]), 'Missing icon/group/version/manifest'
+    parts = [int(x) for x in expected_version.split('.')] + [0]
+    fixed_info = struct.pack('<4I', 0xFEEF04BD, 0x10000, parts[0] << 16 | parts[1], parts[2] << 16 | parts[3])
+    assert fixed_info in data, 'File version does not match release'
+    assert expected_version.encode('utf-16-le') in data, 'Version string missing'
     assert b'PerMonitorV2' in data and b'asInvoker' in data
     with zipfile.ZipFile(archive) as package:
-        assert package.namelist() == ['QuickRemoteToolkitRust.exe', 'RUNTIME.txt']
+        assert package.namelist() == ['QuickRemoteToolkitRust.exe', 'RUNTIME.txt', 'BUILD-INFO.json']
         assert package.read('QuickRemoteToolkitRust.exe') == data
+        build_info = json.loads(package.read('BUILD-INFO.json'))
+        assert build_info['version'] == expected_version
+        assert build_info['exe_sha256'] == hashlib.sha256(data).hexdigest()
+        assert len(build_info['commit']) == 40
+        if expected_commit:
+            assert build_info['commit'] == expected_commit, 'Wrong source commit'
+            assert build_info['source_dirty'] is False, 'Release source tree is dirty'
+        assert expected_version in package.read('RUNTIME.txt').decode('utf-8')
         assert all(entry.date_time == (1980, 1, 1, 0, 0, 0) for entry in package.infolist())
-    return {'machine': 'AMD64', 'subsystem': 'Windows GUI', 'clr_directory': False,
+    return {'version': expected_version, 'source_commit': build_info['commit'], 'source_dirty': build_info['source_dirty'], 'machine': 'AMD64', 'subsystem': 'Windows GUI', 'clr_directory': False,
             'external_vc_runtime_imports': False, 'imports': sorted(imports),
             'resource_types': resource_types, 'dpi_manifest': 'PerMonitorV2,PerMonitor',
             'execution_level': 'asInvoker',
@@ -65,7 +77,9 @@ if __name__ == '__main__':
     parser.add_argument('executable', type=Path)
     parser.add_argument('archive', type=Path)
     parser.add_argument('output', type=Path)
+    parser.add_argument('--version', default='0.4.0')
+    parser.add_argument('--commit')
     args = parser.parse_args()
-    result = inspect(args.executable, args.archive)
+    result = inspect(args.executable, args.archive, args.version, args.commit)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(result, ensure_ascii=False, indent=2))

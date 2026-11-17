@@ -25,7 +25,7 @@ fn rgb(hex: u32) -> Color32 {
     Color32::from_rgb((hex >> 16) as u8, (hex >> 8) as u8, hex as u8)
 }
 impl Palette {
-    // Values mirror ThemeService.cs and App.xaml.
+    // Accepted application palette; documentation map: docs/design-tokens.json.
     pub fn new(dark: bool) -> Self {
         let c = if dark {
             [
