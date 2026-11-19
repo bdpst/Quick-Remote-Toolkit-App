@@ -17,6 +17,16 @@ struct Host {
     scene: String,
 }
 impl eframe::App for Host {
+    fn raw_input_hook(&mut self, ctx: &egui::Context, input: &mut egui::RawInput) {
+        if self.scene == "search-clear-hover"
+            && let Some(clear) = ctx.read_response(egui::Id::new("clear-search"))
+        {
+            input
+                .events
+                .push(egui::Event::PointerMoved(clear.rect.center()));
+        }
+    }
+
     fn update(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
         self.app.update(ctx, frame);
         qa::capture(ctx, "main");

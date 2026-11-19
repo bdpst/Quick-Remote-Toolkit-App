@@ -3,11 +3,12 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import struct
 import zipfile
 
 
-def inspect(executable: Path, archive: Path, expected_version: str = '0.4.0', expected_commit: str = None) -> dict:
+def inspect(executable: Path, archive: Path, expected_version: str, expected_commit: str = None) -> dict:
     data = executable.read_bytes()
     u16 = lambda pos: struct.unpack_from('<H', data, pos)[0]
     u32 = lambda pos: struct.unpack_from('<I', data, pos)[0]
@@ -77,9 +78,16 @@ if __name__ == '__main__':
     parser.add_argument('executable', type=Path)
     parser.add_argument('archive', type=Path)
     parser.add_argument('output', type=Path)
-    parser.add_argument('--version', default='0.4.0')
+    parser.add_argument('--version', help='Expected version (defaults to Cargo.toml)')
     parser.add_argument('--commit')
     args = parser.parse_args()
-    result = inspect(args.executable, args.archive, args.version, args.commit)
+    version = args.version
+    if version is None:
+        manifest = Path(__file__).resolve().parents[1] / 'Cargo.toml'
+        match = re.search(r'^version\s*=\s*"(\d+\.\d+\.\d+)"', manifest.read_text(encoding='utf-8'), re.M)
+        if match is None:
+            parser.error('Package version missing from Cargo.toml')
+        version = match.group(1)
+    result = inspect(args.executable, args.archive, version, args.commit)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(result, ensure_ascii=False, indent=2))

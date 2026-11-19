@@ -1,0 +1,25 @@
+{
+  "admin_open": true,
+  "administering": false,
+  "client_columns": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "clients": 2,
+  "dialog_error": "Введите учётную запись в формате ДОМЕН\\логин или ИМЯ-ПК\\логин.",
+  "log_columns": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "logs": 1,
+  "message_open": false,
+  "messaging": false
+}

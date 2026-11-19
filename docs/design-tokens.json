@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "source": "src/QuickRemoteToolkit.Rust/src/design.rs:Palette::new",
   "units": "egui logical points; sRGB colors",
   "colors": {
@@ -54,6 +54,38 @@
     "favorite": {
       "light": "#CA8A04",
       "dark": "#FACC15"
+    },
+    "primary": {
+      "light": "#2563EB",
+      "dark": "#1D4ED8"
+    },
+    "primaryHover": {
+      "light": "#1D4ED8",
+      "dark": "#2457C8"
+    },
+    "primaryPressed": {
+      "light": "#1E40AF",
+      "dark": "#1E40AF"
+    },
+    "primaryText": {
+      "light": "#FFFFFF",
+      "dark": "#FFFFFF"
+    },
+    "error": {
+      "light": "#B91C1C",
+      "dark": "#FCA5A5"
+    },
+    "hoverBorder": {
+      "light": "#BFD0EA",
+      "dark": "#5B708D"
+    },
+    "pressed": {
+      "light": "#E8F1FF",
+      "dark": "#1E3A5F"
+    },
+    "headerHover": {
+      "light": "#F1F5FB",
+      "dark": "#30415A"
     }
   },
   "geometry": {
@@ -72,7 +104,7 @@
     "cardRadius": 12
   },
   "typography": {
-    "body": 12,
+    "body": 13,
     "title": 22,
     "fonts": [
       "Segoe UI",

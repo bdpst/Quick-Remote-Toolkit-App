@@ -1,0 +1,782 @@
+[
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "main"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": true,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "message"
+  },
+  {
+    "state": {
+      "admin_open": true,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "admin"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "Укажите время показа от 1 до 3600 секунд.",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": true,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "message-error"
+  },
+  {
+    "state": {
+      "admin_open": true,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "Введите учётную запись в формате ДОМЕН\\логин или ИМЯ-ПК\\логин.",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "admin-error"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "search"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 0,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "empty"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "busy"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "collapsed"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        4,
+        2,
+        3,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        3,
+        0,
+        1,
+        2
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "reordered"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 20,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "logs"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "long"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "light",
+    "exit": 0,
+    "scene": "context"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "main"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": true,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "message"
+  },
+  {
+    "state": {
+      "admin_open": true,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "admin"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "Укажите время показа от 1 до 3600 секунд.",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": true,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "message-error"
+  },
+  {
+    "state": {
+      "admin_open": true,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "Введите учётную запись в формате ДОМЕН\\логин или ИМЯ-ПК\\логин.",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "admin-error"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "search"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 0,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "empty"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "busy"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "collapsed"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        4,
+        2,
+        3,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        3,
+        0,
+        1,
+        2
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "reordered"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 20,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "logs"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "long"
+  },
+  {
+    "state": {
+      "admin_open": false,
+      "administering": false,
+      "client_columns": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "clients": 2,
+      "dialog_error": "",
+      "log_columns": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "logs": 1,
+      "message_open": false,
+      "messaging": false
+    },
+    "theme": "dark",
+    "exit": 0,
+    "scene": "context"
+  }
+]

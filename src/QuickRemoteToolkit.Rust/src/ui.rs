@@ -81,7 +81,9 @@ impl Toolkit {
             .show(ctx, |ui| {
                 let body = ui.max_rect();
                 let left_right = (body.right() - 332.).max(body.left());
-                let log_height = self.log_height.clamp(0., (body.height() - 22.).max(0.));
+                let max_log_height = (body.height() - 182.).max(0.);
+                let min_log_height = 170_f32.min(max_log_height);
+                let log_height = self.log_height.clamp(min_log_height, max_log_height);
                 let log_top = body.bottom() - log_height;
                 let clients = egui::Rect::from_min_max(
                     body.min,
@@ -115,12 +117,48 @@ impl Toolkit {
                 let response = ui
                     .interact(
                         splitter,
-                        ui.id().with("journal-splitter"),
-                        egui::Sense::drag(),
+                        egui::Id::new("journal-splitter"),
+                        egui::Sense::click_and_drag(),
                     )
                     .on_hover_cursor(egui::CursorIcon::ResizeVertical)
-                    .on_hover_text("Изменить размер журнала");
+                    .on_hover_text("Высота журнала: ↑ / ↓, Home — сброс");
+                response.widget_info(|| {
+                    egui::WidgetInfo::labeled(
+                        egui::WidgetType::Button,
+                        !self.message_open && !self.admin_open,
+                        "Высота журнала: стрелки, Home — сброс",
+                    )
+                });
+                let grip = egui::Rect::from_center_size(splitter.center(), egui::vec2(44., 4.));
+                ui.painter().rect_filled(
+                    grip,
+                    2.,
+                    if response.hovered() {
+                        p.accent
+                    } else {
+                        p.border
+                    },
+                );
+                design::focus_ring(ui, p, &response);
                 if !self.message_open && !self.admin_open {
+                    if response.has_focus() {
+                        keep_vertical_keys(&response);
+                        let next = ctx.input_mut(|input| {
+                            let mods = egui::Modifiers::NONE;
+                            if input.consume_key(mods, egui::Key::Home)
+                                || input.consume_key(mods, egui::Key::Enter)
+                            {
+                                190.
+                            } else if input.consume_key(mods, egui::Key::ArrowUp) {
+                                log_height + 24.
+                            } else if input.consume_key(mods, egui::Key::ArrowDown) {
+                                log_height - 24.
+                            } else {
+                                log_height
+                            }
+                        });
+                        self.log_height = next.clamp(min_log_height, max_log_height);
+                    }
                     if response.drag_started()
                         && let Some(origin) = ctx.input(|i| i.pointer.press_origin())
                     {
@@ -134,7 +172,7 @@ impl Toolkit {
                         if let Some(pointer) = ctx.input(|i| i.pointer.latest_pos()) {
                             resize.preview_height = (resize.start_height
                                 - (pointer.y - resize.start_y))
-                                .clamp(0., (body.height() - 22.).max(0.));
+                                .clamp(min_log_height, max_log_height);
                         }
                         let height = resize.preview_height;
                         if response.dragged() {
@@ -183,6 +221,7 @@ impl Toolkit {
                 }
             }
             "search" => self.search = "PC-DEMO-02".into(),
+            "no-results" | "search-clear-hover" => self.search = "PC-NOT-FOUND".into(),
             "empty" => self.clients.clear(),
             "busy" => {
                 self.probing = true;
@@ -302,7 +341,7 @@ impl Toolkit {
             log_focused: false,
             log_height: 190.,
             log_resize_start: None,
-            client_columns: Columns::new([48., 58., 190., 150., 20., 150., 180., 170.], 4),
+            client_columns: Columns::new([42., 44., 165., 155., 204., 124., 150., 20.], 7),
             log_columns: Columns::new([155., 180., 230., 20.], 3),
         };
         if let Some(e) = error {
@@ -381,6 +420,18 @@ impl Toolkit {
             false
         } else {
             true
+        }
+    }
+    fn pick_csv(&mut self) {
+        if let Some(path) = rfd::FileDialog::new()
+            .set_title("Выберите CSV клиентов")
+            .add_filter("CSV files (*.csv)", &["csv"])
+            .add_filter("All files (*.*)", &["*"])
+            .pick_file()
+        {
+            self.settings.clients_csv_path = path.display().to_string();
+            self.save();
+            self.reload();
         }
     }
     fn reload(&mut self) {
@@ -568,14 +619,15 @@ impl Toolkit {
                 }
                 p.apply(ctx, self.settings.is_dark_theme);
                 egui::CentralPanel::default().frame(dialog_frame(p)).show(ctx, |ui| {
+                    egui::ScrollArea::vertical().id_salt("message-form").auto_shrink([false, false]).show(ui, |ui| {
                     ui.spacing_mut().item_spacing.y = 0.;
                     ui.label(RichText::new(format!("Сообщение на {}", self.recipient)).font(design::font(16., "semibold")));
                     ui.add_space(8.);
                     ui.label(RichText::new("Сообщение получат пользователи выбранного ПК. Нажатие ОК, Отмена или истечение времени появится в журнале. Требуются права просмотра сеансов и отправки сообщений.").color(p.secondary));
                     ui.add_space(12.);
                     let status = if self.dialog_error.is_empty() {"От 1 до 3600 секунд. Ctrl+Enter — отправить."} else {&self.dialog_error};
-                    let status_height = ui.painter().layout(status.into(), egui::FontId::proportional(12.), p.secondary, ui.available_width()).size().y;
-                    let text_height = (ui.available_height() - 118. - status_height).max(40.);
+                    let status_height = ui.painter().layout(status.into(), egui::FontId::proportional(design::BODY_SIZE), p.secondary, ui.available_width()).size().y;
+                    let text_height = (ui.available_height() - 118. - status_height).clamp(40., 156.);
                     let text = ui.add_sized([ui.available_width(), text_height], egui::TextEdit::multiline(&mut self.message).desired_rows(1).char_limit(2000).margin(egui::vec2(12.,7.)).desired_width(f32::INFINITY));
                     field_name(&text,"Текст сообщения");
                     truncate_utf16(&mut self.message, 2000);
@@ -588,17 +640,22 @@ impl Toolkit {
                     }).inner;
                     field_name(&seconds_input,"Время показа в секундах");
                     ui.add_space(8.);
-                    ui.label(RichText::new(status).color(p.secondary));
+                    if self.dialog_error.is_empty() {
+                        ui.label(RichText::new(status).color(p.secondary));
+                    } else {
+                        design::validation_error(ui, p, status);
+                    }
                     ui.add_space(12.);
                     ui.allocate_ui_with_layout(egui::vec2(ui.available_width(),40.), egui::Layout::right_to_left(egui::Align::Center), |ui| {
                         send = design::primary(ui, p, "Отправить", !self.message.trim().is_empty(), egui::vec2(130.,40.)).clicked();
                         cancel |= ui.add_sized([110.,40.], egui::Button::new("Отмена")).clicked();
                     });
-                    send |= keyboard_send;
+                    send |= keyboard_send && !cancel;
                     if send {
                         if self.message.trim().is_empty() {self.dialog_error="Введите текст сообщения.".into(); text.request_focus(); send=false;}
                         else if !self.seconds_text.parse::<u32>().is_ok_and(|n| (1..=3600).contains(&n)) {self.dialog_error="Укажите время показа от 1 до 3600 секунд.".into(); seconds_input.request_focus(); send=false;}
                     }
+                    });
                 });
                 #[cfg(feature="ui-qa")]
                 crate::qa::capture(ctx,"message");
@@ -640,9 +697,7 @@ impl Toolkit {
                 cancel = ctx.input(|i| i.viewport().close_requested() || i.key_pressed(egui::Key::Escape));
                 p.apply(ctx, self.settings.is_dark_theme);
                 egui::CentralPanel::default().frame(dialog_frame(p)).show(ctx, |ui| {
-                    let mut content_ui = ui.new_child(egui::UiBuilder::new().id_salt("admin-content").max_rect(ui.max_rect()));
-                    let ui=&mut content_ui;
-
+                    egui::ScrollArea::vertical().id_salt("admin-form").auto_shrink([false, false]).show(ui, |ui| {
                     ui.spacing_mut().item_spacing.y = 0.;
                     ui.set_min_height(0.);
                     ui.label(RichText::new(format!("Локальные администраторы — {}",self.recipient)).font(design::font(16.,"semibold")));
@@ -667,17 +722,15 @@ impl Toolkit {
                     ui.add_space(16.);
                     ui.label(RichText::new("Операция изменит права указанной учётной записи на выбранном ПК. Требуются WinRM и административные права текущего пользователя.").color(p.secondary));
                     ui.add_space(12.);
-                    ui.label(RichText::new(&self.dialog_error).color(p.secondary));
+                    design::validation_error(ui, p, &self.dialog_error);
                     ui.add_space(12.);
                     ui.allocate_ui_with_layout(egui::vec2(ui.available_width(),40.), egui::Layout::right_to_left(egui::Align::Center),|ui| {
                         apply=design::primary(ui,p,"Выполнить",true,egui::vec2(130.,40.)).clicked();
                         cancel |= ui.add_sized([110.,40.],egui::Button::new("Отмена")).clicked();
                     });
-                    apply |= keyboard_apply;
+                    apply |= keyboard_apply && !cancel && (member.has_focus() || member.lost_focus());
                     if apply && !services::valid_member(&self.member) {self.dialog_error=r"Введите учётную запись в формате ДОМЕН\логин или ИМЯ-ПК\логин.".into(); member.request_focus(); apply=false;}
-                    let width = 560. - viewport_insets(ctx).map_or(16., |v|v.x);
-                    let desired=egui::vec2(width,ui.min_rect().height()+40.);
-                    if ctx.input(|i|i.viewport().inner_rect.is_some_and(|r|(r.size()-desired).length()>1.)) {ctx.send_viewport_cmd(egui::ViewportCommand::InnerSize(desired));}
+                    });
                 });
                 #[cfg(feature="ui-qa")]
                 crate::qa::capture(ctx,"admin");
@@ -866,15 +919,8 @@ impl Toolkit {
                             egui::Button::new(csv_caption).min_size(egui::vec2(csv_width, 46.)),
                         )
                         .clicked()
-                        && let Some(path) = rfd::FileDialog::new()
-                            .set_title("Выберите CSV клиентов")
-                            .add_filter("CSV files (*.csv)", &["csv"])
-                            .add_filter("All files (*.*)", &["*"])
-                            .pick_file()
                     {
-                        self.settings.clients_csv_path = path.display().to_string();
-                        self.save();
-                        self.reload();
+                        self.pick_csv();
                     }
                     ui.add_space(8.);
                     if design::primary(
@@ -922,9 +968,50 @@ impl Toolkit {
         ui.spacing_mut().scroll.bar_width = 17.;
         ui.spacing_mut().scroll.bar_inner_margin = 0.;
         ui.spacing_mut().scroll.bar_outer_margin = 0.;
+        let enabled = self.selected.is_some();
+        p.card(14).show(ui, |ui| {
+            ui.set_width(ui.available_width());
+            ui.label(RichText::new("Целевой компьютер").font(design::font(14., "semibold")));
+            if let Some(c) = self.selected.and_then(|i| self.clients.get(i)) {
+                egui::ScrollArea::vertical()
+                    .id_salt("target-details")
+                    .max_height(112.)
+                    .show(ui, |ui| {
+                        ui.add(
+                            egui::Label::new(RichText::new(&c.computer).strong())
+                                .wrap()
+                                .selectable(true),
+                        );
+                        for value in [&c.ip, &c.person, &c.status, &c.domain, &c.last_checked] {
+                            if !value.is_empty() && value != "—" {
+                                ui.add(egui::Label::new(value).wrap().selectable(true));
+                            }
+                        }
+                    });
+            } else {
+                ui.label(RichText::new("Выберите компьютер в таблице.").color(p.secondary));
+            }
+        });
+        ui.add_space(4.);
+        design::section(ui, p, '\u{e8fd}', "Операции", |ui| {
+            ui.add_enabled_ui(!self.probing && !self.clients.is_empty(), |ui| {
+                if design::tool(ui, p, '\u{e716}', "Проверить всех").clicked() {
+                    self.start_probe();
+                }
+            });
+            if design::tool(ui, p, '\u{e74e}', "Экспорт логов").clicked() {
+                self.export();
+            }
+            if self.probing {
+                ui.horizontal(|ui| {
+                    ui.spinner();
+                    ui.label("Проверка компьютеров…");
+                });
+            }
+        });
+        ui.add_space(4.0);
         egui::ScrollArea::vertical().show(ui, |ui| {
             ui.set_width(ui.available_width());
-            let enabled = true;
             design::section(ui, p, '\u{e8af}', "Подключение", |ui| {
                 ui.add_enabled_ui(enabled, |ui| {
                     for (a, g, label) in [
@@ -952,13 +1039,13 @@ impl Toolkit {
                             self.run_action(a);
                         }
                     }
-                    ui.add_enabled_ui(true, |ui| {
+                    ui.add_enabled_ui(!self.messaging, |ui| {
                         if design::tool(ui, p, '\u{e8f2}', "Отправить сообщение…").clicked()
                         {
                             self.open_message();
                         }
                     });
-                    ui.add_enabled_ui(true, |ui| {
+                    ui.add_enabled_ui(!self.administering, |ui| {
                         if design::tool(ui, p, '\u{ea18}', "Локальные администраторы…").clicked()
                         {
                             self.open_admin();
@@ -968,23 +1055,6 @@ impl Toolkit {
                         self.run_action(8);
                     }
                 });
-            });
-            ui.add_space(4.0);
-            design::section(ui, p, '\u{e8fd}', "Операции", |ui| {
-                ui.add_enabled_ui(!self.probing && !self.clients.is_empty(), |ui| {
-                    if design::tool(ui, p, '\u{e716}', "Проверить всех").clicked() {
-                        self.start_probe();
-                    }
-                });
-                if design::tool(ui, p, '\u{e74e}', "Экспорт логов").clicked() {
-                    self.export();
-                }
-                if self.probing {
-                    ui.horizontal(|ui| {
-                        ui.spinner();
-                        ui.label("Проверка компьютеров…");
-                    });
-                }
             });
             ui.add_space(4.0);
             p.card(14).show(ui, |ui| {
@@ -1108,15 +1178,17 @@ impl Toolkit {
             let keyboard_rect = ui.available_rect_before_wrap();
             let table_focus = ui.interact(
                 keyboard_rect,
-                ui.id().with("table-focus"),
+                egui::Id::new("log-table-focus"),
                 egui::Sense::focusable_noninteractive(),
             );
+            design::focus_ring(ui, p, &table_focus);
             if table_focus.has_focus() {
+                keep_vertical_keys(&table_focus);
                 self.log_focused = true;
             }
             let mut scroll_to_row = None;
             if self.log_focused
-                && !ctx.wants_keyboard_input()
+                && (table_focus.has_focus() || !ctx.wants_keyboard_input())
                 && keyboard_targets(&ctx, keyboard_rect)
                 && !self.message_open
                 && !self.admin_open
@@ -1162,6 +1234,27 @@ impl Toolkit {
                         ctx.copy_text(text);
                     }
                 }
+            }
+            if let Some(entry) = self
+                .log_selection
+                .current
+                .and_then(|i| self.logs.get(i))
+                .or_else(|| self.logs.first())
+            {
+                egui::ScrollArea::vertical()
+                    .id_salt("log-result")
+                    .max_height(44.)
+                    .show(ui, |ui| {
+                        ui.add(
+                            egui::Label::new(
+                                RichText::new(format!("{}: {}", entry.action, entry.result))
+                                    .color(p.secondary),
+                            )
+                            .wrap()
+                            .selectable(true),
+                        );
+                    });
+                ui.add_space(6.);
             }
             egui::Frame::new()
                 .fill(p.card)
@@ -1254,10 +1347,6 @@ impl Toolkit {
                                                     self.log_selection.rows.contains(&index),
                                                     row_index_is_odd,
                                                 );
-                                                if self.log_selection.rows.contains(&index) {
-                                                    ui.visuals_mut().override_text_color =
-                                                        Some(p.accent);
-                                                }
                                                 plain_cell(ui, text);
                                             });
                                         }
@@ -1368,7 +1457,7 @@ impl Toolkit {
                     egui::pos2(r.left() + 26., r.center().y),
                     egui::Align2::LEFT_CENTER,
                     label,
-                    egui::FontId::proportional(12.),
+                    egui::FontId::proportional(design::BODY_SIZE),
                     p.text,
                 );
                 response.widget_info(|| {
@@ -1469,15 +1558,17 @@ impl Toolkit {
             let keyboard_rect = ui.available_rect_before_wrap();
             let table_focus = ui.interact(
                 keyboard_rect,
-                ui.id().with("table-focus"),
+                egui::Id::new("client-table-focus"),
                 egui::Sense::focusable_noninteractive(),
             );
+            design::focus_ring(ui, p, &table_focus);
             if table_focus.has_focus() {
+                keep_vertical_keys(&table_focus);
                 self.log_focused = false;
             }
             let mut scroll_to_row = None;
             if !self.log_focused
-                && !ctx.wants_keyboard_input()
+                && (table_focus.has_focus() || !ctx.wants_keyboard_input())
                 && keyboard_targets(&ctx, keyboard_rect)
                 && !self.message_open
                 && !self.admin_open
@@ -1511,7 +1602,7 @@ impl Toolkit {
                 ));
             }
             if !self.log_focused
-                && !ctx.wants_keyboard_input()
+                && (table_focus.has_focus() || !ctx.wants_keyboard_input())
                 && keyboard_targets(&ctx, keyboard_rect)
                 && !self.message_open
                 && !self.admin_open
@@ -1530,6 +1621,26 @@ impl Toolkit {
                     };
                     self.selected = Some(indices[next]);
                     scroll_to_row = Some(next);
+                }
+            }
+            if indices.is_empty() {
+                ui.add_space(12.);
+                if self.clients.is_empty() {
+                    let missing = self.csv_loaded_at.is_empty();
+                    ui.label(if missing {
+                        "Список не загружен. Выберите доступный CSV."
+                    } else {
+                        "В CSV нет компьютеров."
+                    });
+                    if ui.button("Открыть CSV").clicked() {
+                        self.pick_csv();
+                    }
+                } else {
+                    ui.label(
+                        RichText::new("Нет компьютеров, подходящих под поиск или фильтр.")
+                            .color(p.secondary),
+                    );
+                    ui.add_space(8.);
                 }
             }
             egui::Frame::new()
@@ -1617,14 +1728,6 @@ impl Toolkit {
                                         let c = self.clients[index].clone();
                                         let mut cell_action = false;
                                         row.set_selected(self.selected == Some(index));
-                                        let row_palette = if self.selected == Some(index) {
-                                            Palette {
-                                                text: p.accent,
-                                                ..p
-                                            }
-                                        } else {
-                                            p
-                                        };
                                         for &column in &column_order {
                                             row.col(|ui| {
                                                 paint_row_cell(
@@ -1633,17 +1736,10 @@ impl Toolkit {
                                                     self.selected == Some(index),
                                                     row_index_is_odd,
                                                 );
-                                                ui.visuals_mut().override_text_color =
-                                                    Some(row_palette.text);
                                                 ui.spacing_mut().interact_size.y = 0.;
                                                 ui.spacing_mut().button_padding = egui::Vec2::ZERO;
-                                                cell_action |= self.client_cell(
-                                                    ui,
-                                                    &ctx,
-                                                    row_palette,
-                                                    &c,
-                                                    column,
-                                                );
+                                                cell_action |=
+                                                    self.client_cell(ui, &ctx, p, &c, column);
                                             });
                                         }
                                         let response = row.response();
@@ -1771,13 +1867,17 @@ fn search_box(ui: &mut egui::Ui, p: Palette, text: &mut String, width: f32) -> e
         (shortcut.size().x + 14.).ceil(),
         (shortcut.size().y + 4.).max(20.).ceil(),
     );
-    let show_shortcut = width > 100.;
-    let right_padding = if show_shortcut {
-        (badge_size.x + 20.).ceil() as i8
-    } else {
-        12
-    };
-    let response = ui.add_sized(
+    let show_clear = !text.is_empty() && width >= 48.;
+    let clear_space = if show_clear { 36. } else { 0. };
+    let show_shortcut = width > 100. + clear_space;
+    let right_padding = (clear_space
+        + if show_shortcut {
+            badge_size.x + 20.
+        } else {
+            12.
+        })
+    .ceil() as i8;
+    let mut response = ui.add_sized(
         [width, 46.],
         egui::TextEdit::singleline(text)
             .hint_text(RichText::new("Поиск компьютера, сотрудника или IP...").color(p.dim))
@@ -1792,7 +1892,7 @@ fn search_box(ui: &mut egui::Ui, p: Palette, text: &mut String, width: f32) -> e
     if show_shortcut {
         let badge = egui::Rect::from_center_size(
             egui::pos2(
-                response.rect.right() - 10. - badge_size.x / 2.,
+                response.rect.right() - 10. - clear_space - badge_size.x / 2.,
                 response.rect.center().y,
             ),
             badge_size,
@@ -1806,6 +1906,45 @@ fn search_box(ui: &mut egui::Ui, p: Palette, text: &mut String, width: f32) -> e
             egui::StrokeKind::Inside,
         );
         painter.galley(badge.center() - shortcut.size() / 2., shortcut, p.dim);
+    }
+    if show_clear {
+        let rect = egui::Rect::from_center_size(
+            egui::pos2(response.rect.right() - 23., response.rect.center().y),
+            egui::vec2(30., 30.),
+        );
+        let clear = ui
+            .interact(rect, egui::Id::new("clear-search"), egui::Sense::click())
+            .on_hover_cursor(egui::CursorIcon::Default)
+            .on_hover_text("Очистить поиск");
+        clear.widget_info(|| {
+            egui::WidgetInfo::labeled(egui::WidgetType::Button, ui.is_enabled(), "Очистить поиск")
+        });
+        if clear.hovered() || clear.is_pointer_button_down_on() {
+            let fill = if clear.is_pointer_button_down_on() {
+                p.pressed
+            } else {
+                p.hover
+            };
+            ui.painter().rect(
+                rect,
+                8.,
+                fill,
+                egui::Stroke::new(1_f32, p.hover_border),
+                egui::StrokeKind::Inside,
+            );
+        }
+        let center = rect.center();
+        let stroke = egui::Stroke::new(1.5_f32, p.secondary);
+        for diagonal in [egui::vec2(5., 5.), egui::vec2(5., -5.)] {
+            ui.painter()
+                .line_segment([center - diagonal, center + diagonal], stroke);
+        }
+        design::focus_ring(ui, p, &clear);
+        if clear.clicked() {
+            text.clear();
+            response.mark_changed();
+            response.request_focus();
+        }
     }
     response
 }
@@ -1821,6 +1960,17 @@ fn clipboard_line<const N: usize>(values: [&str; N], order: &[usize; N]) -> Stri
         .collect::<Vec<_>>()
         .join("\t")
         + "\r\n"
+}
+fn keep_vertical_keys(response: &egui::Response) {
+    response.ctx.memory_mut(|memory| {
+        memory.set_focus_lock_filter(
+            response.id,
+            egui::EventFilter {
+                vertical_arrows: true,
+                ..Default::default()
+            },
+        );
+    });
 }
 fn keyboard_targets(ctx: &egui::Context, rect: egui::Rect) -> bool {
     ctx.memory(|m| m.focused()).is_none_or(|id| {
@@ -1859,37 +2009,42 @@ fn paint_row_cell(ui: &egui::Ui, p: Palette, selected: bool, alternate: bool) {
 }
 fn plain_cell(ui: &mut egui::Ui, text: &str) {
     ui.add_space(8.0);
-    ui.add(egui::Label::new(text).extend());
+    ui.add(egui::Label::new(text).truncate())
+        .on_hover_text(text);
 }
 fn copy_cell(ui: &mut egui::Ui, ctx: &egui::Context, p: Palette, value: &str) -> bool {
     let rect = ui.available_rect_before_wrap();
     let size = egui::vec2(rect.width(), 26.0);
     let (rect, response) = ui.allocate_exact_size(size, egui::Sense::hover());
     let text_rect = rect.shrink2(egui::vec2(8.0, 0.0));
+    let hovered = rect.contains(
+        ui.input(|i| i.pointer.hover_pos())
+            .unwrap_or(egui::Pos2::ZERO),
+    );
+    let trailing = if hovered { 30. } else { 8. };
     let mut job = egui::text::LayoutJob::simple(
         value.to_owned(),
-        egui::FontId::proportional(12.0),
+        egui::FontId::proportional(design::BODY_SIZE),
         p.text,
-        (rect.width() - 40.0).max(0.0),
+        (rect.width() - 8. - trailing).max(0.0),
     );
     job.wrap.max_rows = 1;
+    job.wrap.break_anywhere = true;
     let galley = ui.painter().layout_job(job);
     let text_y = rect.center().y - galley.size().y / 2.0;
     ui.painter()
         .with_clip_rect(egui::Rect::from_min_max(
             text_rect.min,
-            egui::pos2(rect.right() - 32.0, text_rect.bottom()),
+            egui::pos2(
+                (rect.right() - trailing).max(text_rect.left()),
+                text_rect.bottom(),
+            ),
         ))
         .galley(egui::pos2(text_rect.left(), text_y), galley, p.text);
     response
         .widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Label, ui.is_enabled(), value));
     response.on_hover_text(value);
-    if rect.contains(
-        ui.input(|i| i.pointer.hover_pos())
-            .unwrap_or(egui::Pos2::ZERO),
-    ) && !value.is_empty()
-        && value != "-"
-    {
+    if hovered && rect.width() >= 32. && !value.is_empty() && value != "-" {
         let r = egui::Rect::from_center_size(
             egui::pos2(rect.right() - 16.0, rect.center().y),
             egui::vec2(24.0, 22.0),
@@ -2085,7 +2240,7 @@ mod ui_tests {
                 "commit all 120 DIP, including movement in earlier frames"
             );
             assert!(app.log_resize_start.is_none());
-            for (destination, expected) in [(633., 260.), (-1000., 882.), (5000., 0.)] {
+            for (destination, expected) in [(633., 260.), (-1000., 722.), (5000., 170.)] {
                 frame(&mut app, vec![]);
                 let press = egui::pos2(400., 904. - app.log_height - 11.);
                 frame(
@@ -2117,6 +2272,21 @@ mod ui_tests {
                 );
                 frame(&mut app, vec![]);
             }
+            let splitter = egui::Id::new("journal-splitter");
+            ctx.memory_mut(|memory| memory.request_focus(splitter));
+            frame(&mut app, vec![]);
+            let key = |key| egui::Event::Key {
+                key,
+                physical_key: None,
+                pressed: true,
+                repeat: false,
+                modifiers: Default::default(),
+            };
+            frame(&mut app, vec![key(egui::Key::ArrowUp)]);
+            assert_eq!(app.log_height, 194.);
+            assert!(ctx.memory(|memory| memory.has_focus(splitter)));
+            frame(&mut app, vec![key(egui::Key::Home)]);
+            assert_eq!(app.log_height, 190.);
         }
     }
     fn input(events: Vec<egui::Event>) -> egui::RawInput {
@@ -2163,6 +2333,11 @@ mod ui_tests {
         let mut app = fixture();
         app.client_sort = Some((1, false));
         app.selected = Some(998);
+        let table = egui::Id::new("client-table-focus");
+        ctx.memory_mut(|memory| memory.request_focus(table));
+        let _ = ctx.run(input(vec![]), |ctx| {
+            app.client_table(ctx, Palette::new(false))
+        });
         let _ = ctx.run(
             input(vec![egui::Event::Key {
                 key: egui::Key::ArrowDown,
@@ -2177,6 +2352,7 @@ mod ui_tests {
             app.client_table(ctx, Palette::new(false))
         });
         assert_eq!(app.selected, Some(999));
+        assert!(ctx.memory(|memory| memory.has_focus(table)));
 
         assert!(
             out.shapes
@@ -2241,7 +2417,7 @@ mod ui_tests {
             log_focused: false,
             log_height: 190.,
             log_resize_start: None,
-            client_columns: Columns::new([48., 58., 190., 150., 20., 150., 180., 170.], 4),
+            client_columns: Columns::new([42., 44., 165., 155., 204., 124., 150., 20.], 7),
             log_columns: Columns::new([155., 180., 230., 20.], 3),
         }
     }

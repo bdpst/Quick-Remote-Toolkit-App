@@ -1,3 +1,5 @@
+pub const BODY_SIZE: f32 = 13.0;
+
 use eframe::egui::{self, Color32, FontFamily, FontId, RichText, Stroke, Vec2};
 
 #[derive(Clone, Copy)]
@@ -17,6 +19,8 @@ pub struct Palette {
     pub favorite: Color32,
     pub hover_border: Color32,
     pub pressed: Color32,
+    pub primary: Color32,
+    pub error: Color32,
     pub primary_hover: Color32,
     pub primary_pressed: Color32,
     pub header_hover: Color32,
@@ -54,8 +58,10 @@ impl Palette {
             favorite: rgb(c[12]),
             hover_border: rgb(if dark { 0x5B708D } else { 0xBFD0EA }),
             pressed: rgb(if dark { 0x1E3A5F } else { 0xE8F1FF }),
-            primary_hover: rgb(if dark { 0x3B82F6 } else { 0x1D4ED8 }),
-            primary_pressed: rgb(if dark { 0x1D4ED8 } else { 0x1E40AF }),
+            primary: rgb(if dark { 0x1D4ED8 } else { 0x2563EB }),
+            error: rgb(if dark { 0xFCA5A5 } else { 0xB91C1C }),
+            primary_hover: rgb(if dark { 0x2457C8 } else { 0x1D4ED8 }),
+            primary_pressed: rgb(0x1E40AF),
             header_hover: rgb(if dark { 0x30415A } else { 0xF1F5FB }),
         }
     }
@@ -102,10 +108,10 @@ impl Palette {
         style.spacing.interact_size = Vec2::new(38.0, 34.0);
         style
             .text_styles
-            .insert(egui::TextStyle::Body, FontId::proportional(12.0));
+            .insert(egui::TextStyle::Body, FontId::proportional(BODY_SIZE));
         style
             .text_styles
-            .insert(egui::TextStyle::Button, FontId::proportional(12.0));
+            .insert(egui::TextStyle::Button, FontId::proportional(BODY_SIZE));
         style
             .text_styles
             .insert(egui::TextStyle::Small, FontId::proportional(11.0));
@@ -133,7 +139,7 @@ pub fn tool(ui: &mut egui::Ui, p: Palette, glyph: char, label: &str) -> egui::Re
     let rect = r.rect;
     r.widget_info(|| egui::WidgetInfo::labeled(egui::WidgetType::Button, ui.is_enabled(), label));
     let enabled = ui.is_enabled();
-    let color = |c: Color32| if enabled { c } else { c.gamma_multiply(0.55) };
+    let color = |c: Color32| if enabled { c } else { p.secondary };
     ui.painter().rect(
         rect,
         8.0,
@@ -168,7 +174,7 @@ pub fn tool(ui: &mut egui::Ui, p: Palette, glyph: char, label: &str) -> egui::Re
         egui::pos2(rect.left() + if glyph == '\0' { 12. } else { 39. }, center),
         egui::Align2::LEFT_CENTER,
         label,
-        FontId::proportional(12.0),
+        FontId::proportional(BODY_SIZE),
         color(p.text),
     );
     ui.painter().text(
@@ -178,6 +184,7 @@ pub fn tool(ui: &mut egui::Ui, p: Palette, glyph: char, label: &str) -> egui::Re
         FontId::new(11.0, FontFamily::Name("icons".into())),
         color(p.dim),
     );
+    focus_ring(ui, p, &r);
     r.on_hover_text(tool_tip(label))
 }
 pub fn section(
@@ -250,6 +257,7 @@ pub fn section(
             font(11., "icons"),
             if r.hovered() { p.accent } else { p.dim },
         );
+        focus_ring(ui, p, &r);
         if open {
             ui.add_space(2.);
             body(ui);
@@ -268,19 +276,25 @@ pub fn primary(
     ui.scope(|ui| {
         let v = ui.visuals_mut();
         v.disabled_alpha = 1.;
-        v.widgets.inactive.weak_bg_fill = p.accent;
-        v.widgets.inactive.bg_fill = p.accent;
+        let base = if enabled { p.primary } else { p.muted };
+        v.widgets.inactive.weak_bg_fill = base;
+        v.widgets.inactive.bg_fill = base;
         v.widgets.hovered.weak_bg_fill = p.primary_hover;
         v.widgets.hovered.bg_fill = p.primary_hover;
         v.widgets.active.weak_bg_fill = p.primary_pressed;
         v.widgets.active.bg_fill = p.primary_pressed;
-        v.override_text_color = Some(Color32::WHITE);
+        let foreground = if enabled { Color32::WHITE } else { p.secondary };
+        v.override_text_color = Some(foreground);
         let content: egui::WidgetText = if label == "Обновить" {
-            caption('\u{e72c}', label, Color32::WHITE, true).into()
+            caption('\u{e72c}', label, foreground, true).into()
         } else {
-            RichText::new(label).font(font(12., "semibold")).into()
+            RichText::new(label)
+                .font(font(BODY_SIZE, "semibold"))
+                .into()
         };
-        ui.add_enabled(enabled, egui::Button::new(content).min_size(size))
+        let response = ui.add_enabled(enabled, egui::Button::new(content).min_size(size));
+        focus_ring(ui, p, &response);
+        response
     })
     .inner
 }
@@ -294,7 +308,7 @@ pub fn menu_item(ui: &mut egui::Ui, p: Palette, label: &str) -> egui::Response {
         label,
         37.,
         egui::TextFormat {
-            font_id: FontId::proportional(12.),
+            font_id: FontId::proportional(BODY_SIZE),
             color: p.text,
             ..Default::default()
         },
@@ -339,7 +353,7 @@ pub fn table_header(ui: &mut egui::Ui, p: Palette, text: &str) -> egui::Response
         egui::pos2(r.rect.left() + 8., r.rect.center().y),
         egui::Align2::LEFT_CENTER,
         label,
-        font(12., "semibold"),
+        font(BODY_SIZE, "semibold"),
         p.text,
     );
     if let Some(arrow) = arrow {
@@ -351,6 +365,7 @@ pub fn table_header(ui: &mut egui::Ui, p: Palette, text: &str) -> egui::Response
             p.secondary,
         );
     }
+    focus_ring(ui, p, &r);
     r
 }
 
@@ -370,9 +385,9 @@ pub fn caption(glyph: char, label: &str, color: Color32, emphasis: bool) -> egui
         10.,
         egui::TextFormat {
             font_id: if emphasis {
-                font(12., "semibold")
+                font(BODY_SIZE, "semibold")
             } else {
-                FontId::proportional(12.)
+                FontId::proportional(BODY_SIZE)
             },
             color,
             ..Default::default()
@@ -401,5 +416,29 @@ fn tool_tip(label: &str) -> &str {
         "Проверить всех" => "Параллельно проверить ping для всех клиентов из списка",
         "Экспорт логов" => "Сохранить журнал действий в TXT или CSV",
         _ => label,
+    }
+}
+
+pub fn focus_ring(ui: &egui::Ui, p: Palette, response: &egui::Response) {
+    if response.has_focus() {
+        ui.painter().rect_stroke(
+            response.rect,
+            4.,
+            Stroke::new(2_f32, p.accent),
+            egui::StrokeKind::Inside,
+        );
+        if response.gained_focus() {
+            response.scroll_to_me(None);
+        }
+    }
+}
+
+pub fn validation_error(ui: &mut egui::Ui, p: Palette, message: &str) {
+    if !message.is_empty() {
+        ui.label(
+            RichText::new(format!("Ошибка: {message}"))
+                .color(p.error)
+                .strong(),
+        );
     }
 }
