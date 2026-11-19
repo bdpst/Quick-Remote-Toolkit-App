@@ -1,0 +1,25 @@
+{
+  "admin_open": false,
+  "administering": false,
+  "client_columns": [
+    0,
+    1,
+    4,
+    2,
+    3,
+    5,
+    6,
+    7
+  ],
+  "clients": 2,
+  "dialog_error": "",
+  "log_columns": [
+    3,
+    0,
+    1,
+    2
+  ],
+  "logs": 1,
+  "message_open": false,
+  "messaging": false
+}

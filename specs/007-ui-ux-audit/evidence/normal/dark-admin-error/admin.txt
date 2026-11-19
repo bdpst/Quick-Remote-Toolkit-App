@@ -1,0 +1,1 @@
+viewport="347F"; inner=Some([[688.0 366.0] - [1232.0 723.0]]); outer=Some([[680.0 335.0] - [1240.0 731.0]]); focused=Some(true); keyboard=true; widget=Some(BDE5); dpi=1
