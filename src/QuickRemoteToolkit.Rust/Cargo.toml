@@ -1,6 +1,6 @@
 [package]
 name = "quick-remote-toolkit"
-version = "0.4.1"
+version = "0.4.2"
 edition = "2024"
 
 [features]
@@ -17,6 +17,7 @@ required-features = ["ui-qa"]
 
 [dependencies]
 eframe = { version = "=0.33.3", default-features = false, features = ["glow", "default_fonts", "accesskit"] }
+raw-window-handle = "0.6"
 egui_extras = "=0.33.3"
 rfd = "=0.17.2"
 serde = { version = "1", features = ["derive"] }
@@ -25,7 +26,7 @@ encoding_rs = "0.8"
 chrono = "0.4"
 base64 = "0.22"
 
-windows-sys = { version = "=0.61.2", features = ["Win32_Foundation", "Win32_NetworkManagement_IpHelper", "Win32_Networking_WinSock", "Win32_System_IO", "Win32_UI_Shell", "Win32_System_Com"] }
+windows-sys = { version = "=0.61.2", features = ["Win32_Foundation", "Win32_NetworkManagement_IpHelper", "Win32_Networking_WinSock", "Win32_System_IO", "Win32_UI_HiDpi", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging", "Win32_System_Com"] }
 [profile.release]
 opt-level = "s"
 lto = true

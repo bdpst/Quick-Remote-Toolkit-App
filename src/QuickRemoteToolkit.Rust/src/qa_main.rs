@@ -67,6 +67,7 @@ fn main() -> eframe::Result {
         concat!("Quick Remote Toolkit ", env!("CARGO_PKG_VERSION")),
         eframe::NativeOptions {
             centered: true,
+            vsync: false,
             viewport: egui::ViewportBuilder::default()
                 .with_inner_size([width, height])
                 .with_min_inner_size([1200., 760.])

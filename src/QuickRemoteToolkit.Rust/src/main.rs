@@ -17,6 +17,9 @@ fn main() -> eframe::Result {
         concat!("Quick Remote Toolkit ", env!("CARGO_PKG_VERSION")),
         eframe::NativeOptions {
             centered: true,
+            // eframe paints synchronously on WM_SIZE. Present the frame without
+            // blocking that handler on the next OpenGL swap interval.
+            vsync: false,
             viewport: eframe::egui::ViewportBuilder::default()
                 .with_inner_size([1500.0, 920.0])
                 .with_min_inner_size([1200.0, 760.0])

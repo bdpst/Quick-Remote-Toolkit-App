@@ -1,6 +1,82 @@
 //! Small Windows ABI boundary. Buffers and server handles are released on every path.
 use crate::models::Event;
+use raw_window_handle::{HasWindowHandle, RawWindowHandle};
 use std::{ffi::c_void, path::Path, sync::mpsc::Sender, time::Duration};
+use windows_sys::Win32::{
+    Foundation::{HWND, LPARAM, LRESULT, RECT, WPARAM},
+    UI::{
+        HiDpi::GetDpiForWindow,
+        Shell::{DefSubclassProc, RemoveWindowSubclass, SetWindowSubclass},
+        WindowsAndMessaging::{
+            GetWindowRect, HTBOTTOM, HTBOTTOMLEFT, HTBOTTOMRIGHT, HTCLIENT, HTLEFT, HTRIGHT, HTTOP,
+            HTTOPLEFT, HTTOPRIGHT, IsZoomed, WM_NCDESTROY, WM_NCHITTEST,
+        },
+    },
+};
+
+pub fn enable_window_resize(window: &impl HasWindowHandle) {
+    if let Ok(handle) = window.window_handle()
+        && let RawWindowHandle::Win32(handle) = handle.as_raw()
+    {
+        // eframe creates the root window and installs this callback on the window's own thread.
+        if unsafe { SetWindowSubclass(handle.hwnd.get() as HWND, Some(resize_hit_test), 0, 0) } == 0
+        {
+            eprintln!(
+                "Could not enable window resizing: {}",
+                std::io::Error::last_os_error()
+            );
+        }
+    }
+}
+
+unsafe extern "system" fn resize_hit_test(
+    hwnd: HWND,
+    message: u32,
+    wparam: WPARAM,
+    lparam: LPARAM,
+    subclass_id: usize,
+    _data: usize,
+) -> LRESULT {
+    if message == WM_NCDESTROY {
+        unsafe { RemoveWindowSubclass(hwnd, Some(resize_hit_test), subclass_id) };
+    }
+    let hit = unsafe { DefSubclassProc(hwnd, message, wparam, lparam) };
+    if message != WM_NCHITTEST || hit != HTCLIENT as LRESULT || unsafe { IsZoomed(hwnd) } != 0 {
+        return hit;
+    }
+
+    let mut rect = RECT::default();
+    if unsafe { GetWindowRect(hwnd, &mut rect) } == 0 {
+        return hit;
+    }
+    // WM_NCHITTEST packs signed screen coordinates, including negative monitor positions.
+    let x = i32::from(lparam as i16);
+    let y = i32::from((lparam >> 16) as i16);
+    let border = (6 * unsafe { GetDpiForWindow(hwnd) }).div_ceil(96) as i32;
+    resize_border_hit(rect, x, y, border) as LRESULT
+}
+
+fn resize_border_hit(rect: RECT, x: i32, y: i32, border: i32) -> u32 {
+    if !(rect.left..rect.right).contains(&x) || !(rect.top..rect.bottom).contains(&y) {
+        return HTCLIENT;
+    }
+    let left = x - rect.left < border;
+    let right = rect.right - x <= border;
+    let top = y - rect.top < border;
+    let bottom = rect.bottom - y <= border;
+    match (left, right, top, bottom) {
+        (true, _, true, _) => HTTOPLEFT,
+        (_, true, true, _) => HTTOPRIGHT,
+        (true, _, _, true) => HTBOTTOMLEFT,
+        (_, true, _, true) => HTBOTTOMRIGHT,
+        (true, _, _, _) => HTLEFT,
+        (_, true, _, _) => HTRIGHT,
+        (_, _, true, _) => HTTOP,
+        (_, _, _, true) => HTBOTTOM,
+        _ => HTCLIENT,
+    }
+}
+
 type Handle = *mut c_void;
 #[repr(C)]
 struct Session {
