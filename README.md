@@ -1,7 +1,7 @@
 # Quick Remote Toolkit
 
 Windows-приложение для быстрых действий удалённой поддержки. Единственная
-поддерживаемая реализация — Rust + egui/eframe; текущая версия **0.4.1**.
+поддерживаемая реализация — Rust + egui/eframe; текущая версия **0.4.2**.
 
 ![Главное окно Rust в тёмной теме](docs/images/main-dark.png)
 
@@ -124,8 +124,8 @@ Windows-машина без средств разработки не прове�
 Только затем поставьте тег на проверенный коммит:
 
 ```powershell
-git tag -a v0.4.1 <verified-main-sha> -m "Release 0.4.1"
-git push origin v0.4.1
+git tag -a v0.4.2 <verified-main-sha> -m "Release 0.4.2"
+git push origin v0.4.2
 ```
 
 Workflow поддерживает теги `0.4.0` и `v*`, проверяет совпадение версии и публикует

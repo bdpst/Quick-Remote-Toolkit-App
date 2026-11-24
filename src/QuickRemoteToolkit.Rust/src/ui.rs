@@ -270,6 +270,7 @@ impl Toolkit {
         }
     }
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
+        crate::native::enable_window_resize(cc);
         let windows =
             std::path::PathBuf::from(std::env::var_os("WINDIR").unwrap_or("C:\\Windows".into()));
         let mut f = egui::FontDefinitions::default();
